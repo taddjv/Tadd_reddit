@@ -1,0 +1,149 @@
+.redditlogo {
+  height: 32px;
+  width: 32px;
+  margin: 8px 8px 8px 0;
+  /* margin-left: 20px; */
+}
+.redditlogo2 {
+  height: 18px;
+  margin: 14px 0;
+  margin-right: 32px;
+}
+
+.navbar-container {
+  display: flex;
+  height: 49px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid #eceff1;
+}
+
+.nc-left {
+  display: flex;
+  align-items: center;
+}
+
+.nc-right {
+  width: 334px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.home-button {
+  width: 268px;
+  height: 34px;
+  background-color: bisque;
+
+  /* margin-right: 50px; */
+}
+.nc-l-button {
+  padding: 0;
+  background: white;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  font-weight: 500;
+  font-size: 14px;
+}
+.nc-l-b-house {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.nc-l-b-text {
+  font-weight: bolder;
+  margin: auto;
+}
+
+.nc-r-s-glass {
+  height: 20px;
+  width: 20px;
+  color: #878a8c;
+  margin: 10px 12px;
+}
+
+.nc-r-search {
+  width: 645px;
+  height: 40px;
+  background-color: #f6f7f8;
+  border-radius: 500px;
+  border: #eceff1 solid 0.25px;
+  display: flex;
+}
+.nc-r-search:hover {
+  background-color: white;
+  border: solid 0.5px#2884d6;
+}
+
+.nc-r-s-input {
+  margin: auto 0;
+  width: 75%;
+}
+.nc-r-s-input > input {
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  color: #878a8c;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+.nc-r-signup {
+  width: 118px;
+  height: 30px;
+  border: solid 1px#2884d6;
+  color: #2884d6;
+  border-radius: 500px;
+  background-color: white;
+  font-weight: 700;
+}
+.nc-r-signup:hover {
+  background-color: #f6fafd;
+}
+
+.nc-r-login {
+  width: 118px;
+  height: 30px;
+  border: solid 1px#2884d6;
+  color: white;
+  border-radius: 500px;
+  background-color: #2884d6;
+  font-weight: 700;
+}
+.nc-r-login:hover {
+  background-color: #2884d6;
+}
+
+.nc-r-dropdown {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  width: 70px;
+  height: 32px;
+  color: #878a8c;
+}
+
+.nc-r-dropdown:hover {
+  border: 1px solid #eceff1;
+  border-radius: 2px;
+}
+
+.nc-r-d-user {
+  width: 20px;
+  height: 20px;
+}
