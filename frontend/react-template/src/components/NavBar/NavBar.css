@@ -12,11 +12,16 @@
 
 .navbar-container {
   display: flex;
+  position: fixed;
+  overflow: hidden;
+  top: 0;
   height: 49px;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
   border-bottom: 1px solid #eceff1;
+  background-color: white;
 }
 
 .nc-left {
@@ -58,7 +63,6 @@
   margin-right: 10px;
 }
 .nc-l-b-text {
-  font-weight: bolder;
   margin: auto;
 }
 
@@ -97,7 +101,7 @@
   -moz-appearance: none;
   appearance: none;
   color: #878a8c;
-  font-family: "IBM Plex Sans", sans-serif;
+  /* font-family: "IBM Plex Sans", Arial, sans-serif; */
 }
 
 .nc-r-signup {
@@ -146,4 +150,5 @@
 .nc-r-d-user {
   width: 20px;
   height: 20px;
+  padding-right: 5px;
 }

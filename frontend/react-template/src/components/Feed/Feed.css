@@ -1,0 +1,8 @@
+.feed {
+  width: 975px;
+  height: 2000px;
+  margin: auto;
+  background: lightblue;
+  display: flex;
+  justify-content: space-between;
+}
