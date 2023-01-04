@@ -7,6 +7,7 @@ import "./Feed.css";
 function Feed() {
   return (
     <div className="feed">
+      <Trending />
       <Posts />
       <Communities />
     </div>

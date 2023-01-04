@@ -3,4 +3,5 @@
   width: 310px;
   height: 400px;
   background: white;
+  grid-area: communities;
 }

@@ -6,8 +6,13 @@ import TopicOptionDrop from "./TopicOptionDrop";
 function TopicOption({ title, options, icon }) {
   //! when you click on the title it should do a search for that title
   const [selected, setSelected] = useState(false);
+  const [flip, setFlip] = useState(false);
+
   return (
-    <div className={`topics-${title.split(" ").join("")}-container`}>
+    <div
+      onClick={() => setFlip(!flip)}
+      className={`topics-${title.split(" ").join("")}-container`}
+    >
       <div
         onClick={() => setSelected(!selected)}
         className={`topics-${title.split(" ").join("")}`}
@@ -19,7 +24,12 @@ function TopicOption({ title, options, icon }) {
           />
           <span className={`${title.split(" ").join("")}-text`}>{title}</span>
         </div>
-        <FontAwesomeIcon className="option-down" icon={faChevronDown} />
+        <FontAwesomeIcon
+          className={`option-down-${title.split(" ").join("")} ${
+            flip ? "option-down-flip" : "option-down-normal"
+          }`}
+          icon={faChevronDown}
+        />
       </div>
       {selected && options.map((ele) => <TopicOptionDrop option={ele} />)}
     </div>

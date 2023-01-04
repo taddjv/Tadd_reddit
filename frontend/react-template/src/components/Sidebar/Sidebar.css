@@ -1,6 +1,7 @@
 .sidebar {
   width: 270px;
-  max-height: calc(100vh - 50px);
+  /* max-height: calc(100vh - 50px); */
+  height: calc(100vh - 50px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -78,7 +79,13 @@
 
 .option-down {
   justify-self: end;
-  /* padding: 0 10px; */
+}
+.option-down-flip {
+  transition: 0.5s;
+  transform: rotate(180deg);
+}
+.option-down-normal {
+  transition: 0.5s;
 }
 
 .topics-Gaming,
@@ -105,6 +112,7 @@
   padding: 20px 24px 40px;
   width: 100%;
   height: 214px;
+
   /* margin-bottom: 40px; */
 }
 

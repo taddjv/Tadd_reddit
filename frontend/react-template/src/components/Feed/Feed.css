@@ -1,8 +1,8 @@
 .feed {
-  width: 975px;
   height: 2000px;
+  width: 990px;
   margin: auto;
-  background: lightblue;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-areas: "trending trending" "posts communities";
+  grid-template-rows: 224px;
 }
