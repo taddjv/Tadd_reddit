@@ -1,4 +1,5 @@
 const User = require("../models/Users");
+const { setTokenCookie } = require("../utils/auth");
 
 //sign up
 exports.postUserSign = async (req, res) => {
@@ -16,16 +17,17 @@ exports.postUserSign = async (req, res) => {
       errors: err,
     });
   } else {
-    //? login process
     const hashedPassword = await User.hashPassword(password);
 
     const newUser = new User({
       username,
       password: hashedPassword,
     });
-    const savedUser = await newUser.save();
-    //?^
-    res.json(savedUser);
+    await newUser.save();
+
+    const token = setTokenCookie(res, newUser);
+
+    res.json({ newUser, token });
   }
 };
 
@@ -44,9 +46,9 @@ exports.postUserLog = async (req, res) => {
       errors: err,
     });
   } else {
-    if (User.signup(foundUser, password)) {
-      //* create the token
-      res.json(foundUser);
+    if (User.verifyUser(foundUser, password)) {
+      const token = setTokenCookie(res, foundUser);
+      res.json({ foundUser, token });
     } else {
       const err = new Error("Invalid credentials");
       err.password = "Invalid credentials";
@@ -61,7 +63,21 @@ exports.postUserLog = async (req, res) => {
   }
 };
 
+exports.deleteUserLog = async (req, res) => {
+  res.clearCookie("token");
+  return res.json({ message: "success" });
+};
+
+exports.getUserLog = async (req, res) => {
+  const { user } = req;
+  if (user) {
+    return res.json({
+      user: user,
+    });
+  } else return res.json({});
+};
+
 exports.test = async (req, res) => {
-  User.cl("booo");
-  res.json("test");
+  const foundUser = await User.find({});
+  res.json(foundUser);
 };

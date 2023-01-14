@@ -24,12 +24,10 @@ const postSchema = new Schema({
     type: String,
     required: true,
   },
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Comment",
-    },
-  ],
+  link: {
+    type: String,
+    required: true,
+  },
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   community: { type: Schema.Types.ObjectId, ref: "Community", required: true },
   createdAt: {

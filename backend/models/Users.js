@@ -21,19 +21,6 @@ const userSchema = new Schema({
     required: true,
     default: 0,
   },
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Comment",
-    },
-  ],
-  posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
-  communities: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Community",
-    },
-  ],
   createdAt: {
     type: Date,
     default: new Date(),
@@ -50,8 +37,8 @@ userSchema.statics.match = (password1, password2) => {
   return bcrypt.compareSync(password1, password2);
 };
 
-userSchema.statics.signup = async (foundUser, password) => {
-  return (await User.match(password, foundUser.password)) ? user : null;
+userSchema.statics.verifyUser = (foundUser, password) => {
+  return bcrypt.compareSync(password, foundUser.password);
 };
 
 userSchema.statics.cl = (input) => {

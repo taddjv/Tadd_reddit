@@ -9,6 +9,7 @@ import {
   faArrowAltCircleDown,
   faArrowAltCircleUp,
   faEllipsis,
+  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCommentAlt,
@@ -33,21 +34,21 @@ function Posts() {
           <option value="canada">Canada</option>
         </select>
         <button className="p-s-new p-s-option">
-          <FontAwesomeIcon className="f-h-house pp-l-down-logo" icon={faStar} />
+          <FontAwesomeIcon className="f-h-house ps-o-new-logo" icon={faStar} />
           New
         </button>
         <button className="p-s-top p-s-option">
           <FontAwesomeIcon
-            className="f-h-house pp-l-down-logo"
+            className="f-h-house ps-o-top-logo"
             icon={faChartBar}
           />
           Top
         </button>
         {/* <button className="p-p-other p-p-option"></button> */}
-        <select className="p-s-format">
-          <option value="card"></option>
-          <option value="classic"></option>
-          <option value="compact"></option>
+        <select className="p-s-format p-s-option">
+          <option value="card">Card</option>
+          <option value="classic">Classic</option>
+          <option value="compact">Compact</option>
         </select>
       </div>
       <PhotoPost />
