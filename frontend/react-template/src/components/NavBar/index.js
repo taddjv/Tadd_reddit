@@ -1,19 +1,71 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import RedditLogo from "./logos/RedditLogo";
 import RedditLogo2 from "./logos/RedditLogo2";
 import SearchBar from "./SearchBar";
+import { usePop } from "../../context/UserPopcontext";
 import LoginPop from "./LoginPop";
+
+import SignupPop from "./SignupPop";
+import UserDropDown from "./UserDropDown";
+import * as userActions from "../../store/users";
 
 import "./NavBar.css";
 
-function NavBar() {
-  const [showLogin, setShowLogin] = useState(false);
+function NavBar({ isLoaded }) {
+  const {
+    showLogin,
+    setShowLogin,
+    showSignin,
+    setShowSignin,
+    dropUser,
+    setDropUser,
+  } = usePop();
+  const currentUser = useSelector((state) => state.users.user);
+  const nonMemberProfile = (
+    <button
+      onClick={() => {
+        setDropUser(!dropUser);
+      }}
+      className="nc-r-dropdown"
+    >
+      <FontAwesomeIcon className="nc-r-d-user" icon={faUser} />
+      <FontAwesomeIcon icon={faChevronDown} />
+      {dropUser && <UserDropDown member={currentUser !== null} />}
+    </button>
+  );
+  const memberProfile = (
+    <button
+      onClick={() => {
+        setDropUser(!dropUser);
+      }}
+      className="nc-r-dropdown2"
+    >
+      <div className="nc-r-left">
+        <FontAwesomeIcon className="nc-r-d-user" icon={faUser} />
+      </div>
+      <div className="nc-r-middle">
+        <div className="n-c-r-m-top">{currentUser && currentUser.username}</div>
+        <div className="n-c-r-m-bottom">
+          {currentUser && currentUser.karma}
+          <span> karma</span>
+        </div>
+      </div>
+      <div className="nc-r-right">
+        <FontAwesomeIcon icon={faChevronDown} />
+      </div>
+      {dropUser && <UserDropDown member={currentUser !== null} />}
+    </button>
+  );
+
   return (
     <>
       {showLogin && <LoginPop />}
+      {showSignin && <SignupPop />}
+
       <div className="navbar-container">
         <div className="nc-left">
           <div className="reddit-logo">
@@ -33,19 +85,20 @@ function NavBar() {
           </div>
         </div>
         <div className="nc-right">
-          <button className="nc-r-signup">Sign Up</button>
-          <button
-            className="nc-r-login"
-            onClick={() => {
-              setShowLogin(!showLogin);
-            }}
-          >
-            Log In
-          </button>
-          <button className="nc-r-dropdown">
-            <FontAwesomeIcon className="nc-r-d-user" icon={faUser} />
-            <FontAwesomeIcon icon={faChevronDown} />
-          </button>
+          {!currentUser && (
+            <>
+              <button className="nc-r-signup">Demo User</button>
+              <button
+                className="nc-r-login"
+                onClick={() => {
+                  setShowLogin(!showLogin);
+                }}
+              >
+                Log In
+              </button>
+            </>
+          )}
+          {!currentUser ? nonMemberProfile : memberProfile}
         </div>
       </div>
     </>

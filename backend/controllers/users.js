@@ -27,10 +27,10 @@ exports.postUserSign = async (req, res) => {
 
     const token = setTokenCookie(res, newUser);
 
-    res.json({ newUser, token });
+    res.json(newUser);
   }
 };
-
+//Log in
 exports.postUserLog = async (req, res) => {
   const { username, password } = req.body;
   const foundUser = await User.findOne({ username });
@@ -48,12 +48,12 @@ exports.postUserLog = async (req, res) => {
   } else {
     if (User.verifyUser(foundUser, password)) {
       const token = setTokenCookie(res, foundUser);
-      res.json({ foundUser, token });
+      res.json(foundUser);
     } else {
       const err = new Error("Invalid credentials");
       err.password = "Invalid credentials";
       res.status(403);
-      err.message = "Invalid credentials";
+      err.message = "Wrong username or password";
       res.json({
         message: err.message,
         statusCode: 403,
@@ -70,10 +70,9 @@ exports.deleteUserLog = async (req, res) => {
 
 exports.getUserLog = async (req, res) => {
   const { user } = req;
+
   if (user) {
-    return res.json({
-      user: user,
-    });
+    return res.json(user);
   } else return res.json({});
 };
 

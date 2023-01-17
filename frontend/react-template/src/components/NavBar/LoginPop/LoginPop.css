@@ -135,6 +135,21 @@
   margin: 12px 0;
 }
 
+.lc-c-b-text > u {
+  color: #2884d6;
+  cursor: pointer;
+}
+
 .lc-c-bottom {
   margin-bottom: 60px;
+}
+
+.lc-c-m-errors {
+  list-style-type: none;
+}
+.lc-c-m-errors > li {
+  color: #fb133a;
+  font-size: 12px;
+  width: 240px;
+  margin: auto;
 }

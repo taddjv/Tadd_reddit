@@ -19,10 +19,13 @@ const validateSignup = [
 ];
 
 const validateLogin = [
-  check("credential")
+  check("username")
     .exists({ checkFalsy: true })
     .notEmpty()
-    .withMessage("Email or username is required"),
+    .withMessage("username is required"),
+  check("username")
+    .isLength({ min: 4, max: 20 })
+    .withMessage("Username must be between 3 and 20 characters"),
   check("password")
     .exists({ checkFalsy: true })
     .withMessage("Password is required"),

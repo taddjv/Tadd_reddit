@@ -1,0 +1,72 @@
+.lc-container1,
+.lc-container2 {
+  background: white;
+  width: 400px;
+  border-radius: 15px;
+  display: block;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lc-c-back {
+  margin: 16px;
+  float: left;
+
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.lc-c-m-email {
+  position: relative;
+  margin: 16px 0;
+}
+
+.lc-c-m-email-label {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: 0.25s;
+  color: #737577;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.lc-c-m-email > input {
+  width: 280px;
+  height: 46px;
+  border: none;
+  border-radius: 500px;
+  background: #f6f7f8;
+  padding: 12px;
+}
+
+#lc-c-m-email:hover {
+  border: 0.5px solid #c5c6c6;
+}
+
+#lc-c-m-email:focus {
+  outline: none !important;
+  border: 0.5px solid #c5c6c6;
+}
+
+#lc-c-m-email:hover + .lc-c-m-email-label,
+#lc-c-m-email:focus + .lc-c-m-email-label,
+#lc-c-m-email:not(:placeholder-shown)#lc-c-m-email:not(:focus)
+  + .lc-c-m-username-label {
+  border: 0.5px solid #c5c6c6;
+  top: 10%;
+  transform: translateY(0%);
+  font-size: 14px;
+  border: none;
+  font-size: 12px;
+  font-weight: 400;
+}

@@ -21,7 +21,6 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
-app.use(routes);
 
 if (!isProduction) {
   app.use(cors());
@@ -33,15 +32,16 @@ app.use(
   })
 );
 
-// app.use(
-//   csurf({
-//     cookie: {
-//       secure: isProduction,
-//       sameSite: isProduction && "Lax",
-//       httpOnly: true,
-//     },
-//   })
-// );
+app.use(
+  csurf({
+    cookie: {
+      secure: isProduction,
+      sameSite: isProduction && "Lax",
+      httpOnly: true,
+    },
+  })
+);
+app.use(routes);
 
 // app.use(routes);
 

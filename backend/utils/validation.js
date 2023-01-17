@@ -11,7 +11,6 @@ const handleValidationErrors = (req, _res, next) => {
     err.status = 400;
     err.title = "Validation Error";
     next(err);
-    console.log("gg bro");
   }
   next();
 };

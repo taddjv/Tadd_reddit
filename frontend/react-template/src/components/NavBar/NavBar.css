@@ -13,7 +13,7 @@
 .navbar-container {
   display: flex;
   position: fixed;
-  overflow: hidden;
+  /* overflow: hidden; */
   top: 0;
   height: 49px;
   width: 100%;
@@ -131,6 +131,7 @@
 }
 
 .nc-r-dropdown {
+  position: relative;
   background: none;
   border: none;
   padding: 0;
@@ -140,6 +141,7 @@
   width: 70px;
   height: 32px;
   color: #878a8c;
+  border: 1px solid white;
 }
 
 .nc-r-dropdown:hover {
@@ -151,4 +153,27 @@
   width: 20px;
   height: 20px;
   padding-right: 5px;
+}
+
+.nc-r-dropdown2 {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  height: 38px;
+  color: #878a8c;
+  border: 1px solid white;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+}
+
+.nc-r-dropdown2:hover {
+  border: 1px solid #eceff1;
+  border-radius: 2px;
 }
