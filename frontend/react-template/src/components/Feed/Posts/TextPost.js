@@ -1,4 +1,8 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as voteActions from "../../../store/votes";
+import * as postActions from "../../../store/posts";
+import moment from "moment";
 import "./Posts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,18 +18,35 @@ import {
   faArrowAltCircleRight,
 } from "@fortawesome/free-regular-svg-icons";
 
-function TextPost({ title, content }) {
+function TextPost({ post, user }) {
+  const dispatch = useDispatch();
+
+  const upvote = (e) => {
+    e.preventDefault();
+    dispatch(voteActions.upvoteThePost(post, user)).then(async (res) => {
+      const data = await res;
+      dispatch(postActions.upvoteThePost(post._id, data));
+    });
+  };
+  const downvote = (e) => {
+    e.preventDefault();
+    dispatch(voteActions.downvoteThePost(post, user)).then(async (res) => {
+      const data = await res;
+      dispatch(postActions.downvoteThePost(post._id, data));
+    });
+  };
+
   return (
     <div className="posts-post pp-text">
       <div className="pp-left">
-        <div className="pp-l-up">
+        <div onClick={upvote} className="pp-l-up">
           <FontAwesomeIcon
             className="f-h-house pp-l-up-logo"
             icon={faArrowAltCircleUp}
           />
         </div>
-        <div className="pp-l-count">333</div>
-        <div className="pp-l-down">
+        <div className="pp-l-count">{post.upVotes - post.downVotes}</div>
+        <div onClick={downvote} className="pp-l-down">
           <FontAwesomeIcon
             className="f-h-house pp-l-down-logo"
             icon={faArrowAltCircleDown}
@@ -35,13 +56,17 @@ function TextPost({ title, content }) {
       <div className="pp-middle">
         <div className="pp-m-top">
           <div className="pp-m-top-left">
+            {/*//! subreddit url pic ! */}
             <img
               className="pp-m-t-l-logo"
               src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpgs"
             />
-            <div className="pp-m-t-l-community">r/$murderedByWords$</div>
+            <div className="pp-m-t-l-community">r/{post.community.name}</div>
             <div className="pp-m-t-l-user">
-              Posted by u/$userInQuestion$ $3 hours$ ago
+              Posted by u/
+              {post.author.username +
+                " " +
+                moment(post.createdAt).from(Date.now())}
             </div>
           </div>
           <div className="pp-m-top-right">
@@ -49,8 +74,8 @@ function TextPost({ title, content }) {
           </div>
         </div>
         <div className="pp-m-middle">
-          <div className="pp-m-m-title">{title}</div>
-          <div className="pp-m-m-content">{content}</div>
+          <div className="pp-m-m-title">{post.title}</div>
+          <div className="pp-m-m-content">{post.content}</div>
         </div>
         <div className="pp-m-bottom">
           <button className="pp-m-b-comments">
@@ -64,13 +89,13 @@ function TextPost({ title, content }) {
             <FontAwesomeIcon className="f-h-house" icon={faFolder} />
             Share
           </button>
-          <button className="pp-m-b-save">
+          {/* <button className="pp-m-b-save">
             <FontAwesomeIcon className="f-h-house" icon={faFileArchive} />
             Save
           </button>
           <button className="pp-m-b-other">
             <FontAwesomeIcon className="pp-m-b-o-button" icon={faEllipsis} />
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

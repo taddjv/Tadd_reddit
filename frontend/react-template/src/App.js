@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import * as usersActions from "./store/users";
+import * as subscriptionsActions from "./store/subscriptions";
+import * as votesActions from "./store/votes";
 
 import NavBar from "./components/NavBar";
 import Sidebar from "./components/Sidebar";
 import Feed from "./components/Feed";
-import UserDropDown from "./components/NavBar/UserDropDown";
+import Community from "./components/Community";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    dispatch(usersActions.restoreTheUser()).then(() => setIsLoaded(true));
+    dispatch(usersActions.restoreTheUser()).then(async (res) => {
+      const data = await res;
+      dispatch(subscriptionsActions.getTheCommunitiesS(data._id));
+      dispatch(votesActions.getTheUserVotes(data._id));
+      setIsLoaded(true);
+    });
   }, [dispatch]);
   return (
     <Switch>
@@ -26,8 +33,18 @@ function App() {
           </div>
         </div>
       </Route>
+      <Route exact path="/r/:communityName">
+        <div className="App">
+          <NavBar isLoaded={isLoaded} />
+          <Community />
+        </div>
+      </Route>
       <Route exact path="/test">
-        <UserDropDown />
+        {" "}
+        <div className="App">
+          <NavBar isLoaded={isLoaded} />
+          <Community />
+        </div>
       </Route>
     </Switch>
   );

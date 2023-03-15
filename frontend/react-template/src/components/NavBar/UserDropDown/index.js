@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 
 function UserDropDown({ member }) {
   const dispatch = useDispatch();
-  const { setShowLogin } = usePop();
+  const { setShowLogin, showCommunity, setShowCommunity } = usePop();
   const nonMemberDrop = (
     <div className="udd-container">
       <div className="udd-mode">
@@ -36,7 +36,13 @@ function UserDropDown({ member }) {
         <FontAwesomeIcon className="udd-user" icon={faUser} />
         <p className="udd-m-text">profile</p>
       </div>
-      <div className="udd-community">
+      <div
+        className="udd-community"
+        onClick={(e) => {
+          e.preventDefault();
+          setShowCommunity(true);
+        }}
+      >
         <FontAwesomeIcon className="udd-comm" icon={faUser} />
         <p className="udd-m-text">Create a community</p>
       </div>

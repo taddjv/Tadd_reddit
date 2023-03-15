@@ -11,8 +11,8 @@ const { environment } = require("./config");
 const isProduction = environment === "production";
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-
-const User = require("./models/Users");
+const multer = require("multer");
+const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -41,9 +41,8 @@ app.use(
     },
   })
 );
-app.use(routes);
 
-// app.use(routes);
+app.use(routes);
 
 mongoose.connect(
   process.env.DATABASE_URL,
@@ -53,7 +52,24 @@ mongoose.connect(
     else console.log("error with database");
   }
 );
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "images");
+//   },
+//   filename: (req, file, cb) => {
+//     console.log(file);
+//     // cb(null, Date.now() + path.extname(file.originalname));
+//     cb(null, Date.now() + file.originalname);
+//   },
+// });
+// const upload = multer({ storage: storage });
+
 app.listen(port, () => console.log(`Listening on port ${port}...`));
+
+// app.post("/api/upload", upload.single("image"), (req, res) => {
+//   res.json({ cool: "cool brooo" });
+// });
 
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");

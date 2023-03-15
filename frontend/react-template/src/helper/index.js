@@ -10,3 +10,20 @@ export const formSetter = (state) => {
     form1.style.display = "none";
   }
 };
+
+export const userSubbed = (subs, commId) => {
+  for (let subscription in subs) {
+    if (subs[subscription].community === commId) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const dataRender = (obj) => {
+  const final = [];
+  for (let data in obj) {
+    final.push(obj[data]);
+  }
+  return final;
+};

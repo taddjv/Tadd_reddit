@@ -1,9 +1,19 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import usersReducer from "./users";
+import communitiesReducer from "./communities";
+import imagesReducer from "./images";
+import subscriptionsReducer from "./subscriptions";
+import postsReducer from "./posts";
+import votesReducer from "./votes";
 
 const rootReducer = combineReducers({
   users: usersReducer,
+  communities: communitiesReducer,
+  images: imagesReducer,
+  subscriptions: subscriptionsReducer,
+  posts: postsReducer,
+  votes: votesReducer,
 });
 
 let enhancer;

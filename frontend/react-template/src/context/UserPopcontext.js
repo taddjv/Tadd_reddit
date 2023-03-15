@@ -5,6 +5,7 @@ export const usePop = () => useContext(UserPopContext);
 export default function UserPopProvider({ children }) {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignin, setShowSignin] = useState(false);
+  const [showCommunity, setShowCommunity] = useState(false);
   const [dropUser, setDropUser] = useState(false);
   return (
     <UserPopContext.Provider
@@ -15,6 +16,8 @@ export default function UserPopProvider({ children }) {
         setShowSignin,
         dropUser,
         setDropUser,
+        showCommunity,
+        setShowCommunity,
       }}
     >
       {children}

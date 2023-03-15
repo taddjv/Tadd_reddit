@@ -80,3 +80,8 @@ exports.test = async (req, res) => {
   const foundUser = await User.find({});
   res.json(foundUser);
 };
+
+exports.getAllUsers = async (req, res) => {
+  const allUsers = await User.find({});
+  res.json(allUsers);
+};

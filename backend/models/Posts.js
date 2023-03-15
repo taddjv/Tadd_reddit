@@ -22,11 +22,9 @@ const postSchema = new Schema({
   },
   content: {
     type: String,
-    required: true,
   },
   link: {
     type: String,
-    required: true,
   },
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   community: { type: Schema.Types.ObjectId, ref: "Community", required: true },

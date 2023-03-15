@@ -10,27 +10,35 @@ function TopicOption({ title, options, icon }) {
 
   return (
     <div
-      onClick={() => setFlip(!flip)}
-      className={`topics-${title.split(" ").join("")}-container`}
+      onClick={() => {
+        if (icon) setFlip(!flip);
+      }}
+      className={`topics-ops-container`}
     >
       <div
-        onClick={() => setSelected(!selected)}
-        className={`topics-${title.split(" ").join("")}`}
+        onClick={() => {
+          if (icon) setSelected(!selected);
+        }}
+        className={`topics-ops topics-${icon === undefined}`}
       >
-        <div className={`${title.split(" ").join("")}-left`}>
+        {icon ? (
+          <div className={`ops-left`}>
+            <FontAwesomeIcon className={`ops-icon`} icon={icon} />
+            <span className={`${title.split(" ").join("")}-text`}>{title}</span>
+          </div>
+        ) : (
+          <div className={`ops-left`}>
+            <span className={`ops-text`}>{title}</span>
+          </div>
+        )}
+        {options && (
           <FontAwesomeIcon
-            className={`${title.split(" ").join("")}-icon`}
-            icon={icon}
+            className={` ${flip ? "option-down-flip" : "option-down-normal"}`}
+            icon={faChevronDown}
           />
-          <span className={`${title.split(" ").join("")}-text`}>{title}</span>
-        </div>
-        <FontAwesomeIcon
-          className={`option-down-${title.split(" ").join("")} ${
-            flip ? "option-down-flip" : "option-down-normal"
-          }`}
-          icon={faChevronDown}
-        />
+        )}
       </div>
+
       {selected && options.map((ele) => <TopicOptionDrop option={ele} />)}
     </div>
   );

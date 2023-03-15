@@ -8,6 +8,7 @@ import RedditLogo2 from "./logos/RedditLogo2";
 import SearchBar from "./SearchBar";
 import { usePop } from "../../context/UserPopcontext";
 import LoginPop from "./LoginPop";
+import CreateCommunity from "../Feed/CreateCommunity";
 
 import SignupPop from "./SignupPop";
 import UserDropDown from "./UserDropDown";
@@ -21,6 +22,8 @@ function NavBar({ isLoaded }) {
     setShowLogin,
     showSignin,
     setShowSignin,
+    showCommunity,
+    setShowCommunit,
     dropUser,
     setDropUser,
   } = usePop();
@@ -38,33 +41,39 @@ function NavBar({ isLoaded }) {
     </button>
   );
   const memberProfile = (
-    <button
-      onClick={() => {
-        setDropUser(!dropUser);
-      }}
-      className="nc-r-dropdown2"
-    >
-      <div className="nc-r-left">
-        <FontAwesomeIcon className="nc-r-d-user" icon={faUser} />
-      </div>
-      <div className="nc-r-middle">
-        <div className="n-c-r-m-top">{currentUser && currentUser.username}</div>
-        <div className="n-c-r-m-bottom">
-          {currentUser && currentUser.karma}
-          <span> karma</span>
+    <>
+      <div></div>
+      <button
+        onClick={() => {
+          setDropUser(!dropUser);
+        }}
+        className="nc-r-dropdown2 "
+      >
+        <div className="nc-r-left">
+          <FontAwesomeIcon className="nc-r-d-user" icon={faUser} />
         </div>
-      </div>
-      <div className="nc-r-right">
-        <FontAwesomeIcon icon={faChevronDown} />
-      </div>
-      {dropUser && <UserDropDown member={currentUser !== null} />}
-    </button>
+        <div className="nc-r-middle">
+          <div className="n-c-r-m-top">
+            {currentUser && currentUser.username}
+          </div>
+          <div className="n-c-r-m-bottom">
+            {currentUser && currentUser.karma}
+            <span> karma</span>
+          </div>
+        </div>
+        <div className="nc-r-right">
+          <FontAwesomeIcon icon={faChevronDown} />
+        </div>
+        {dropUser && <UserDropDown member={currentUser !== null} />}
+      </button>
+    </>
   );
 
   return (
     <>
       {showLogin && <LoginPop />}
       {showSignin && <SignupPop />}
+      {showCommunity && <CreateCommunity />}
 
       <div className="navbar-container">
         <div className="nc-left">

@@ -24,13 +24,7 @@
 .rc-community1,
 .rc-community2,
 .rc-community3,
-.topics-Gaming,
-.topics-Sports,
-.topics-Business,
-.topics-Crypto,
-.topics-Television,
-.topics-Celebrity,
-.topics-MoreTopics {
+.topics-ops {
   height: 36px;
   width: 100%;
   display: flex;
@@ -44,25 +38,21 @@
 .rc-community1:hover,
 .rc-community2:hover,
 .rc-community3:hover,
-.topics-Gaming:hover,
-.topics-Sports:hover,
-.topics-Business:hover,
-.topics-Crypto:hover,
-.topics-Television:hover,
-.topics-Celebrity:hover,
-.topics-MoreTopics:hover {
+.topics-ops:hover {
   background-color: #f5f5f5;
+}
+
+.topics-true {
+  cursor: default;
+}
+.topics-true:hover {
+  cursor: default;
+  background-color: white;
 }
 
 .f-h-house,
 .f-p-circle,
-.Gaming-icon,
-.Sports-icon,
-.Business-icon,
-.Crypto-icon,
-.Television-icon,
-.Celebrity-icon,
-.MoreTopics-icon {
+.ops-icon {
   width: 20px;
   height: 20px;
   margin-right: 10px;
@@ -88,22 +78,11 @@
   transition: 0.5s;
 }
 
-.topics-Gaming,
-.topics-Sports,
-.topics-Business,
-.topics-Crypto,
-.topics-Television,
-.topics-Celebrity,
-.topics-MoreTopics {
+.topics-ops {
   justify-content: space-between;
+  background: white;
 }
-.topics-Gaming > div,
-.topics-Sports > div,
-.topics-Business > div,
-.topics-Crypto > div,
-.topics-Television > div,
-.topics-Celebrity > div,
-.topics-MoreTopics > div {
+.topics-ops > div {
   display: flex;
   align-items: center;
 }

@@ -70,6 +70,7 @@ export const restoreTheUser = () => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(restoreUser(data));
+    return data;
   }
 };
 

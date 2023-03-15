@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as postsActions from "../../../store/posts";
+import { dataRender } from "../../../helper";
 import PhotoPost from "./PhotoPost";
 import VideoPost from "./VideoPost";
 import LinkPost from "./LinkPost";
@@ -20,6 +23,14 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 
 function Posts() {
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts);
+  const currentUser = useSelector((state) => state.users.user);
+
+  useEffect(() => {
+    dispatch(postsActions.getThePosts());
+  }, []);
+
   return (
     <div className="posts">
       <div className="posts-title">Popular posts</div>
@@ -28,11 +39,7 @@ function Posts() {
           <FontAwesomeIcon className="f-h-house" icon={faHandPointUp} />
           Hot
         </button>
-        <select className="p-s-country p-s-option">
-          <option value="everywhere">Everywhere</option>
-          <option value="united-states">United-States</option>
-          <option value="canada">Canada</option>
-        </select>
+
         <button className="p-s-new p-s-option">
           <FontAwesomeIcon className="f-h-house ps-o-new-logo" icon={faStar} />
           New
@@ -44,14 +51,15 @@ function Posts() {
           />
           Top
         </button>
-        {/* <button className="p-p-other p-p-option"></button> */}
-        <select className="p-s-format p-s-option">
-          <option value="card">Card</option>
-          <option value="classic">Classic</option>
-          <option value="compact">Compact</option>
-        </select>
       </div>
-      <PhotoPost />
+      {posts &&
+        dataRender(posts).map((ele) => {
+          switch (ele.type) {
+            case "text":
+              return <TextPost post={ele} user={currentUser} />;
+          }
+        })}
+      {/* <PhotoPost />
       <VideoPost />
       <LinkPost title="Murdering with kindness" />
       <LinkPost
@@ -61,7 +69,6 @@ Psychology"
       <TextPost
         title="AITA for putting parental controls on my TV and royally pissing off my FIL?"
         content={`I (M30's) live with my wife (F30's). We have two kids, M8 and F6.
-
         My wife's parents are staying with us temporarily as their home is having some serious repairs after a freak accident. It wasn't their fault and luckily they had insurance. The repairs should be completed in two months from now.
 
         I don't really get along with my in-laws, especially my father-in-law, but I agreed to let them stay because I thought the time would fly by and it wouldn't be that bad, but I'm posting here so I guess I was wrong.
@@ -87,7 +94,7 @@ Psychology"
         My FIL is now incredibly pissed off with me and said that I'm acting like a child and keeps pestering me, demanding the password. My wife is also mad at me for upsetting her dad.
 
         I'm just so annoyed at this whole situation and I'm sick of hearing about it so I just want to know if I'm morally in the clear.`}
-      />
+      /> */}
     </div>
   );
 }
