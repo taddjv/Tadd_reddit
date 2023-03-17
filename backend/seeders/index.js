@@ -47,7 +47,7 @@ const seedDB = async () => {
         content: ele.content,
         type: ele.type,
         author: allUsers[i],
-        community: allCommunities[i],
+        community: allCommunities[i || 2],
       };
     })
   );

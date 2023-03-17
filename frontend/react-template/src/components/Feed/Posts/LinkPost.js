@@ -1,4 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as voteActions from "../../../store/votes";
+import * as postActions from "../../../store/posts";
+import moment from "moment";
+import { reactionCheck } from "../../../helper";
 import "./Posts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,20 +18,43 @@ import {
   faFileArchive,
   faArrowAltCircleRight,
 } from "@fortawesome/free-regular-svg-icons";
-function LinkPost({ title }) {
+function LinkPost({ post, user, userVotes }) {
+  const dispatch = useDispatch();
+  const upvote = (e) => {
+    e.preventDefault();
+    dispatch(voteActions.upvoteThePost(post, user)).then(async (res) => {
+      const data = await res;
+      dispatch(postActions.upvoteThePost(post._id, data));
+    });
+  };
+  const downvote = (e) => {
+    e.preventDefault();
+    dispatch(voteActions.downvoteThePost(post, user)).then(async (res) => {
+      const data = await res;
+      dispatch(postActions.downvoteThePost(post._id, data));
+    });
+  };
   return (
     <div className="posts-post pp-link">
       <div className="pp-left">
-        <div className="pp-l-up">
+        <div onClick={upvote} className="pp-l-up">
           <FontAwesomeIcon
-            className="f-h-house pp-l-up-logo"
+            className={`pp-l-up-logo ${
+              reactionCheck(userVotes, post).upvote
+                ? "pp-l-up-logo-voted"
+                : null
+            }`}
             icon={faArrowAltCircleUp}
           />
         </div>
-        <div className="pp-l-count">333</div>
-        <div className="pp-l-down">
+        <div className="pp-l-count">{post.upVotes - post.downVotes}</div>
+        <div onClick={downvote} className="pp-l-down">
           <FontAwesomeIcon
-            className="f-h-house pp-l-down-logo"
+            className={`pp-l-down-logo ${
+              reactionCheck(userVotes, post).downvote
+                ? "pp-l-down-logo-voted"
+                : null
+            }`}
             icon={faArrowAltCircleDown}
           />
         </div>
@@ -38,9 +66,12 @@ function LinkPost({ title }) {
               className="pp-m-t-l-logo"
               src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpgs"
             />
-            <div className="pp-m-t-l-community">r/$murderedByWords$</div>
+            <div className="pp-m-t-l-community">r/{post.community.name}</div>
             <div className="pp-m-t-l-user">
-              Posted by u/$userInQuestion$ $3 hours$ ago
+              Posted by u/
+              {post.author.username +
+                " " +
+                moment(post.createdAt).from(Date.now())}
             </div>
           </div>
           <div className="pp-m-top-right">
@@ -49,10 +80,8 @@ function LinkPost({ title }) {
         </div>
         <div className="pp-m-middle pp-m-middle-link">
           <div className="pp-m-m-left pp-m-m-left-link">
-            <div className="pp-m-m-title">{title}</div>
-            <div className="pp-m-m-link">
-              https://photogeeksteven.files.wordpress.com/2014/06/default-user-icon-profile.png
-            </div>
+            <div className="pp-m-m-title">{post.title}</div>
+            <div className="pp-m-m-link">{post.content}</div>
           </div>
           <div className="pp-m-m-right">
             <div className="p-m-m-r-link">
@@ -80,13 +109,6 @@ function LinkPost({ title }) {
           <button className="pp-m-b-share">
             <FontAwesomeIcon className="f-h-house" icon={faFolder} />
             Share
-          </button>
-          <button className="pp-m-b-save">
-            <FontAwesomeIcon className="f-h-house" icon={faFileArchive} />
-            Save
-          </button>
-          <button className="pp-m-b-other">
-            <FontAwesomeIcon className="pp-m-b-o-button" icon={faEllipsis} />
           </button>
         </div>
       </div>

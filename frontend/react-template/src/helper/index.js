@@ -27,3 +27,14 @@ export const dataRender = (obj) => {
   }
   return final;
 };
+
+export const reactionCheck = (userData, post) => {
+  let final = {};
+  for (let vote in userData) {
+    if (userData[vote].post === post._id) {
+      final["upvote"] = userData[vote].upvote;
+      final["downvote"] = userData[vote].downvote;
+    }
+  }
+  return final;
+};

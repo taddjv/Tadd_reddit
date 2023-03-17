@@ -104,6 +104,12 @@
   background: #f8f9fa;
   color: black;
 }
+.pp-l-up-logo-voted {
+  color: #cc3800;
+}
+.pp-l-down-logo-voted {
+  color: #5a74cc;
+}
 .pp-l-up-logo:hover {
   color: #cc3800;
 }

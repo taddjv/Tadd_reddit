@@ -78,15 +78,21 @@ const votesReducer = (state = initialState, action) => {
       if (action.payload.removed) {
         delete newState[action.payload.removed];
         return newState;
+      } else if (action.payload.edited) {
+        newState[action.payload.edited._id] = action.payload.edited;
+        return newState;
       } else {
         newState[action.payload._id] = action.payload;
         return newState;
       }
     }
     case DOWNVOTE_POST: {
-      let newState = {};
+      let newState = { ...state };
       if (action.payload.removed) {
         delete newState[action.payload.removed];
+        return newState;
+      } else if (action.payload.edited) {
+        newState[action.payload.edited._id] = action.payload.edited;
         return newState;
       } else {
         newState[action.payload._id] = action.payload;

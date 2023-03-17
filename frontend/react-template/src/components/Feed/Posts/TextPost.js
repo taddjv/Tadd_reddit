@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as voteActions from "../../../store/votes";
 import * as postActions from "../../../store/posts";
 import moment from "moment";
+import { reactionCheck } from "../../../helper";
 import "./Posts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,10 +18,8 @@ import {
   faFileArchive,
   faArrowAltCircleRight,
 } from "@fortawesome/free-regular-svg-icons";
-
-function TextPost({ post, user }) {
+function TextPost({ post, user, userVotes }) {
   const dispatch = useDispatch();
-
   const upvote = (e) => {
     e.preventDefault();
     dispatch(voteActions.upvoteThePost(post, user)).then(async (res) => {
@@ -35,20 +34,27 @@ function TextPost({ post, user }) {
       dispatch(postActions.downvoteThePost(post._id, data));
     });
   };
-
   return (
     <div className="posts-post pp-text">
       <div className="pp-left">
         <div onClick={upvote} className="pp-l-up">
           <FontAwesomeIcon
-            className="f-h-house pp-l-up-logo"
+            className={`pp-l-up-logo ${
+              reactionCheck(userVotes, post).upvote
+                ? "pp-l-up-logo-voted"
+                : null
+            }`}
             icon={faArrowAltCircleUp}
           />
         </div>
         <div className="pp-l-count">{post.upVotes - post.downVotes}</div>
         <div onClick={downvote} className="pp-l-down">
           <FontAwesomeIcon
-            className="f-h-house pp-l-down-logo"
+            className={`pp-l-down-logo ${
+              reactionCheck(userVotes, post).downvote
+                ? "pp-l-down-logo-voted"
+                : null
+            }`}
             icon={faArrowAltCircleDown}
           />
         </div>
@@ -89,13 +95,6 @@ function TextPost({ post, user }) {
             <FontAwesomeIcon className="f-h-house" icon={faFolder} />
             Share
           </button>
-          {/* <button className="pp-m-b-save">
-            <FontAwesomeIcon className="f-h-house" icon={faFileArchive} />
-            Save
-          </button>
-          <button className="pp-m-b-other">
-            <FontAwesomeIcon className="pp-m-b-o-button" icon={faEllipsis} />
-          </button> */}
         </div>
       </div>
     </div>

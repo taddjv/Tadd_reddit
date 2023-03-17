@@ -206,23 +206,60 @@ const seedCommunities = [
 
 const seedPosts = [
   {
-    title: "this i s a demo post",
+    title: "this is a video 1",
+    type: "video",
+    content:
+      "https://joy1.videvo.net/videvo_files/video/free/video0455/large_watermarked/_import_609113a1be0e89.39394997_preview.mp4",
+  },
+  {
+    title:
+      "this is a video 2 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    type: "video",
+    content: "https://www.w3schools.com/html/mov_bbb.mp4",
+  },
+  {
+    title: "this is a picture 1",
+    type: "image",
+    content:
+      "https://edit.co.uk/uploads/2016/12/Image-1-Alternatives-to-stock-photography-Thinkstock.jpg",
+  },
+  {
+    title:
+      "this is a picture 2 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    type: "image",
+    content: "https://shotkit.com/wp-content/uploads/2019/02/Stock-photo.jpg",
+  },
+  {
+    title: "this is a demo post link post 1",
+    type: "link",
+    content:
+      "https://photogeeksteven.files.wordpress.com/2014/06/default-user-icon-profile.png",
+  },
+  {
+    title:
+      "this is a demo link post 2 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    type: "link",
+    content:
+      "https://globalnews.ca/news/9556134/edmonton-police-inglewood-apartment-crime/",
+  },
+  {
+    title: "this is a demo post 1",
     type: "text",
   },
   {
-    title: "this i s a demo post",
+    title: "this is a demo post 2",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     type: "text",
   },
   {
-    title: "this i s a demo post",
+    title: "this is a demo post 3",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     type: "text",
   },
   {
-    title: "this i s a demo post",
+    title: "this is a demo post 4",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     type: "text",
