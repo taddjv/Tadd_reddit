@@ -137,7 +137,7 @@ const seedCommunities = [
   {
     type: "public",
     contentType: "text",
-    name: "askReddit",
+    name: "askreddit",
     rules: [
       {
         rule: "don't hit each other",
@@ -171,7 +171,7 @@ const seedCommunities = [
   {
     type: "public",
     contentType: "image,link,video,text",
-    name: "Music",
+    name: "music",
     description: "The musical side of Reddit!",
   },
   {
@@ -209,7 +209,7 @@ const seedCommunities = [
   {
     type: "public",
     contentType: "text",
-    name: "Jokes",
+    name: "jokes",
     description: "The main goal here is to make each other laugh.",
   },
 ];

@@ -48,3 +48,12 @@ exports.editCommunity = async (req, res) => {
   await foundCommunity.save();
   res.json(foundCommunity);
 };
+
+exports.searchCommunities = async (req, res) => {
+  const { search } = req.params;
+  const foundCommunities = await Community.find({
+    name: new RegExp(`(${search})`, "i"),
+  });
+
+  res.json(foundCommunities);
+};

@@ -85,3 +85,11 @@ exports.getAllUsers = async (req, res) => {
   const allUsers = await User.find({});
   res.json(allUsers);
 };
+exports.searchUsers = async (req, res) => {
+  const { search } = req.params;
+  const foundUsers = await User.find({
+    username: new RegExp(`(${search})`, "i"),
+  });
+
+  res.json(foundUsers);
+};

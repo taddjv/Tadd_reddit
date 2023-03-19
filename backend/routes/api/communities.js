@@ -4,6 +4,7 @@ const router = express.Router();
 const { validateCommunityCreate } = require("../../validators/communities");
 const { findUser } = require("../../utils/auth");
 
+router.get("/search/:search", communitiesController.searchCommunities);
 router.get("/:name", communitiesController.getCommunity);
 router.post(
   "/",

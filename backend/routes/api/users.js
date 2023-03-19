@@ -4,6 +4,7 @@ const router = express.Router();
 const { validateLogin, validateSignup } = require("../../validators/users");
 const { findUser } = require("../../utils/auth");
 
+router.get("/search/:search", usersController.searchUsers);
 router.post("/signup", validateSignup, usersController.postUserSign);
 router.post("/login", validateLogin, usersController.postUserLog);
 router.delete("/logout", usersController.deleteUserLog);

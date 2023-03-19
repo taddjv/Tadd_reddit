@@ -26,7 +26,7 @@ const seedDB = async () => {
       return {
         rules: comm.rules,
         type: comm.type,
-        name: comm.name,
+        name: comm.name.toLowerCase(),
         description: comm.description,
         owner: allUsers[i],
         contentType: comm.contentType,
