@@ -10,6 +10,9 @@ import NavBar from "./components/NavBar";
 import Sidebar from "./components/Sidebar";
 import Feed from "./components/Feed";
 import Community from "./components/Community";
+import SelectedPost from "./components/Feed/SelectedPost";
+import SubmitPost from "./components/SubmitPost.js";
+// import SubmitPost from "./components/Community/SubmitPost";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +27,10 @@ function App() {
   }, [dispatch]);
   return (
     <Switch>
+      <Route exact path="/post/:id">
+        <NavBar isLoaded={isLoaded} />
+        <SelectedPost />
+      </Route>
       <Route exact path="/">
         <div className="App">
           <NavBar isLoaded={isLoaded} />
@@ -39,11 +46,16 @@ function App() {
           <Community />
         </div>
       </Route>
-      <Route exact path="/test">
-        {" "}
+      <Route exact path="/r/:communityName/submit">
         <div className="App">
           <NavBar isLoaded={isLoaded} />
-          <Community />
+          <SubmitPost />
+        </div>
+      </Route>
+      <Route exact path="/test">
+        <div className="App">
+          <NavBar isLoaded={isLoaded} />
+          <SubmitPost />
         </div>
       </Route>
     </Switch>

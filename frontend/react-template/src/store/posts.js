@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const GET_POSTS = "posts/GET_POSTS";
 const GET_USER_POSTS = "posts/GET_USER_POSTS";
 const GET_COMMUNITY_POSTS = "posts/GET_COMMUNITY_POSTS";
+const GET_SINGLE_POST = "posts/GET_SINGLE_POST";
 const POST_POST = "posts/POST_POST";
 const EDIT_POST = "posts/EDIT_POST";
 const DELETE_POST = "post/DELETE_POST";
@@ -25,6 +26,12 @@ const getCommunityPosts = (posts) => {
   return {
     type: GET_COMMUNITY_POSTS,
     payload: posts,
+  };
+};
+const getSinglePost = (post) => {
+  return {
+    type: GET_SINGLE_POST,
+    payload: post,
   };
 };
 const postPost = (post) => {
@@ -85,6 +92,15 @@ export const getTheCommunityPosts = (communityId) => async (dispatch) => {
     dispatch(getCommunityPosts(data));
   }
 };
+export const getTheSinglePost = (postId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/posts/${postId}`, {
+    method: "GET",
+  });
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(getSinglePost(data));
+  }
+};
 export const upvoteThePost = (postId, vote) => async (dispatch) => {
   const response = await csrfFetch(`/api/posts/upvote/${postId}`, {
     method: "PUT",
@@ -113,6 +129,24 @@ export const downvoteThePost = (postId, vote) => async (dispatch) => {
     dispatch(downvotePost(data.post, data.voteStatus));
   }
 };
+export const postThePost =
+  (postData, type, communityId) => async (dispatch) => {
+    const { title, content } = postData;
+    const response = await csrfFetch(`/api/posts/community/${communityId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title: title, content: content, type: type }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(postPost(data));
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  };
 
 const initialState = {};
 const postsReducer = (state = initialState, action) => {
@@ -138,6 +172,11 @@ const postsReducer = (state = initialState, action) => {
       });
       return newState;
     }
+    case GET_SINGLE_POST: {
+      let newState = {};
+      newState[action.payload._id] = action.payload;
+      return newState;
+    }
     case UPVOTE_POST: {
       let newState = { ...state };
       newState[action.payload.post._id].upVotes += action.payload.vote.up;
@@ -148,6 +187,11 @@ const postsReducer = (state = initialState, action) => {
       let newState = { ...state };
       newState[action.payload.post._id].upVotes += action.payload.vote.up;
       newState[action.payload.post._id].downVotes += action.payload.vote.down;
+      return newState;
+    }
+    case POST_POST: {
+      let newState = { ...state };
+      newState[action.payload._id] = action.payload;
       return newState;
     }
     default:

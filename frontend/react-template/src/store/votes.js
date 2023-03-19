@@ -68,10 +68,14 @@ const votesReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_VOTES: {
       let newState = {};
-      action.payload.forEach((ele, i) => {
-        newState[ele._id] = ele;
-      });
-      return newState;
+      if (action.payload.message) {
+        return newState;
+      } else {
+        action.payload.forEach((ele, i) => {
+          newState[ele._id] = ele;
+        });
+        return newState;
+      }
     }
     case UPVOTE_POST: {
       let newState = { ...state };

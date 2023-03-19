@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
@@ -76,7 +77,7 @@ function NavBar({ isLoaded }) {
       {showCommunity && <CreateCommunity />}
 
       <div className="navbar-container">
-        <div className="nc-left">
+        <NavLink exact to="/" className="nc-left">
           <div className="reddit-logo">
             <RedditLogo />
             <RedditLogo2 />
@@ -87,7 +88,7 @@ function NavBar({ isLoaded }) {
               <span className="nc-l-b-text">Home</span>
             </button>
           </div>
-        </div>
+        </NavLink>
         <div className="nc-middle">
           <div className="nc-r-search">
             <SearchBar />

@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import * as communitiesActions from "../../store/communities";
 import RuleOption from "./RuleOption";
 
-import TopicOption from "../Sidebar/Topics/TopicOption";
-
 function RulesCommunity({ community, user }) {
   const dispatch = useDispatch();
 

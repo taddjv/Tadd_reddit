@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import * as voteActions from "../../../store/votes";
 import * as postActions from "../../../store/posts";
 import moment from "moment";
@@ -18,7 +19,7 @@ import {
   faFileArchive,
   faArrowAltCircleRight,
 } from "@fortawesome/free-regular-svg-icons";
-function TextPost({ post, user, userVotes }) {
+function TextPost({ post, user, userVotes, individual, community }) {
   const dispatch = useDispatch();
   const upvote = (e) => {
     e.preventDefault();
@@ -34,9 +35,12 @@ function TextPost({ post, user, userVotes }) {
       dispatch(postActions.downvoteThePost(post._id, data));
     });
   };
+  const postClass = individual ? "sp-b-post" : "pp-text";
+  const contentClass = individual ? "sp-b-content" : "pp-m-m-content";
+  const leftClass = individual ? "sp-b-left" : "pp-left";
   return (
-    <div className="posts-post pp-text">
-      <div className="pp-left">
+    <NavLink to={`/post/${post._id}`} className={`posts-post ${postClass}`}>
+      <div className={leftClass}>
         <div onClick={upvote} className="pp-l-up">
           <FontAwesomeIcon
             className={`pp-l-up-logo ${
@@ -63,11 +67,20 @@ function TextPost({ post, user, userVotes }) {
         <div className="pp-m-top">
           <div className="pp-m-top-left">
             {/*//! subreddit url pic ! */}
-            <img
-              className="pp-m-t-l-logo"
-              src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpgs"
-            />
-            <div className="pp-m-t-l-community">r/{post.community.name}</div>
+            {!community && (
+              <>
+                <img
+                  className="pp-m-t-l-logo"
+                  src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpgs"
+                />
+                <NavLink
+                  to={`/r/${post.community.name}`}
+                  className="pp-m-t-l-community"
+                >
+                  r/{post.community.name}
+                </NavLink>
+              </>
+            )}
             <div className="pp-m-t-l-user">
               Posted by u/
               {post.author.username +
@@ -81,7 +94,7 @@ function TextPost({ post, user, userVotes }) {
         </div>
         <div className="pp-m-middle">
           <div className="pp-m-m-title">{post.title}</div>
-          <div className="pp-m-m-content">{post.content}</div>
+          <div className={contentClass}>{post.content}</div>
         </div>
         <div className="pp-m-bottom">
           <button className="pp-m-b-comments">
@@ -97,7 +110,7 @@ function TextPost({ post, user, userVotes }) {
           </button>
         </div>
       </div>
-    </div>
+    </NavLink>
   );
 }
 

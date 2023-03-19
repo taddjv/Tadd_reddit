@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import * as voteActions from "../../../store/votes";
 import * as postActions from "../../../store/posts";
 import moment from "moment";
@@ -17,7 +18,7 @@ import {
   faFileArchive,
 } from "@fortawesome/free-regular-svg-icons";
 
-function PhotoPost({ post, user, userVotes }) {
+function PhotoPost({ post, user, userVotes, individual, community }) {
   const dispatch = useDispatch();
   const upvote = (e) => {
     e.preventDefault();
@@ -33,9 +34,12 @@ function PhotoPost({ post, user, userVotes }) {
       dispatch(postActions.downvoteThePost(post._id, data));
     });
   };
+  const postClass = individual ? "sp-b-post" : "pp-photo";
+  const photoClass = individual ? "sp-b-photo" : "pp-m-m-photo";
+  const leftClass = individual ? "sp-b-left" : "pp-left";
   return (
-    <div className="posts-post pp-photo">
-      <div className="pp-left">
+    <NavLink to={`/post/${post._id}`} className={`posts-post ${postClass}`}>
+      <div className={leftClass}>
         <div onClick={upvote} className="pp-l-up">
           <FontAwesomeIcon
             className={`pp-l-up-logo ${
@@ -61,11 +65,20 @@ function PhotoPost({ post, user, userVotes }) {
       <div className="pp-middle">
         <div className="pp-m-top">
           <div className="pp-m-top-left">
-            <img
-              className="pp-m-t-l-logo"
-              src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpgs"
-            />
-            <div className="pp-m-t-l-community">r/{post.community.name}</div>
+            {!community && (
+              <>
+                <img
+                  className="pp-m-t-l-logo"
+                  src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpgs"
+                />
+                <NavLink
+                  to={`/r/${post.community.name}`}
+                  className="pp-m-t-l-community"
+                >
+                  r/{post.community.name}
+                </NavLink>
+              </>
+            )}
             <div className="pp-m-t-l-user">
               Posted by u/
               {post.author.username +
@@ -80,7 +93,7 @@ function PhotoPost({ post, user, userVotes }) {
         <div className="pp-m-middle">
           <div className="pp-m-m-title">{post.title}</div>
           <div className="pp-m-m-link">{post.content}</div>
-          <img className="pp-m-m-photo" src={post.content} />
+          <img className={photoClass} src={post.content} />
         </div>
         <div className="pp-m-bottom">
           <button className="pp-m-b-comments">
@@ -96,7 +109,7 @@ function PhotoPost({ post, user, userVotes }) {
           </button>
         </div>
       </div>
-    </div>
+    </NavLink>
   );
 }
 

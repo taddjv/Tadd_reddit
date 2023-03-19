@@ -44,6 +44,7 @@ export const getTheCommunity = (name) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(getCommunity(data));
+    return data;
   }
 };
 export const getTheCommunities = () => async (dispatch) => {

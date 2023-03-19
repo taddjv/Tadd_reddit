@@ -112,6 +112,7 @@ const seedUsers = [
 const seedCommunities = [
   {
     type: "public",
+    contentType: "text,image,video,link",
     rules: [
       {
         rule: "no eating",
@@ -135,6 +136,7 @@ const seedCommunities = [
   },
   {
     type: "public",
+    contentType: "text",
     name: "askReddit",
     rules: [
       {
@@ -151,6 +153,7 @@ const seedCommunities = [
   },
   {
     type: "public",
+    contentType: "image,link,video",
     name: "awww",
     rules: [
       {
@@ -167,38 +170,45 @@ const seedCommunities = [
   },
   {
     type: "public",
+    contentType: "image,link,video,text",
     name: "Music",
     description: "The musical side of Reddit!",
   },
   {
     type: "public",
+    contentType: "image",
     name: "pics",
     description: "Do you intend on sharing a jpeg file here ?",
   },
   {
     type: "public",
+    contentType: "image,link,video",
     name: "science",
     description:
       "Science is a systematic endeavor that builds and organizes knowledge in the form of testable explanations and predictions about the universe.",
   },
   {
     type: "public",
+    contentType: "link",
     name: "worldnews",
     description: "Anything related news around the world.",
   },
   {
     type: "public",
+    contentType: "video",
     name: "videos",
     description: "Do you intend on sharing a mp4 file here ?",
   },
   {
     type: "public",
+    contentType: "image,link,video",
     name: "todayilearned",
     description:
       "A community where people share info they've just recently learned.",
   },
   {
     type: "public",
+    contentType: "text",
     name: "Jokes",
     description: "The main goal here is to make each other laugh.",
   },

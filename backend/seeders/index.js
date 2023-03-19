@@ -29,6 +29,7 @@ const seedDB = async () => {
         name: comm.name,
         description: comm.description,
         owner: allUsers[i],
+        contentType: comm.contentType,
       };
     })
   );
@@ -36,7 +37,11 @@ const seedDB = async () => {
   const allCommunities = await Community.find({});
   await Subscription.insertMany(
     allCommunities.map((comm, i) => {
-      return { user: allUsers[i + 1], community: comm, role: "member" };
+      return {
+        user: allUsers[i + 1],
+        community: comm,
+        role: "member",
+      };
     })
   );
 

@@ -84,10 +84,14 @@ const subscriptionsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_COMMUNITIES_S: {
       let newState = {};
-      action.payload.forEach((ele, i) => {
-        newState[ele._id] = ele;
-      });
-      return newState;
+      if (action.payload.message) {
+        return newState;
+      } else {
+        action.payload.forEach((ele, i) => {
+          newState[ele._id] = ele;
+        });
+        return newState;
+      }
     }
     case GET_USERS_S: {
       let newState = { ...state };

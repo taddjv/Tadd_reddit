@@ -18,9 +18,13 @@
   max-height: 676px;
   width: 640px;
   display: flex;
+  text-decoration: none;
+  color: black;
 }
 .posts-post:hover {
   border: #898989 0.5px solid;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .posts-sorter {

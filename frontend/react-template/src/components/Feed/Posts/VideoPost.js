@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import * as voteActions from "../../../store/votes";
 import * as postActions from "../../../store/posts";
 import moment from "moment";
@@ -17,7 +18,7 @@ import {
   faFileArchive,
 } from "@fortawesome/free-regular-svg-icons";
 
-function VideoPost({ post, user, userVotes }) {
+function VideoPost({ post, user, userVotes, individual, community }) {
   const dispatch = useDispatch();
   const upvote = (e) => {
     e.preventDefault();
@@ -33,9 +34,12 @@ function VideoPost({ post, user, userVotes }) {
       dispatch(postActions.downvoteThePost(post._id, data));
     });
   };
+  const postClass = individual ? "sp-b-post" : "pp-video";
+  const videoClass = individual ? "sp-b-video" : "pp-m-m-video";
+  const leftClass = individual ? "sp-b-left" : "pp-left";
   return (
-    <div className="posts-post pp-video">
-      <div className="pp-left">
+    <NavLink to={`/post/${post._id}`} className={`${postClass} posts-post`}>
+      <div className={leftClass}>
         <div onClick={upvote} className="pp-l-up">
           <FontAwesomeIcon
             className={`pp-l-up-logo ${
@@ -61,11 +65,22 @@ function VideoPost({ post, user, userVotes }) {
       <div className="pp-middle">
         <div className="pp-m-top">
           <div className="pp-m-top-left">
-            <img
-              className="pp-m-t-l-logo"
-              src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpgs"
-            />
-            <div className="pp-m-t-l-community">r/{post.community.name}</div>
+            {/*//! subreddit url pic ! */}
+            {!community && (
+              <>
+                <img
+                  className="pp-m-t-l-logo"
+                  src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpgs"
+                />
+                <NavLink
+                  to={`/r/${post.community.name}`}
+                  className="pp-m-t-l-community"
+                >
+                  r/{post.community.name}
+                </NavLink>
+              </>
+            )}
+
             <div className="pp-m-t-l-user">
               Posted by u/
               {post.author.username +
@@ -80,7 +95,7 @@ function VideoPost({ post, user, userVotes }) {
         <div className="pp-m-middle">
           <div className="pp-m-m-title">{post.title}</div>
           <div className="pp-m-m-link">{post.content}</div>
-          <video className="pp-m-m-video" controls>
+          <video className={videoClass} controls>
             <source src={post.content} type="video/mp4" />
           </video>
         </div>
@@ -98,7 +113,7 @@ function VideoPost({ post, user, userVotes }) {
           </button>
         </div>
       </div>
-    </div>
+    </NavLink>
   );
 }
 
