@@ -6,7 +6,7 @@ import { faHouse, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import RedditLogo from "./logos/RedditLogo";
 import RedditLogo2 from "./logos/RedditLogo2";
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar/index";
 import { usePop } from "../../context/UserPopcontext";
 import LoginPop from "./LoginPop";
 import CreateCommunity from "../Feed/CreateCommunity";
@@ -89,11 +89,8 @@ function NavBar({ isLoaded }) {
             </button>
           </div>
         </NavLink>
-        <div className="nc-middle">
-          <div className="nc-r-search">
-            <SearchBar />
-          </div>
-        </div>
+        <SearchBar />
+
         <div className="nc-right">
           {!currentUser && (
             <>

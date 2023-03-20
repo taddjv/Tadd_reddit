@@ -6,6 +6,7 @@ import imagesReducer from "./images";
 import subscriptionsReducer from "./subscriptions";
 import postsReducer from "./posts";
 import votesReducer from "./votes";
+import searchReducer from "./search";
 
 const rootReducer = combineReducers({
   users: usersReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   subscriptions: subscriptionsReducer,
   posts: postsReducer,
   votes: votesReducer,
+  search: searchReducer,
 });
 
 let enhancer;

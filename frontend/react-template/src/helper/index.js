@@ -23,7 +23,9 @@ export const userSubbed = (subs, commId) => {
 export const dataRender = (obj) => {
   const final = [];
   for (let data in obj) {
-    final.push(obj[data]);
+    if (data !== "data") {
+      final.push(obj[data]);
+    }
   }
   return final;
 };
@@ -34,6 +36,16 @@ export const reactionCheck = (userData, post) => {
     if (userData[vote].post === post._id) {
       final["upvote"] = userData[vote].upvote;
       final["downvote"] = userData[vote].downvote;
+    }
+  }
+  return final;
+};
+
+export const searchRender = (obj, type) => {
+  const final = [];
+  for (let data in obj) {
+    if (data !== "data" && data.split("/")[0] === type) {
+      final.push(obj[data]);
     }
   }
   return final;

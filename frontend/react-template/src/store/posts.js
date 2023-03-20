@@ -9,6 +9,7 @@ const EDIT_POST = "posts/EDIT_POST";
 const DELETE_POST = "post/DELETE_POST";
 const UPVOTE_POST = "post/UPVOTE_POST";
 const DOWNVOTE_POST = "post/DOWNVOTE_POST";
+const SEARCH_POSTS = "post/SEARCH_POSTS";
 
 const getPosts = (posts) => {
   return {
@@ -62,6 +63,12 @@ const downvotePost = (post, vote) => {
   return {
     type: DOWNVOTE_POST,
     payload: { post, vote },
+  };
+};
+const searchPosts = (posts) => {
+  return {
+    type: SEARCH_POSTS,
+    payload: posts,
   };
 };
 
@@ -147,6 +154,17 @@ export const postThePost =
       return data;
     }
   };
+export const searchThePosts =
+  ({ search }) =>
+  async (dispatch) => {
+    const response = await csrfFetch(`/api/posts/search/${search}`, {
+      method: "GET",
+    });
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(searchPosts(data));
+    }
+  };
 
 const initialState = {};
 const postsReducer = (state = initialState, action) => {
@@ -192,6 +210,13 @@ const postsReducer = (state = initialState, action) => {
     case POST_POST: {
       let newState = { ...state };
       newState[action.payload._id] = action.payload;
+      return newState;
+    }
+    case SEARCH_POSTS: {
+      let newState = {};
+      action.payload.forEach((ele) => {
+        newState[ele._id] = ele;
+      });
       return newState;
     }
     default:

@@ -13,9 +13,11 @@ const VideoSubmit = ({ community }) => {
   const [title, setTitle] = useState(null);
   const [tempVideo, setTempVideo] = useState(null);
   const [video, setVideo] = useState(null);
+  const [viewVideo, setViewVideo] = useState(false);
 
   const [titleError, setTitleError] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [vidLoadError, setVidLoadError] = useState(false);
 
   const post = (e) => {
     e.preventDefault();
@@ -53,13 +55,23 @@ const VideoSubmit = ({ community }) => {
           }
         }}
       ></input>
-      <div className="suP-l-c-i-file">
+      <div className={`suP-l-c-i-file ${vidLoadError && "suP-l-c-i-error"}`}>
         {video ? (
           <>
             <div className="suP-l-c-i-f-top">
-              <video className="suP-l-c-i-f-t-img" controls>
-                <source src={video} type="video/mp4" />
-              </video>
+              {vidLoadError ? (
+                <div>Broken Video</div>
+              ) : (
+                <video
+                  onLoad={() => setVideo(tempVideo)}
+                  onError={() => setVidLoadError(true)}
+                  hidden={vidLoadError}
+                  className="suP-l-c-i-f-t-img"
+                  controls
+                >
+                  <source src={video} type="video/mp4" />
+                </video>
+              )}
             </div>
           </>
         ) : (
@@ -96,6 +108,9 @@ const VideoSubmit = ({ community }) => {
                 onClick={(e) => {
                   e.preventDefault();
                   setVideo(tempVideo);
+                  if (tempVideo) {
+                    setViewVideo(true);
+                  }
                 }}
                 className={`c-profile-input ${videoError && "suP-l-c-i-error"}`}
               >
@@ -106,20 +121,26 @@ const VideoSubmit = ({ community }) => {
         )}
       </div>
       <div className="suP-l-submit">
-        {video && (
+        {viewVideo && (
           <button
             onClick={(e) => {
               e.preventDefault();
               setVideo(null);
               setTempVideo(null);
               setVideoError(false);
+              setViewVideo(false);
+              setVidLoadError(false);
             }}
             className="suP-l-s-button2"
           >
             <FontAwesomeIcon className="suP-l-s-b-logo" icon={faTrash} />
           </button>
         )}
-        <button onClick={post} className="suP-l-s-button">
+        <button
+          onClick={post}
+          disabled={video && title ? false : true}
+          className="suP-l-s-button"
+        >
           Post
         </button>
       </div>

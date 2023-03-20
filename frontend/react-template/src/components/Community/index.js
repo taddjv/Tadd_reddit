@@ -50,7 +50,7 @@ function Community() {
         dispatch(postsActions.getTheCommunityPosts(data._id));
       }
     );
-  }, []);
+  }, [history.location.pathname]);
 
   const subscribe = (e) => {
     e.preventDefault();

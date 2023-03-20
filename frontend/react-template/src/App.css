@@ -6,18 +6,9 @@
   margin: 0;
   font-family: "IBM Plex Sans", Arial, sans-serif;
 }
-.page-body {
-  margin-top: 50px;
-  margin-left: 270px;
-  background: #dae0e6;
-  overflow: visible;
-}
 
 .App {
   height: 100vh;
-}
-
-.feed {
   background: #dae0e6;
 }
 

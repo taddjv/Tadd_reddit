@@ -150,3 +150,13 @@ exports.postSubPost = async (req, res, next) => {
       }
   }
 };
+exports.searchPosts = async (req, res) => {
+  const { search } = req.params;
+  const foundPosts = await Post.find({
+    title: new RegExp(`(${search})`, "i"),
+  })
+    .populate("community")
+    .populate("author", "username");
+
+  res.json(foundPosts);
+};

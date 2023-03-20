@@ -12,7 +12,7 @@ import Feed from "./components/Feed";
 import Community from "./components/Community";
 import SelectedPost from "./components/Feed/SelectedPost";
 import SubmitPost from "./components/SubmitPost.js";
-// import SubmitPost from "./components/Community/SubmitPost";
+import SearchResults from "./components/SearchResults/index";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,15 +35,20 @@ function App() {
         <div className="App">
           <NavBar isLoaded={isLoaded} />
           <Sidebar />
-          <div className="page-body">
-            <Feed />
-          </div>
+          <Feed />
         </div>
       </Route>
       <Route exact path="/r/:communityName">
         <div className="App">
           <NavBar isLoaded={isLoaded} />
           <Community />
+        </div>
+      </Route>
+      <Route exact path="/search/:search">
+        <div className="App">
+          <NavBar isLoaded={isLoaded} />
+          <Sidebar />
+          <SearchResults />
         </div>
       </Route>
       <Route exact path="/r/:communityName/submit">

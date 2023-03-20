@@ -4,6 +4,7 @@ const router = express.Router();
 const { validatePostCreate } = require("../../validators/posts");
 const { findUser } = require("../../utils/auth");
 
+router.get("/search/:search", postsController.searchPosts);
 router.put("/upvote/:postId", findUser, postsController.putUpvote);
 router.put("/downvote/:postId", findUser, postsController.putDownvote);
 router.get("/community/:communityId", postsController.getSubPosts);

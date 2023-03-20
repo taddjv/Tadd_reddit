@@ -13,9 +13,11 @@ const ImageSubmit = ({ community }) => {
   const [title, setTitle] = useState(null);
   const [tempImage, setTempImage] = useState(null);
   const [image, setImage] = useState(null);
+  const [viewImage, setViewImage] = useState(false);
 
   const [titleError, setTitleError] = useState(false);
   const [pictureError, setPictureError] = useState(false);
+  const [picLoadError, setPicLoadError] = useState(false);
 
   const post = (e) => {
     e.preventDefault();
@@ -53,11 +55,20 @@ const ImageSubmit = ({ community }) => {
           }
         }}
       ></input>
-      <div className="suP-l-c-i-file">
-        {image ? (
+      <div className={`suP-l-c-i-file ${picLoadError && "suP-l-c-i-error"}`}>
+        {viewImage ? (
           <>
-            <div className="suP-l-c-i-f-top">
-              <img className="suP-l-c-i-f-t-img" src={image} />
+            <div className={`suP-l-c-i-f-top`}>
+              {picLoadError ? (
+                <div>Broken Image</div>
+              ) : (
+                <img
+                  className="suP-l-c-i-f-t-img"
+                  onLoad={() => setImage(tempImage)}
+                  onError={() => setPicLoadError(true)}
+                  src={tempImage}
+                />
+              )}
             </div>
           </>
         ) : (
@@ -95,7 +106,9 @@ const ImageSubmit = ({ community }) => {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  setImage(tempImage);
+                  if (tempImage) {
+                    setViewImage(true);
+                  }
                 }}
                 className={`c-profile-input ${
                   pictureError && "suP-l-c-i-error"
@@ -108,20 +121,26 @@ const ImageSubmit = ({ community }) => {
         )}
       </div>
       <div className="suP-l-submit">
-        {image && (
+        {viewImage && (
           <button
             onClick={(e) => {
               e.preventDefault();
               setImage(null);
               setTempImage(null);
               setPictureError(false);
+              setViewImage(false);
+              setPicLoadError(false);
             }}
             className="suP-l-s-button2"
           >
             <FontAwesomeIcon className="suP-l-s-b-logo" icon={faTrash} />
           </button>
         )}
-        <button onClick={post} className={`suP-l-s-button`}>
+        <button
+          onClick={post}
+          disabled={image && title ? false : true}
+          className={`suP-l-s-button`}
+        >
           Post
         </button>
       </div>
