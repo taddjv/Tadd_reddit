@@ -150,5 +150,5 @@
 } */
 .sidebar-options {
   overflow-y: auto;
-  max-height: calc(100vh - 50px - 214px);
+  height: 100%;
 }

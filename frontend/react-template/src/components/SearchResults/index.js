@@ -5,8 +5,13 @@ import Posts from "../Feed/Posts";
 import SearchedData2 from "./SearchedData2";
 import * as postsActions from "../../store/posts";
 import * as searchActions from "../../store/search";
-import { searchRender } from "../../helper";
+import { searchRender, dataRender } from "../../helper";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircleXmark,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 import "./SearchResults.css";
 
 const SearchResults = () => {
@@ -27,7 +32,6 @@ const SearchResults = () => {
     dispatch(searchActions.searchTheCommunity(search));
     dispatch(searchActions.searchTheUser(search));
   }, [history.location.pathname]);
-
   return (
     <div className="SearchResults">
       <div className="search-results">
@@ -55,16 +59,32 @@ const SearchResults = () => {
         </div>
         <div className="sr-results">
           <div className="sr-r-left">
-            {posts && <Posts posts={posts} search={true} />}
+            {dataRender(posts).length ? (
+              <Posts posts={posts} search={true} />
+            ) : (
+              <div className="sr-r-left-nothing">
+                <FontAwesomeIcon
+                  className="sr-r-l-n-top"
+                  icon={faMagnifyingGlass}
+                />
+                <div className="sr-r-l-n-middle">
+                  Hm... we couldn’t find any results for “{search}”
+                </div>
+              </div>
+            )}
           </div>
+
           <div className="sr-r-right">
-            <div className="sr-r-r-communities">
-              {searchRes.data ? (
-                <>
-                  <SearchedData2 type="Community" data={searchRes} />
-                </>
-              ) : null}
-            </div>
+            {searchRes.data ? (
+              <>
+                <SearchedData2 type="Community" data={searchRes} />
+              </>
+            ) : null}
+            {searchRes.data ? (
+              <>
+                <SearchedData2 type="User" data={searchRes} />
+              </>
+            ) : null}
             <div className="sr-r-r-people"></div>
           </div>
         </div>

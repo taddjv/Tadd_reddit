@@ -9,15 +9,13 @@ function TopicOption({ title, options, icon }) {
   const [flip, setFlip] = useState(false);
 
   return (
-    <div
-      onClick={() => {
-        if (icon) setFlip(!flip);
-      }}
-      className={`topics-ops-container`}
-    >
+    <div className={`topics-ops-container`}>
       <div
         onClick={() => {
-          if (icon) setSelected(!selected);
+          if (icon) {
+            setSelected(!selected);
+            setFlip(!flip);
+          }
         }}
         className={`topics-ops topics-${icon === undefined}`}
       >

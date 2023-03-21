@@ -1,4 +1,5 @@
 const Post = require("../models/Posts");
+const Subscription = require("../models/Subscriptions");
 const Community = require("../models/Communities");
 const { callErr } = require("../helper/index");
 
@@ -160,3 +161,16 @@ exports.searchPosts = async (req, res) => {
 
   res.json(foundPosts);
 };
+exports.getHomePosts = async (req, res) => {
+  // const allPosts = await Post.find()
+  //   .populate("community")
+  //   .populate("author", "username");
+  const { userId } = req.params;
+  const foundCommunities = await Subscription.find({ user: userId });
+  res.json(allPosts);
+};
+// exports.getUserPosts = async (req, res) => {
+//   const { userId } = req.params;
+//   const allPosts = await Post.find({ author: userId });
+//   res.json(allPosts);
+// };

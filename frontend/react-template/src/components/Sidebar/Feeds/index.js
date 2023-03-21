@@ -19,7 +19,7 @@ function Feeds() {
       {/* <NavLink to="/"> */}
       <div className="feeds-popular">
         <FontAwesomeIcon className="f-p-circle" icon={faCircleUp} />
-        <span className="f-p-text">Popular</span>
+        <span className="f-p-text">r/All</span>
       </div>
       {/* </NavLink> */}
     </div>

@@ -1,12 +1,18 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 function TopicOptionDrop({ option }) {
   return (
-    <div className={`${option.split(" ").join("")}-option topic-dd`}>
-      <div className={`${option.split(" ").join("")}-o-small topic-dd-inside`}>
-        {option}
-      </div>
-    </div>
+    <NavLink
+      exact
+      to={`/search/${option}`}
+      className={` topic-dd`}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      <div className={`topic-dd-inside`}>{option}</div>
+    </NavLink>
   );
 }
 
