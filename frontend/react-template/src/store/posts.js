@@ -10,6 +10,7 @@ const DELETE_POST = "post/DELETE_POST";
 const UPVOTE_POST = "post/UPVOTE_POST";
 const DOWNVOTE_POST = "post/DOWNVOTE_POST";
 const SEARCH_POSTS = "post/SEARCH_POSTS";
+const GET_HOME_POSTS = "posts/GET_HOME_POSTS";
 
 const getPosts = (posts) => {
   return {
@@ -71,9 +72,15 @@ const searchPosts = (posts) => {
     payload: posts,
   };
 };
+const getHomePosts = (posts) => {
+  return {
+    type: GET_HOME_POSTS,
+    payload: posts,
+  };
+};
 
-export const getThePosts = () => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/`, {
+export const getThePosts = (sort) => async (dispatch) => {
+  const response = await csrfFetch(`/api/posts/all/?sort=${sort}`, {
     method: "GET",
   });
   if (response.ok) {
@@ -85,8 +92,8 @@ export const getTheUserPosts = (userId) => async (dispatch) => {
   const response = await csrfFetch(`/api/posts/user/${userId}`, {
     method: "GET",
   });
+  const data = await response.json();
   if (response.ok) {
-    const data = await response.json();
     dispatch(getUserPosts(data));
   }
 };
@@ -165,6 +172,16 @@ export const searchThePosts =
       dispatch(searchPosts(data));
     }
   };
+export const getTheHomePosts = (sort) => async (dispatch) => {
+  const response = await csrfFetch(`/api/posts/home/?sort=${sort}`, {
+    method: "GET",
+  });
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(getHomePosts(data));
+    return data;
+  }
+};
 
 const initialState = {};
 const postsReducer = (state = initialState, action) => {
@@ -174,6 +191,16 @@ const postsReducer = (state = initialState, action) => {
       action.payload.forEach((ele) => {
         newState[ele._id] = ele;
       });
+      return newState;
+    }
+    case GET_HOME_POSTS: {
+      let newState = { ...state };
+      if (action.payload.length) {
+        newState = {};
+        action.payload.forEach((ele) => {
+          newState[ele._id] = ele;
+        });
+      }
       return newState;
     }
     case GET_USER_POSTS: {

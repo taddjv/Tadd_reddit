@@ -22,10 +22,11 @@ const communitySchema = new Schema({
     required: true,
   },
   owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
+
   createdAt: {
     allowNull: false,
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
 });
 

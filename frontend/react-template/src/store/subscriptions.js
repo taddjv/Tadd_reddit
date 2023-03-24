@@ -40,6 +40,7 @@ export const getTheUsersS = (communityId) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(getUsersS(data));
+    return data;
   }
 };
 export const getTheCommunitiesS = (userId) => async (dispatch) => {

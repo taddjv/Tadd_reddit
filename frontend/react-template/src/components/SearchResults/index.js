@@ -27,11 +27,14 @@ const SearchResults = () => {
   const [postFilter, setPostFilter] = useState("Relevance");
   const [postSort, setPostSort] = useState("All Time");
 
+  console.log(searchRes);
+
   useEffect(() => {
     dispatch(postsActions.searchThePosts({ search }));
     dispatch(searchActions.searchTheCommunity(search));
     dispatch(searchActions.searchTheUser(search));
   }, [history.location.pathname]);
+
   return (
     <div className="SearchResults">
       <div className="search-results">
@@ -53,10 +56,10 @@ const SearchResults = () => {
             Comments
           </button>
         </div>
-        <div className="sr-query">
+        {/* <div className="sr-query">
           <button className="sr-q-button">{postFilter}</button>
           <button className="sr-q-button">{postSort}</button>
-        </div>
+        </div> */}
         <div className="sr-results">
           <div className="sr-r-left">
             {dataRender(posts).length ? (
@@ -75,14 +78,14 @@ const SearchResults = () => {
           </div>
 
           <div className="sr-r-right">
-            {searchRes.data ? (
+            {searchRes.community ? (
               <>
-                <SearchedData2 type="Community" data={searchRes} />
+                <SearchedData2 type="Community" data={searchRes.community} />
               </>
             ) : null}
-            {searchRes.data ? (
+            {searchRes.user ? (
               <>
-                <SearchedData2 type="User" data={searchRes} />
+                <SearchedData2 type="User" data={searchRes.user} />
               </>
             ) : null}
             <div className="sr-r-r-people"></div>

@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as voteActions from "../../../store/votes";
 import * as postActions from "../../../store/posts";
+import * as subscriptionsActions from "../../../store/subscriptions";
 import moment from "moment";
-import { reactionCheck } from "../../../helper";
+import { reactionCheck, userSubbed } from "../../../helper";
 import "./Posts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -21,6 +22,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 function TextPost({ post, user, userVotes, individual, community }) {
   const dispatch = useDispatch();
+  const subscriptionStatus = useSelector((state) => state.subscriptions);
   const upvote = (e) => {
     e.preventDefault();
     dispatch(voteActions.upvoteThePost(post, user)).then(async (res) => {
@@ -34,6 +36,14 @@ function TextPost({ post, user, userVotes, individual, community }) {
       const data = await res;
       dispatch(postActions.downvoteThePost(post._id, data));
     });
+  };
+  const subscribe = (e) => {
+    e.preventDefault();
+    dispatch(
+      subscriptionsActions.postTheSubscription(post.community._id, {
+        role: "member",
+      })
+    );
   };
   const postClass = individual ? "sp-b-post" : "pp-text";
   const contentClass = individual ? "sp-b-content" : "pp-m-m-content";
@@ -89,7 +99,11 @@ function TextPost({ post, user, userVotes, individual, community }) {
             </div>
           </div>
           <div className="pp-m-top-right">
-            <button className="pp-m-t-r-button">Join</button>
+            {userSubbed(subscriptionStatus, post.community._id) ? null : (
+              <button onClick={subscribe} className="pp-m-t-r-button">
+                Join
+              </button>
+            )}
           </div>
         </div>
         <div className="pp-m-middle">

@@ -16,6 +16,7 @@ const userSchema = new Schema({
   profilePicture: {
     type: String,
   },
+  recentCommunities: { type: Array, default: [], required: true },
   karma: {
     type: Number,
     required: true,

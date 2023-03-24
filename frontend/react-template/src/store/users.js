@@ -4,6 +4,7 @@ const SIGNUP_USER = "users/SIGNUP_USER";
 const LOGIN_USER = "users/LOGIN_USER";
 const LOGOUT_USER = "users/LOGOUT_USER";
 const RESTORE_USER = "users/RESTORE_USER";
+const ADD_RECENT = "users/ADD_RECENT";
 
 const signupUser = (user) => {
   return {
@@ -28,6 +29,12 @@ const restoreUser = (user) => {
     payload: user,
   };
 };
+const addRecent = (community) => {
+  return {
+    type: ADD_RECENT,
+    payload: community,
+  };
+};
 
 export const signupTheUser = (userCredentials) => async (dispatch) => {
   const response = await csrfFetch(`/api/users/signup`, {
@@ -50,6 +57,7 @@ export const loginTheUser = (userCredentials) => async (dispatch) => {
     },
     body: JSON.stringify(userCredentials),
   });
+  const data = await response.json();
   if (response.ok) {
     const data = await response.json();
     dispatch(loginUser(data));
@@ -70,6 +78,20 @@ export const restoreTheUser = () => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(restoreUser(data));
+    return data;
+  }
+};
+export const addTheRecent = (userId, community) => async (dispatch) => {
+  const response = await csrfFetch(`/api/users/${userId}/add-recent`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(community),
+  });
+  const data = await response.json();
+  if (response.ok) {
+    dispatch(addRecent(data));
     return data;
   }
 };
@@ -94,6 +116,11 @@ const usersReducer = (state = initialState, action) => {
       newState = Object.assign({}, state);
       newState.user = action.payload.message ? null : action.payload;
       return newState;
+    case ADD_RECENT: {
+      newState = { ...state };
+      newState.user = action.payload;
+      return newState;
+    }
 
     default:
       return state;

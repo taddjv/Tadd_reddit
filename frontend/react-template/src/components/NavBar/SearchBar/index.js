@@ -13,12 +13,11 @@ import {
 function SearchBar() {
   const dispatch = useDispatch();
 
-  const communities = useSelector((state) => state.search);
+  const searchResults = useSelector((state) => state.search);
 
   const [search, setSearch] = useState(null);
 
   const [showX, stShowX] = useState(false);
-
   return (
     <>
       <div className="nc-middle">
@@ -45,12 +44,15 @@ function SearchBar() {
                 onClick={() => setSearch("")}
                 className="nc-r-s-results-container"
               >
-                {communities.data ? (
-                  <>
-                    <SearchedData type="Community" data={communities} />
-                    <SearchedData type="User" data={communities} />
-                  </>
-                ) : null}
+                {searchResults.community && (
+                  <SearchedData
+                    type="Community"
+                    data={searchResults.community}
+                  />
+                )}
+                {searchResults.user && (
+                  <SearchedData type="User" data={searchResults.user} />
+                )}
                 <NavLink
                   exact
                   to={`/search/${search}`}

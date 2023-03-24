@@ -19,7 +19,8 @@ const seedDB = async () => {
   await User.deleteMany({});
   await Community.deleteMany({});
   await Post.deleteMany({});
-  await User.insertMany(seedUsers);
+  await Subscription.deleteMany({});
+  await User.insertMany(await seedUsers());
   const allUsers = await User.find({});
   await Community.insertMany(
     seedCommunities.map((comm, i) => {
@@ -30,6 +31,7 @@ const seedDB = async () => {
         description: comm.description,
         owner: allUsers[i],
         contentType: comm.contentType,
+        profilePicture: comm.profilePicture,
       };
     })
   );
@@ -39,7 +41,7 @@ const seedDB = async () => {
     allCommunities.map((comm, i) => {
       return {
         user: allUsers[i + 1],
-        community: comm,
+        community: comm._id,
         role: "member",
       };
     })

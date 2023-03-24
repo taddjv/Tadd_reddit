@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import * as communitiesActions from "../../store/communities";
 
 import "./Community.css";
@@ -8,6 +9,7 @@ import { faCalendar, faClipboard } from "@fortawesome/free-regular-svg-icons";
 
 function AboutCommunity({ community, user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [showDescEdit, setShowDescEdit] = useState(false);
   const [showComOps, setShowComOps] = useState(false);
@@ -141,7 +143,12 @@ function AboutCommunity({ community, user }) {
           </div>
         </div>
         <div className="ac-c-post">
-          <button className="ac-c-p-button">Create Post</button>
+          <button
+            onClick={() => history.push(`/r/${community.name}/submit`)}
+            className="ac-c-p-button"
+          >
+            Create Post
+          </button>
         </div>
         <div className="ac-c-options">
           <button
@@ -222,7 +229,12 @@ function AboutCommunity({ community, user }) {
           </div>
         </div>
         <div className="ac-c-post">
-          <button className="ac-c-p-button">Create Post</button>
+          <button
+            onClick={() => history.push(`/r/${community.name}/submit`)}
+            className="ac-c-p-button"
+          >
+            Create Post
+          </button>
         </div>
       </div>
     </>

@@ -31,12 +31,30 @@ const SelectedPost = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-
   const { id } = params;
 
   const post = useSelector((state) => state.posts);
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
+
+  const upvote = (e) => {
+    e.preventDefault();
+    dispatch(voteActions.upvoteThePost(post[id], currentUser)).then(
+      async (res) => {
+        const data = await res;
+        dispatch(postActions.upvoteThePost(post[id]._id, data));
+      }
+    );
+  };
+  const downvote = (e) => {
+    e.preventDefault();
+    dispatch(voteActions.downvoteThePost(post[id], currentUser)).then(
+      async (res) => {
+        const data = await res;
+        dispatch(postActions.downvoteThePost(post[id]._id, data));
+      }
+    );
+  };
   return (
     <>
       {post[id] && (
@@ -48,25 +66,25 @@ const SelectedPost = () => {
             <div className="selectedPost-top">
               <div className="sp-t-left">
                 <FontAwesomeIcon
-                  className={`sp-t-l-upLogo`}
-                  // ${
-                  //   reactionCheck(userVotes, post).upvote
-                  //     ? "pp-l-up-logo-voted"
-                  //     : null
-                  // }
-                  // `}
+                  onClick={upvote}
+                  className={`sp-t-l-upLogo        ${
+                    reactionCheck(userVotes, post[id]).upvote
+                      ? "sp-t-l-upLogo-voted"
+                      : null
+                  }
+                  `}
                   icon={faArrowAltCircleUp}
                 />
                 <div className="sp-t-l-count">
                   {post[id].upVotes - post[id].downVotes}
                 </div>
                 <FontAwesomeIcon
-                  className={`sp-t-l-downLogo`}
-                  //   className={`pp-l-up-logo ${
-                  //     reactionCheck(userVotes, post).upvote
-                  //       ? "pp-l-up-logo-voted"
-                  //       : null
-                  //   }`}
+                  onClick={downvote}
+                  className={`sp-t-l-downLogo ${
+                    reactionCheck(userVotes, post[id]).downvote
+                      ? "sp-t-l-downLogo-voted"
+                      : null
+                  }`}
                   icon={faArrowAltCircleUp}
                 />
                 <div className="sp-t-l-title">{post[id].title}</div>

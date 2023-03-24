@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faChevronDown } from "@fortawesome/free-solid-svg-icons";
@@ -13,11 +13,12 @@ import CreateCommunity from "../Feed/CreateCommunity";
 
 import SignupPop from "./SignupPop";
 import UserDropDown from "./UserDropDown";
-import * as userActions from "../../store/users";
+import * as usersActions from "../../store/users";
 
 import "./NavBar.css";
 
 function NavBar({ isLoaded }) {
+  const dispatch = useDispatch();
   const {
     showLogin,
     setShowLogin,
@@ -82,19 +83,32 @@ function NavBar({ isLoaded }) {
             <RedditLogo />
             <RedditLogo2 />
           </div>
-          <div className="home-button">
+          {/* <div className="home-button">
             <button className="nc-l-button">
               <FontAwesomeIcon className="nc-l-b-house" icon={faHouse} />
               <span className="nc-l-b-text">Home</span>
             </button>
-          </div>
+          </div> */}
         </NavLink>
         <SearchBar />
 
         <div className="nc-right">
           {!currentUser && (
             <>
-              <button className="nc-r-signup">Demo User</button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(
+                    usersActions.loginTheUser({
+                      username: "demo",
+                      password: "password",
+                    })
+                  );
+                }}
+                className="nc-r-signup"
+              >
+                Demo User
+              </button>
               <button
                 className="nc-r-login"
                 onClick={() => {

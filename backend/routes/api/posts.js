@@ -15,7 +15,8 @@ router.post(
   postsController.postSubPost
 );
 router.get("/user/:userId", postsController.getUserPosts);
+router.get("/home", findUser, postsController.getHomePosts);
+router.get("/all", postsController.getAllPosts);
 router.get("/:postId", postsController.getSinglePost);
-router.get("/", postsController.getAllPosts);
 
 module.exports = router;

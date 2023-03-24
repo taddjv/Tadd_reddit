@@ -37,30 +37,31 @@ export const searchTheUser = (search) => async (dispatch) => {
   }
 };
 
-const initialState = { data: false };
+const initialState = { community: {}, user: {} };
 const searchReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case SEARCH_COMMUNITY: {
-      if (action.payload) {
-        newState = { data: true };
+      newState = { ...state };
+      if (action.payload?.length) {
         action.payload.forEach((ele) => {
-          newState[`Community/${ele.name}`] = ele;
+          newState[`community`][ele.name] = ele;
         });
         return newState;
       } else {
-        return { data: false };
+        newState[`community`] = {};
+        return newState;
       }
     }
     case SEARCH_USER: {
-      if (action.payload) {
-        newState = { ...state };
+      newState = { ...state };
+      if (action.payload?.length) {
         action.payload.forEach((ele) => {
-          newState[`User/${ele.username}`] = ele;
+          newState[`user`][ele.username] = ele;
         });
         return newState;
-      } else if (!newState.data) {
-        newState = { data: false };
+      } else {
+        newState[`user`] = {};
         return newState;
       }
     }

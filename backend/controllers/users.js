@@ -76,8 +76,14 @@ exports.getUserLog = async (req, res) => {
   } else return res.json({});
 };
 
-exports.test = async (req, res) => {
-  const foundUser = await User.find({});
+exports.getUser = async (req, res) => {
+  const { username } = req.params;
+  const foundUser = await User.findOne(
+    {
+      username: { $regex: username, $options: "i" },
+    },
+    { password: 0, recentCommunities: 0 }
+  );
   res.json(foundUser);
 };
 
@@ -92,4 +98,31 @@ exports.searchUsers = async (req, res) => {
   });
 
   res.json(foundUsers);
+};
+exports.addRecent = async (req, res) => {
+  const { user } = req;
+  const { profilePicture, name } = req.body;
+  let newRecent;
+  const foundUser = await User.findOne({ _id: user._id });
+
+  if (foundUser.recentCommunities.includes(`${profilePicture},${name}`))
+    return res.json(foundUser);
+
+  newRecent = foundUser.recentCommunities;
+
+  if (foundUser.recentCommunities.length === 3) {
+    newRecent.shift();
+    newRecent.push(`${profilePicture},${name}`);
+  } else {
+    newRecent.push(`${profilePicture},${name}`);
+  }
+
+  await User.updateOne(
+    { _id: user._id },
+    {
+      recentCommunities: newRecent,
+    }
+  );
+
+  return res.json(foundUser);
 };

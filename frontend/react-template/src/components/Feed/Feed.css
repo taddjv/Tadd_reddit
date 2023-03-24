@@ -1,4 +1,5 @@
-.feed {
+.feed,
+.user {
   width: calc(100% - 270px);
   position: fixed;
   right: 0;

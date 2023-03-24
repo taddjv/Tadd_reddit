@@ -4,9 +4,17 @@ const Community = require("../models/Communities");
 const { callErr } = require("../helper/index");
 
 exports.getAllPosts = async (req, res) => {
+  const { sort } = req.query;
+  let sortQuery;
+  if (sort === "Hot") {
+    sortQuery = { upVotes: -1, downVotes: 1 };
+  } else if (sort === "New") {
+    sortQuery = { createdAt: -1 };
+  }
   const allPosts = await Post.find()
     .populate("community")
-    .populate("author", "username");
+    .populate("author", "username")
+    .sort(sortQuery);
   res.json(allPosts);
 };
 exports.getSubPosts = async (req, res) => {
@@ -14,11 +22,7 @@ exports.getSubPosts = async (req, res) => {
   const allPosts = await Post.find({ community: communityId })
     .populate("author", "username")
     .populate("community");
-  res.json(allPosts);
-};
-exports.getUserPosts = async (req, res) => {
-  const { userId } = req.params;
-  const allPosts = await Post.find({ author: userId });
+
   res.json(allPosts);
 };
 exports.putUpvote = async (req, res) => {
@@ -162,15 +166,23 @@ exports.searchPosts = async (req, res) => {
   res.json(foundPosts);
 };
 exports.getHomePosts = async (req, res) => {
-  // const allPosts = await Post.find()
-  //   .populate("community")
-  //   .populate("author", "username");
+  const { user } = req;
+  const foundCommunities = await Subscription.find({ user: user });
+  const allPosts = await Post.find({
+    community: { $in: foundCommunities.map((ele) => ele.community.toString()) },
+  })
+    .populate("community")
+    .populate("author", "username");
+  if (allPosts.length) {
+    res.json(allPosts);
+  } else {
+    return this.getAllPosts(req, res);
+  }
+};
+exports.getUserPosts = async (req, res) => {
   const { userId } = req.params;
-  const foundCommunities = await Subscription.find({ user: userId });
+  const allPosts = await Post.find({ author: userId })
+    .populate("community")
+    .populate("author", "username");
   res.json(allPosts);
 };
-// exports.getUserPosts = async (req, res) => {
-//   const { userId } = req.params;
-//   const allPosts = await Post.find({ author: userId });
-//   res.json(allPosts);
-// };

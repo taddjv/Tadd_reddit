@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+function randomDate(start, end) {
+  return new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
+}
+
 const postSchema = new Schema({
   upVotes: {
     type: Number,
@@ -30,7 +36,7 @@ const postSchema = new Schema({
   community: { type: Schema.Types.ObjectId, ref: "Community", required: true },
   createdAt: {
     type: Date,
-    default: new Date(),
+    default: randomDate(new Date(2023, 0, 1), new Date()),
     required: true,
   },
 });

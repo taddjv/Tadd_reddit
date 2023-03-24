@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding-top: 16px;
 }
 .posts-title {
   font-size: 14px;
@@ -50,7 +51,7 @@
   background: white;
   color: inherit;
   border: none;
-  padding: 0;
+  padding: 6px 8px;
   font: inherit;
   cursor: pointer;
   outline: inherit;
@@ -58,8 +59,7 @@
   align-items: center;
   border-radius: 500px;
 }
-.p-s-hot,
-.p-s-country {
+.p-s-chosen {
   color: #2884d6;
   background: #f6f7f8;
   padding: 6px 8px;
@@ -73,9 +73,7 @@
 .p-s-format {
   margin-left: auto;
 }
-.p-s-new:hover,
-.p-s-top:hover,
-.p-s-format:hover {
+.p-s-option:hover {
   background: #ededed;
 }
 .ps-o-new-logo,
@@ -160,6 +158,7 @@
   border: none;
   color: white;
   background: #2884d6;
+  cursor: pointer;
 }
 
 .pp-m-m-title {

@@ -1,11 +1,12 @@
-import React from "react";
-import { useSelector } from "react-redux";
-
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { dataRender } from "../../../helper";
 import PhotoPost from "./PhotoPost";
 import VideoPost from "./VideoPost";
 import LinkPost from "./LinkPost";
 import TextPost from "./TextPost";
+import * as postsActions from "../../../store/posts";
 import "./Posts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -15,29 +16,54 @@ import {
   faChartBar,
 } from "@fortawesome/free-regular-svg-icons";
 
-function Posts({ posts, search }) {
+function Posts({ search, type, user }) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
-
+  const posts = useSelector((state) => state.posts);
+  const [sort, setSort] = useState("Hot");
+  useEffect(() => {
+    if (type === "home") {
+      dispatch(postsActions.getTheHomePosts(sort));
+    }
+    if (type === "all") {
+      dispatch(postsActions.getThePosts(sort));
+    }
+    if (type === "user") {
+      dispatch(postsActions.getTheUserPosts(user._id, sort));
+    }
+  }, [history.location.pathname, sort, user]);
   return (
     <div className="posts">
       {!search && (
         <>
-          <div className="posts-title">Popular posts</div>
+          {type === "home" && <div className="posts-title">Your Feed</div>}
+
           <div className="posts-sorter">
-            <button className="p-s-hot p-s-option">
+            <button
+              onClick={() => setSort("Hot")}
+              className={`p-s-option ${sort === "Hot" && "p-s-chosen"}`}
+            >
               <FontAwesomeIcon className="f-h-house" icon={faHandPointUp} />
               Hot
             </button>
 
-            <button className="p-s-new p-s-option">
+            <button
+              onClick={() => setSort("New")}
+              className={`p-s-option ${sort === "New" && "p-s-chosen"}`}
+            >
               <FontAwesomeIcon
                 className="f-h-house ps-o-new-logo"
                 icon={faStar}
               />
               New
             </button>
-            <button className="p-s-top p-s-option">
+            <button
+              onClick={() => setSort("Top")}
+              className={`p-s-option ${sort === "Top" && "p-s-chosen"}`}
+            >
               <FontAwesomeIcon
                 className="f-h-house ps-o-top-logo"
                 icon={faChartBar}

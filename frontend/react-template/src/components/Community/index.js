@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as communitiesActions from "../../store/communities";
 import * as subscriptionsActions from "../../store/subscriptions";
 import * as postsActions from "../../store/posts";
-import * as imagesActions from "../../store/images";
+import * as userActions from "../../store/users";
 import { userSubbed, dataRender } from "../../helper";
 
 import PhotoPost from "../Feed/Posts/PhotoPost";
@@ -40,17 +40,29 @@ function Community() {
   const [showPictureEdit, setShowPictureEdit] = useState(false);
   const [showPost, setShowPost] = useState(false);
 
-  const [comImage, setComImage] = useState(null);
-  const [comImage2, setComImage2] = useState(null);
+  useEffect(() => {
+    dispatch(communitiesActions.getTheCommunity(communityName));
+  }, [history.location.pathname]);
 
   useEffect(() => {
-    dispatch(communitiesActions.getTheCommunity(communityName)).then(
-      async (res) => {
-        const data = await res;
-        dispatch(postsActions.getTheCommunityPosts(data._id));
-      }
-    );
-  }, [history.location.pathname]);
+    if (community) {
+      dispatch(postsActions.getTheCommunityPosts(community._id));
+      dispatch(subscriptionsActions.getTheUsersS(community._id)).then(
+        async (res) => {
+          const data = await res;
+          console.log(data);
+        }
+      );
+    }
+    if (currentUser && community) {
+      dispatch(
+        userActions.addTheRecent(currentUser._id, {
+          profilePicture: community.profilePicture,
+          name: community.name,
+        })
+      );
+    }
+  }, [community]);
 
   const subscribe = (e) => {
     e.preventDefault();
@@ -64,23 +76,6 @@ function Community() {
     e.preventDefault();
     dispatch(subscriptionsActions.deleteTheSubscription(community._id));
   };
-
-  // const uploadImage = (e) => {
-  //   e.preventDefault();
-
-  //   dispatch(imagesActions.postTheImage(comImage)).then(async (res) => {
-  //     const data = await res;
-  //     console.log(data);
-  //   });
-
-  //   // const
-  // };
-
-  // const imageToFile = (e) => {
-  //   const formData = new FormData();
-  //   formData.append("image", e.target.files[(0, e.target.files[0].name)]);
-  //   setComImage(formData);
-  // };
   return (
     <>
       {community && (
