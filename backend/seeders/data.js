@@ -3,6 +3,10 @@ const User = require("../models/Users");
 const seedUsers = async () => {
   return [
     {
+      username: "Demo",
+      password: await User.hashPassword("password"),
+    },
+    {
       username: "Batman",
       password: await User.hashPassword("luckyguy11"),
       profilePicture:
@@ -110,10 +114,6 @@ const seedUsers = async () => {
       profilePicture:
         "https://imgix.ranker.com/user_node_img/69/1372810/original/kid-flash-comic-book-characters-photo-u1?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&crop=faces&h=150&w=150",
     },
-    {
-      username: "Demo",
-      password: await User.hashPassword("password"),
-    },
   ];
 };
 
@@ -124,17 +124,17 @@ const seedCommunities = [
     rules: [
       {
         rule: "no eating",
-        description:
+        detail:
           "seriously, people arent allowed to eat it leaves crumbs everywhere",
       },
       {
         rule: "no having fun",
-        description:
+        detail:
           "fun is the number one cause of people getting hurt and we dont want that",
       },
       {
         rule: "no games",
-        description:
+        detail:
           "this is a subreddit dedicated to posting funny things, not games and stuffs",
       },
     ],
@@ -153,11 +153,11 @@ const seedCommunities = [
     rules: [
       {
         rule: "don't hit each other",
-        description: "we dont have time to deal with conflicts ",
+        detail: "we dont have time to deal with conflicts ",
       },
       {
         rule: "be yourself",
-        description: "unless youre super wierd, be yourself and chill",
+        detail: "unless youre super wierd, be yourself and chill",
       },
     ],
     description:
@@ -172,12 +172,12 @@ const seedCommunities = [
     rules: [
       {
         rule: "if i see you being mean",
-        description:
+        detail:
           "like why do people always have to be so mean what did they do to you ???",
       },
       {
         rule: "be chilll bro",
-        description: "its too hot in here for real",
+        detail: "its too hot in here for real",
       },
     ],
     description: "Come here if you intend on sharing something super cute.",

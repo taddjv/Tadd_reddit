@@ -66,7 +66,9 @@ function NavBar({ isLoaded }) {
         <div className="nc-r-right">
           <FontAwesomeIcon icon={faChevronDown} />
         </div>
-        {dropUser && <UserDropDown member={currentUser !== null} />}
+        {dropUser && (
+          <UserDropDown member={currentUser !== null} user={currentUser} />
+        )}
       </button>
     </>
   );

@@ -2,8 +2,22 @@ const Community = require("../models/Communities");
 
 exports.getCommunity = async (req, res) => {
   const { name } = req.params;
-  const foundCommunity = await Community.findOne({ name });
-  res.json(foundCommunity);
+  const foundCommunity = await Community
+    // .findOne({ name })
+    .aggregate([
+      { $match: { name } },
+      {
+        $lookup: {
+          from: "subscriptions",
+          localField: "_id",
+          foreignField: "community",
+          as: "subs",
+        },
+      },
+      { $addFields: { subCount: { $size: "$subs" } } },
+    ]);
+
+  res.json(foundCommunity[0]);
 };
 
 exports.getCommunities = async (req, res) => {
@@ -32,7 +46,7 @@ exports.deleteCommunity = async (req, res) => {
   }
 };
 exports.editCommunity = async (req, res) => {
-  const { type, description, rule } = req.body;
+  const { type, description, rule, detail } = req.body;
   const { user } = req;
   const { name } = req.params;
   const foundCommunity = await Community.findOne({ name });
@@ -40,7 +54,7 @@ exports.editCommunity = async (req, res) => {
   foundCommunity.description = description || foundCommunity.description;
   foundCommunity.type = type || foundCommunity.type;
   if (rule) {
-    foundCommunity.rules.push(rule);
+    foundCommunity.rules.push({ rule, detail });
   } else {
     foundCommunity.rules = foundCommunity.rules;
   }

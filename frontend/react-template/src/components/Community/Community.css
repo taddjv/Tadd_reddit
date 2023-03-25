@@ -39,6 +39,7 @@
   position: absolute;
   bottom: 20px;
   position: relative;
+  background: white;
 }
 
 .c-h-2-plus-container {
@@ -163,6 +164,7 @@ input[type="file"] {
   height: 38px;
   border-radius: 100%;
   margin: 0 8px;
+  color: #7c7c7c;
 }
 
 #c-b-p-input {
@@ -185,7 +187,6 @@ input[type="file"] {
 .c-b-left {
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
 .AboutCommunity-container {
@@ -388,15 +389,19 @@ input[type="file"] {
   cursor: pointer;
 }
 
-#ar-input {
+.ar-input {
   height: 38px;
   width: 286px;
   margin: 11px;
   margin-top: 16px;
+  margin-bottom: 0px;
   padding-left: 8px;
   background: #f6f7f8;
   border: 0.5px solid #eceff1;
   border-radius: 3px;
+}
+.ar-input-e {
+  border: 0.5px solid red;
 }
 
 .ar-i-container {
@@ -405,6 +410,7 @@ input[type="file"] {
 }
 .ar-i-c-c {
   margin-left: 12px;
+  margin-top: 12px;
 }
 
 .rc-add {

@@ -59,7 +59,7 @@ export const loginTheUser = (userCredentials) => async (dispatch) => {
   });
   const data = await response.json();
   if (response.ok) {
-    const data = await response.json();
+    // const data = await response.json();
     dispatch(loginUser(data));
   }
 };

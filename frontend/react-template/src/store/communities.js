@@ -86,10 +86,8 @@ export const patchTheCommunity =
       },
       body: JSON.stringify(communityCredentials),
     });
-
     if (response.ok) {
       const data = await response.json();
-
       dispatch(patchCommunity(data));
     }
   };

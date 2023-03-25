@@ -4,6 +4,7 @@ const User = require("../models/Users");
 const Community = require("../models/Communities");
 const Subscription = require("../models/Subscriptions");
 const Post = require("../models/Posts");
+const Subscriptions = require("../models/Subscriptions");
 require("dotenv").config();
 
 mongoose.connect(
@@ -37,6 +38,12 @@ const seedDB = async () => {
   );
 
   const allCommunities = await Community.find({});
+  // allCommunities.forEach((ele, i) => {
+  //   if (i < 3) {
+  //     allUsers[0]["subscriptions"].push(ele._id);
+  //     ele.subscribers.push(allUsers[0]._id);
+  //   }
+  // });
   await Subscription.insertMany(
     allCommunities.map((comm, i) => {
       return {

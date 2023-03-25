@@ -39,10 +39,10 @@ export const searchTheUser = (search) => async (dispatch) => {
 
 const initialState = { community: {}, user: {} };
 const searchReducer = (state = initialState, action) => {
-  let newState;
   switch (action.type) {
     case SEARCH_COMMUNITY: {
-      newState = { ...state };
+      let newState = { ...state };
+      newState.community = {};
       if (action.payload?.length) {
         action.payload.forEach((ele) => {
           newState[`community`][ele.name] = ele;
@@ -54,7 +54,8 @@ const searchReducer = (state = initialState, action) => {
       }
     }
     case SEARCH_USER: {
-      newState = { ...state };
+      let newState = { ...state };
+      newState.user = {};
       if (action.payload?.length) {
         action.payload.forEach((ele) => {
           newState[`user`][ele.username] = ele;

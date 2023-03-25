@@ -18,10 +18,18 @@ exports.getAllPosts = async (req, res) => {
   res.json(allPosts);
 };
 exports.getSubPosts = async (req, res) => {
-  const { communityId } = req.params;
+  const { communityId, sort } = req.params;
+
+  let sortQuery;
+  if (sort === "Hot") {
+    sortQuery = { upVotes: -1, downVotes: 1 };
+  } else if (sort === "New") {
+    sortQuery = { createdAt: -1 };
+  }
   const allPosts = await Post.find({ community: communityId })
     .populate("author", "username")
-    .populate("community");
+    .populate("community")
+    .sort(sortQuery);
 
   res.json(allPosts);
 };
@@ -180,9 +188,16 @@ exports.getHomePosts = async (req, res) => {
   }
 };
 exports.getUserPosts = async (req, res) => {
-  const { userId } = req.params;
+  const { userId, sort } = req.params;
+  let sortQuery;
+  if (sort === "Hot") {
+    sortQuery = { upVotes: -1, downVotes: 1 };
+  } else if (sort === "New") {
+    sortQuery = { createdAt: -1 };
+  }
   const allPosts = await Post.find({ author: userId })
     .populate("community")
-    .populate("author", "username");
+    .populate("author", "username")
+    .sort(sortQuery);
   res.json(allPosts);
 };

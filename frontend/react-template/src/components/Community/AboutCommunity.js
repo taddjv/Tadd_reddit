@@ -13,7 +13,7 @@ function AboutCommunity({ community, user }) {
 
   const [showDescEdit, setShowDescEdit] = useState(false);
   const [showComOps, setShowComOps] = useState(false);
-  const [newDesc, setNewDesc] = useState("");
+  const [newDesc, setNewDesc] = useState(community.description);
   const mod = user ? (community.owner === user._id ? user : null) : null;
   const description = community.description;
   const comDate = new Date(community.createdAt);
@@ -44,6 +44,7 @@ function AboutCommunity({ community, user }) {
           <button
             onClick={(e) => {
               e.preventDefault();
+              setNewDesc(community.description);
               setShowDescEdit(false);
             }}
             className="ac-c-d-ta-c"
@@ -134,7 +135,7 @@ function AboutCommunity({ community, user }) {
         </div>
         <div className="ac-c-stats">
           <div className="ac-c-s-members">
-            <div className="ac-c-s-m-number">44</div>
+            <div className="ac-c-s-m-number">{community.subCount}</div>
             <div className="ac-c-s-m-text">Members</div>
           </div>
           <div className="ac-c-s-rank">
@@ -220,7 +221,7 @@ function AboutCommunity({ community, user }) {
         </div>
         <div className="ac-c-stats">
           <div className="ac-c-s-members">
-            <div className="ac-c-s-m-number">44</div>
+            <div className="ac-c-s-m-number">{community.subCount}</div>
             <div className="ac-c-s-m-text">Members</div>
           </div>
           <div className="ac-c-s-rank">
@@ -258,7 +259,7 @@ function AboutCommunity({ community, user }) {
         </div>
         <div className="ac-c-stats">
           <div className="ac-c-s-members">
-            <div className="ac-c-s-m-number">44</div>
+            <div className="ac-c-s-m-number">{community.subCount}</div>
             <div className="ac-c-s-m-text">Members</div>
           </div>
           <div className="ac-c-s-rank">

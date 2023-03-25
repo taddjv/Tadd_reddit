@@ -7,7 +7,9 @@ exports.getSubUsers = async (req, res) => {
 };
 exports.getSubCommunities = async (req, res) => {
   const { communityId } = req.params;
-  const foundCommunities = await Subscription.find({ community: communityId });
+  const foundCommunities = await Subscription.find({
+    community: communityId,
+  })
   res.json(foundCommunities);
 };
 

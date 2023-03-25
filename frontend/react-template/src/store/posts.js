@@ -86,24 +86,30 @@ export const getThePosts = (sort) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(getPosts(data));
+    return data;
   }
 };
-export const getTheUserPosts = (userId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/user/${userId}`, {
+export const getTheUserPosts = (userId, sort) => async (dispatch) => {
+  const response = await csrfFetch(`/api/posts/user/${userId}/?sort=${sort}`, {
     method: "GET",
   });
   const data = await response.json();
   if (response.ok) {
     dispatch(getUserPosts(data));
+    return data;
   }
 };
-export const getTheCommunityPosts = (communityId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/community/${communityId}`, {
-    method: "GET",
-  });
+export const getTheCommunityPosts = (communityId, sort) => async (dispatch) => {
+  const response = await csrfFetch(
+    `/api/posts/community/${communityId}/?sort=${sort}`,
+    {
+      method: "GET",
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(getCommunityPosts(data));
+    return data;
   }
 };
 export const getTheSinglePost = (postId) => async (dispatch) => {
@@ -113,6 +119,7 @@ export const getTheSinglePost = (postId) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(getSinglePost(data));
+    return data;
   }
 };
 export const upvoteThePost = (postId, vote) => async (dispatch) => {

@@ -16,24 +16,47 @@ import {
   faChartBar,
 } from "@fortawesome/free-regular-svg-icons";
 
-function Posts({ search, type, user }) {
+function Posts({ search, type, user, communityId }) {
   const history = useHistory();
   const dispatch = useDispatch();
 
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
   const posts = useSelector((state) => state.posts);
+  const [newPosts, setNewPosts] = useState(null);
   const [sort, setSort] = useState("Hot");
   useEffect(() => {
     if (type === "home") {
-      dispatch(postsActions.getTheHomePosts(sort));
+      dispatch(postsActions.getTheHomePosts(sort)).then(async (res) => {
+        const data = await res;
+        setNewPosts(data);
+      });
     }
     if (type === "all") {
-      dispatch(postsActions.getThePosts(sort));
+      dispatch(postsActions.getThePosts(sort)).then(async (res) => {
+        const data = await res;
+        setNewPosts(data);
+      });
     }
     if (type === "user") {
-      dispatch(postsActions.getTheUserPosts(user._id, sort));
+      dispatch(postsActions.getTheUserPosts(user._id, sort)).then(
+        async (res) => {
+          const data = await res;
+          setNewPosts(data);
+        }
+      );
     }
+    if (type === "community") {
+      dispatch(postsActions.getTheCommunityPosts(communityId, sort)).then(
+        async (res) => {
+          const data = await res;
+          setNewPosts(data);
+        }
+      );
+    }
+    return () => {
+      setNewPosts(null);
+    };
   }, [history.location.pathname, sort, user]);
   return (
     <div className="posts">
@@ -74,7 +97,7 @@ function Posts({ search, type, user }) {
         </>
       )}
 
-      {posts &&
+      {newPosts &&
         dataRender(posts).map((ele) => {
           switch (ele.type) {
             case "text":

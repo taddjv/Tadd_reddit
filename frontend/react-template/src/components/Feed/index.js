@@ -13,16 +13,6 @@ function Feed({ type }) {
   const history = useHistory();
   const posts = useSelector((state) => state.posts);
 
-  // useEffect(() => {
-  //   if (type === "home") {
-  //     dispatch(postsActions.getTheHomePosts()).then(async (res) => {
-  //       const data = await res;
-  //     });
-  //   }
-  //   if (type === "all") {
-  //     dispatch(postsActions.getThePosts());
-  //   }
-  // }, [history.location.pathname]);
   return (
     <div className="feed">
       <div className="feed-child">

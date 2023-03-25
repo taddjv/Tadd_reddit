@@ -70,7 +70,7 @@ const User = () => {
                     <FontAwesomeIcon
                       className="u-c-c-b-logo"
                       icon={faCalendar}
-                    />{" "}
+                    />
                     {redditor.createdAt.slice(0, 10)}
                   </div>
                 </div>

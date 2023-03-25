@@ -22,6 +22,7 @@ const userSchema = new Schema({
     required: true,
     default: 0,
   },
+  subscriptions: [{ type: Schema.Types.ObjectId, ref: "Community" }],
   createdAt: {
     type: Date,
     default: new Date(),

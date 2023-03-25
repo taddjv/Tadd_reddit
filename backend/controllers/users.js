@@ -4,7 +4,9 @@ const { setTokenCookie } = require("../utils/auth");
 //sign up
 exports.postUserSign = async (req, res) => {
   const { username, password } = req.body;
-  const foundUser = await User.findOne({ username });
+  const foundUser = await User.findOne({
+    username,
+  });
 
   if (foundUser) {
     const err = new Error("User with that username already exists");
@@ -33,7 +35,9 @@ exports.postUserSign = async (req, res) => {
 //Log in
 exports.postUserLog = async (req, res) => {
   const { username, password } = req.body;
-  const foundUser = await User.findOne({ username });
+  const foundUser = await User.findOne({
+    username: new RegExp(`(${username})`, "i"),
+  });
 
   if (!foundUser) {
     const err = new Error("Username doesn't exist");

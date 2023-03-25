@@ -7,6 +7,7 @@ import * as postsActions from "../../store/posts";
 import * as userActions from "../../store/users";
 import { userSubbed, dataRender } from "../../helper";
 
+import Posts from "../Feed/Posts";
 import PhotoPost from "../Feed/Posts/PhotoPost";
 import VideoPost from "../Feed/Posts/VideoPost";
 import LinkPost from "../Feed/Posts/LinkPost";
@@ -22,6 +23,7 @@ import {
   faStar,
   faChartBar,
   faPlusSquare,
+  faUser,
 } from "@fortawesome/free-regular-svg-icons";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 
@@ -29,7 +31,6 @@ function Community() {
   const params = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-
   const { communityName } = params;
   const community = useSelector((state) => state.communities.community);
   const posts = useSelector((state) => state.posts);
@@ -38,22 +39,27 @@ function Community() {
   const subscriptionStatus = useSelector((state) => state.subscriptions);
 
   const [showPictureEdit, setShowPictureEdit] = useState(false);
+
+  const [communityId, setCommunityId] = useState(null);
+  const [isMod, setIsMod] = useState(false);
+
+  const [showPosts, setShowPosts] = useState(false);
   const [showPost, setShowPost] = useState(false);
+  const [subcount, setSubCount] = useState(null);
 
   useEffect(() => {
-    dispatch(communitiesActions.getTheCommunity(communityName));
+    dispatch(communitiesActions.getTheCommunity(communityName)).then(
+      async (res) => {
+        const data = await res;
+        setCommunityId(data._id);
+      }
+    );
+    return () => {
+      setCommunityId(null);
+    };
   }, [history.location.pathname]);
 
   useEffect(() => {
-    if (community) {
-      dispatch(postsActions.getTheCommunityPosts(community._id));
-      dispatch(subscriptionsActions.getTheUsersS(community._id)).then(
-        async (res) => {
-          const data = await res;
-          console.log(data);
-        }
-      );
-    }
     if (currentUser && community) {
       dispatch(
         userActions.addTheRecent(currentUser._id, {
@@ -61,8 +67,11 @@ function Community() {
           name: community.name,
         })
       );
+      if (currentUser._id === community.owner) {
+        setIsMod(true);
+      }
     }
-  }, [community]);
+  }, [community, history.location.pathname]);
 
   const subscribe = (e) => {
     e.preventDefault();
@@ -86,57 +95,65 @@ function Community() {
               <div className="c-h-2">
                 <div className="c-h-2-content">
                   <div className="c-h-2-profile-container">
-                    <div className="c-h-2-profile c-h-2-profile-default">
-                      <FontAwesomeIcon
-                        className="c-h-2-p-d-child"
-                        icon={faClipboardList}
+                    {!community?.profilePicture ? (
+                      <div className="c-h-2-profile c-h-2-profile-default">
+                        <FontAwesomeIcon
+                          className="c-h-2-p-d-child"
+                          icon={faClipboardList}
+                        />
+                      </div>
+                    ) : (
+                      <img
+                        src={community.profilePicture}
+                        className="c-h-2-profile"
                       />
-                    </div>
-
-                    <form
-                      // onSubmit={uploadImage}
-                      className="c-h-2-plus-container"
-                    >
-                      <FontAwesomeIcon
-                        onClick={() => setShowPictureEdit(!showPictureEdit)}
-                        className="c-h-2-plus"
-                        icon={faPlusSquare}
-                      />
-                      {showPictureEdit && (
-                        <div className="c-h-2-plus-dd">
-                          <input
-                            type="file"
-                            id="c-profile-input"
-                            accept="image/*"
-                            // onChange={imageToFile}
-                            // value={comImage}
-                          />
-                          <label
-                            for="c-profile-input"
-                            className="c-profile-input"
-                          >
-                            Add an Image
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="Or Paste Image Url Here"
-                            onChange={(e) => {
-                              // setComImage2(e.target.value);
-                            }}
-                          />
-                          <div className="c-h-2-plus-dd-buttons">
-                            <button onClick={() => setShowPictureEdit(false)}>
-                              cancel
-                            </button>
-                            <button
-                            // onClick={uploadImage}
+                    )}
+                    {currentUser?._id === community?.owner && (
+                      <form
+                        // onSubmit={uploadImage}
+                        className="c-h-2-plus-container"
+                      >
+                        <FontAwesomeIcon
+                          onClick={() => setShowPictureEdit(!showPictureEdit)}
+                          className="c-h-2-plus"
+                          icon={faPlusSquare}
+                        />
+                        {showPictureEdit && (
+                          <div className="c-h-2-plus-dd">
+                            <input
+                              type="file"
+                              id="c-profile-input"
+                              accept="image/*"
+                              // onChange={imageToFile}
+                              // value={comImage}
+                            />
+                            <label
+                              for="c-profile-input"
+                              className="c-profile-input"
                             >
-                              save
-                            </button>
+                              Add an Image
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Or Paste Image Url Here"
+                              onChange={(e) => {
+                                // setComImage2(e.target.value);
+                              }}
+                            />
+                            <div className="c-h-2-plus-dd-buttons">
+                              <button onClick={() => setShowPictureEdit(false)}>
+                                cancel
+                              </button>
+                              <button
+                              // onClick={uploadImage}
+                              >
+                                save
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </form>
+                        )}
+                      </form>
+                    )}
                   </div>
 
                   <div className="c-h-2-name">
@@ -161,10 +178,15 @@ function Community() {
                   onClick={() => history.push(`/r/${community.name}/submit`)}
                   className="c-b-post"
                 >
-                  <img
-                    className="c-b-p-profile"
-                    src="https://img.freepik.com/premium-vector/pretty-hijab-woman-side-profile-with-colorful-flower-bouquet_185694-1105.jpg?w=2000"
-                  />
+                  {currentUser?.profilePicture ? (
+                    <img
+                      className="c-b-p-profile"
+                      src={currentUser.profilePicture}
+                    />
+                  ) : (
+                    <FontAwesomeIcon className="c-b-p-profile" icon={faUser} />
+                  )}
+
                   <input
                     type="text"
                     id="c-b-p-input"
@@ -172,71 +194,9 @@ function Community() {
                   />
                   <FontAwesomeIcon className="c-b-p-post" icon={faPaperPlane} />
                 </div>
-                <div className="posts-sorter">
-                  <button className="p-s-hot p-s-option">
-                    <FontAwesomeIcon
-                      className="f-h-house"
-                      icon={faHandPointUp}
-                    />
-                    Hot
-                  </button>
-
-                  <button className="p-s-new p-s-option">
-                    <FontAwesomeIcon
-                      className="f-h-house ps-o-new-logo"
-                      icon={faStar}
-                    />
-                    New
-                  </button>
-                  <button className="p-s-top p-s-option">
-                    <FontAwesomeIcon
-                      className="f-h-house ps-o-top-logo"
-                      icon={faChartBar}
-                    />
-                    Top
-                  </button>
-                </div>
-                {posts &&
-                  dataRender(posts).map((ele) => {
-                    switch (ele.type) {
-                      case "text":
-                        return (
-                          <TextPost
-                            post={ele}
-                            user={currentUser}
-                            userVotes={userVotes}
-                            community={true}
-                          />
-                        );
-                      case "link":
-                        return (
-                          <LinkPost
-                            post={ele}
-                            user={currentUser}
-                            userVotes={userVotes}
-                            community={true}
-                          />
-                        );
-                      case "image":
-                        return (
-                          <PhotoPost
-                            post={ele}
-                            user={currentUser}
-                            userVotes={userVotes}
-                            community={true}
-                          />
-                        );
-                      case "video":
-                        return (
-                          <VideoPost
-                            post={ele}
-                            user={currentUser}
-                            userVotes={userVotes}
-                            community={true}
-                          />
-                        );
-                    }
-                  })}
+                {communityId && (
+                  <Posts type="community" communityId={communityId} />
+                )}
               </div>
               <div className="c-b-right">
                 <AboutCommunity community={community} user={currentUser} />

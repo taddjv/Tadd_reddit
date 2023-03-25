@@ -24,7 +24,7 @@ const RuleOption = ({ rule, number }) => {
           icon={faChevronDown}
         />
       </div>
-      {flip && <div className="rc-rule-c-desc">{rule.description}</div>}
+      {flip && <div className="rc-rule-c-desc">{rule.detail}</div>}
     </div>
   );
 };
