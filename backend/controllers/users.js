@@ -1,5 +1,6 @@
 const User = require("../models/Users");
 const { setTokenCookie } = require("../utils/auth");
+const { callErr } = require("../helper");
 
 //sign up
 exports.postUserSign = async (req, res) => {
@@ -128,5 +129,32 @@ exports.addRecent = async (req, res) => {
     }
   );
 
+  return res.json(foundUser);
+};
+
+exports.editUser = async (req, res, next) => {
+  const { userId } = req.params;
+
+  const { profilePicture, username, oldPassword, newPassword } = req.body;
+  const foundUser = await User.findOne({ _id: userId });
+
+  if (newPassword) {
+    if (User.match(oldPassword, foundUser.password)) {
+      foundUser.password = await User.hashPassword(newPassword);
+    } else {
+      return callErr("Password doesn't match current Password", 401, next);
+    }
+  }
+
+  foundUser.profilePicture = profilePicture || foundUser.profilePicture;
+  foundUser.username = username || foundUser.username;
+
+  await foundUser.save();
+  // const foundUser = await User.updateOne(
+  //   { _id: userId },
+  //   {
+  //     profilePicture: profilePicture,
+  //   }
+  // );
   return res.json(foundUser);
 };

@@ -4,6 +4,7 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route } from "react-router-dom";
 import UserPopProvider from "./context/UserPopcontext";
+import EditProvider from "./context/EditContext";
 import configureStore from "./store";
 import { restoreCSRF, csrfFetch } from "./store/csrf";
 
@@ -23,11 +24,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <UserPopProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </UserPopProvider>
+      <EditProvider>
+        <UserPopProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </UserPopProvider>
+      </EditProvider>
     </Provider>
   </React.StrictMode>
 );

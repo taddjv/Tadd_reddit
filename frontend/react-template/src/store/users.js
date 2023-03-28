@@ -5,6 +5,7 @@ const LOGIN_USER = "users/LOGIN_USER";
 const LOGOUT_USER = "users/LOGOUT_USER";
 const RESTORE_USER = "users/RESTORE_USER";
 const ADD_RECENT = "users/ADD_RECENT";
+const UPDATE_USER = "users/UPDATE_USER";
 
 const signupUser = (user) => {
   return {
@@ -35,6 +36,12 @@ const addRecent = (community) => {
     payload: community,
   };
 };
+const editUser = (user) => {
+  return {
+    type: UPDATE_USER,
+    payload: user,
+  };
+};
 
 export const signupTheUser = (userCredentials) => async (dispatch) => {
   const response = await csrfFetch(`/api/users/signup`, {
@@ -59,7 +66,6 @@ export const loginTheUser = (userCredentials) => async (dispatch) => {
   });
   const data = await response.json();
   if (response.ok) {
-    // const data = await response.json();
     dispatch(loginUser(data));
   }
 };
@@ -95,6 +101,9 @@ export const addTheRecent = (userId, community) => async (dispatch) => {
     return data;
   }
 };
+export const editTheUser = (data) => async (dispatch) => {
+  dispatch(editUser(data));
+};
 
 const initialState = { user: null };
 const usersReducer = (state = initialState, action) => {
@@ -118,6 +127,11 @@ const usersReducer = (state = initialState, action) => {
       return newState;
     case ADD_RECENT: {
       newState = { ...state };
+      newState.user = action.payload;
+      return newState;
+    }
+    case UPDATE_USER: {
+      newState = {};
       newState.user = action.payload;
       return newState;
     }

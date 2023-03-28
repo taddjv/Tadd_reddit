@@ -1,10 +1,17 @@
 import { csrfFetch } from "./csrf";
 
 const GET_REDDITOR = "redditors/GET_REDDITOR";
+const EDIT_REDDITOR = "redditors/EDIT_REDDITOR";
 
 const getRedditor = (user) => {
   return {
     type: GET_REDDITOR,
+    payload: user,
+  };
+};
+const editRedditor = (user) => {
+  return {
+    type: EDIT_REDDITOR,
     payload: user,
   };
 };
@@ -19,6 +26,21 @@ export const getTheRedditor = (user) => async (dispatch) => {
     return data;
   }
 };
+export const editTheRedditor =
+  (userCredentials, userId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/users/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userCredentials),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      dispatch(editRedditor(data));
+    }
+    return data;
+  };
 
 const initialState = {};
 const redditorsReducer = (state = initialState, action) => {
@@ -28,6 +50,11 @@ const redditorsReducer = (state = initialState, action) => {
       newState = {};
       newState = action.payload;
 
+      return newState;
+    }
+    case EDIT_REDDITOR: {
+      newState = {};
+      newState = action.payload;
       return newState;
     }
 

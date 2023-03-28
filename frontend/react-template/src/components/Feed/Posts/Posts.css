@@ -192,10 +192,11 @@
   gap: 4px;
 }
 .pp-m-bottom > button {
+  height: 36px;
   background: none;
   color: #878a8c;
   border: none;
-  padding: 0;
+  padding: 0 8px;
   font: inherit;
   cursor: pointer;
   outline: inherit;
@@ -203,20 +204,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 .pp-m-bottom > button:hover {
   background-color: #e8e8e8;
 }
-.pp-m-b-comments {
-  width: 127px;
-  height: 36px;
+.pp-m-b-error {
+  color: red;
 }
-.pp-m-b-other {
-  /* margin: auto; */
-  width: 28px;
-  /* padding: 0 4px; */
-  text-align: center;
+.pp-m-b-error:hover {
+  background: rgb(255, 210, 210);
 }
+
 .pp-m-b-o-button {
   width: 20px;
   height: 20px;
@@ -277,4 +276,9 @@
   max-height: 265px;
   overflow-y: hidden;
   -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+}
+
+.f-h-logo {
+  width: 20px;
+  height: 20px;
 }

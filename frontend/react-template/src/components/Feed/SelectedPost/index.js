@@ -55,6 +55,10 @@ const SelectedPost = () => {
       }
     );
   };
+
+  useEffect(() => {
+    dispatch(postActions.getTheSinglePost(id));
+  }, []);
   return (
     <>
       {post[id] && (

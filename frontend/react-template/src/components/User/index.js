@@ -4,28 +4,41 @@ import { useParams, useHistory } from "react-router-dom";
 import * as userActions from "../../store/users";
 import * as postsActions from "../../store/posts";
 import * as redditorsActions from "../../store/redditors";
-import moment from "moment";
 import { dataRender } from "../../helper";
 import Posts from "../Feed/Posts/index";
+import EditUserPopup from "./EditUserPopup";
+import AddPhotoFrom from "./AddPhotoFrom";
+import { useEdit } from "../../context/EditContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faStar } from "@fortawesome/free-regular-svg-icons";
+import {
+  faCalendar,
+  faStar,
+  faUser,
+} from "@fortawesome/free-regular-svg-icons";
 import "./User.css";
+import {
+  faAssistiveListeningSystems,
+  faEdit,
+  faUserEdit,
+} from "@fortawesome/free-solid-svg-icons";
 
 const User = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
 
+  const { showUserPicEdit, setShowUserPicEdit } = useEdit();
+
   const { username } = params;
   const currentUser = useSelector((state) => state.users.user);
   const redditor = useSelector((state) => state.redditor);
   const posts = useSelector((state) => state.posts);
+  // const myProfile = redditor._id === currentUser._id;
 
   useEffect(() => {
     dispatch(redditorsActions.getTheRedditor(username));
   }, [history.location.pathname]);
-
   const [chosen, setChosen] = useState("posts");
   return (
     <div className="user">
@@ -46,21 +59,43 @@ const User = () => {
         </button>
       </div>
       <div className="user-child">
-        {dataRender(redditor).length ? (
+        {dataRender(redditor).length && currentUser ? (
           <>
             <div>
               <Posts type="user" user={redditor} />
             </div>
             <div className="u-c-card">
               <div className="u-c-c-top">
-                <img className="u-c-c-t-image" src={redditor.profilePicture} />
+                {!redditor.profilePicture ? (
+                  <FontAwesomeIcon className="u-c-c-t-image" icon={faUser} />
+                ) : (
+                  <img
+                    className="u-c-c-t-image"
+                    src={redditor.profilePicture}
+                  />
+                )}
+                {redditor._id === currentUser._id && (
+                  <AddPhotoFrom
+                    container="user-add-photo"
+                    drop="user-drop"
+                    img="user-img"
+                    user={currentUser}
+                  />
+                )}
+
+                {/* <img className="u-c-c-t-image" src={redditor.profilePicture} /> */}
               </div>
-              <div className="u-c-c-middle1">u/{redditor.username}</div>
+              <div className="u-c-c-middle1">
+                u/{redditor.username}
+                {redditor._id === currentUser._id && (
+                  <EditUserPopup user={redditor} />
+                )}
+              </div>
               <div className="u-c-c-bottom">
                 <div className="u-c-c-bottom1">
                   <div className="u-c-c-b-title">Karma</div>
                   <div className="u-c-c-b-text">
-                    <FontAwesomeIcon className="u-c-c-b-logo" icon={faStar} />{" "}
+                    <FontAwesomeIcon className="u-c-c-b-logo" icon={faStar} />
                     {redditor.karma}
                   </div>
                 </div>

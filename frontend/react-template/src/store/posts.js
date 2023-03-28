@@ -189,6 +189,11 @@ export const getTheHomePosts = (sort) => async (dispatch) => {
     return data;
   }
 };
+export const deleteThePost = (postId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/communities`, {
+    method: "DELETE",
+  });
+};
 
 const initialState = {};
 const postsReducer = (state = initialState, action) => {

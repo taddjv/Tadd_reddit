@@ -50,3 +50,5 @@ export const searchRender = (obj, type) => {
   }
   return final;
 };
+
+export const validateUsername = (oldU, newU, user) => {};

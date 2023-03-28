@@ -27,7 +27,6 @@ const SearchResults = () => {
   const [postFilter, setPostFilter] = useState("Relevance");
   const [postSort, setPostSort] = useState("All Time");
 
-  console.log(searchRes);
 
   useEffect(() => {
     dispatch(postsActions.searchThePosts({ search }));

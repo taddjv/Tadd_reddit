@@ -10,7 +10,6 @@ import { useDispatch } from "react-redux";
 function UserDropDown({ member, user }) {
   const dispatch = useDispatch();
   const { setShowLogin, showCommunity, setShowCommunity } = usePop();
-  console.log(user);
   const nonMemberDrop = (
     <div className="udd-container">
       <div className="udd-mode">
@@ -34,7 +33,7 @@ function UserDropDown({ member, user }) {
         <FontAwesomeIcon className="udd-moon" icon={faMoon} />
         <p className="udd-m-text">Change Mode</p>
       </div>
-      <NavLink exact to={`/u/${user.username}`} className="udd-profile">
+      <NavLink exact to={`/u/${user?.username}`} className="udd-profile">
         <FontAwesomeIcon className="udd-user" icon={faUser} />
         <p className="udd-m-text">profile</p>
       </NavLink>

@@ -16,7 +16,7 @@ import {
 import {
   faCommentAlt,
   faFolder,
-  faFileArchive,
+  faUser,
 } from "@fortawesome/free-regular-svg-icons";
 
 function VideoPost({ post, user, userVotes, individual, community }) {
@@ -75,13 +75,16 @@ function VideoPost({ post, user, userVotes, individual, community }) {
       <div className="pp-middle">
         <div className="pp-m-top">
           <div className="pp-m-top-left">
-            {/*//! subreddit url pic ! */}
             {!community && (
               <>
-                <img
-                  className="pp-m-t-l-logo"
-                  src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpgs"
-                />
+                {post.community.profilePicture ? (
+                  <img
+                    className="pp-m-t-l-logo"
+                    src={post.community.profilePicture}
+                  />
+                ) : (
+                  <FontAwesomeIcon className="pp-m-t-l-logo" icon={faUser} />
+                )}
                 <NavLink
                   to={`/r/${post.community.name}`}
                   className="pp-m-t-l-community"

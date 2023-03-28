@@ -6,6 +6,8 @@ import * as postActions from "../../../store/posts";
 import * as subscriptionsActions from "../../../store/subscriptions";
 import moment from "moment";
 import { reactionCheck, userSubbed } from "../../../helper";
+import DeletePost from "./DeletePost";
+
 import "./Posts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,8 +20,10 @@ import {
   faCommentAlt,
   faFolder,
   faFileArchive,
+  faUser,
   faArrowAltCircleRight,
 } from "@fortawesome/free-regular-svg-icons";
+
 function LinkPost({ post, user, userVotes, individual, community }) {
   const dispatch = useDispatch();
   const subscriptionStatus = useSelector((state) => state.subscriptions);
@@ -79,10 +83,14 @@ function LinkPost({ post, user, userVotes, individual, community }) {
           <div className="pp-m-top-left">
             {!community && (
               <>
-                <img
-                  className="pp-m-t-l-logo"
-                  src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpgs"
-                />
+                {post.community.profilePicture ? (
+                  <img
+                    className="pp-m-t-l-logo"
+                    src={post.community.profilePicture}
+                  />
+                ) : (
+                  <FontAwesomeIcon className="pp-m-t-l-logo" icon={faUser} />
+                )}
                 <NavLink
                   to={`/r/${post.community.name}`}
                   className="pp-m-t-l-community"
@@ -134,10 +142,11 @@ function LinkPost({ post, user, userVotes, individual, community }) {
             />
             222 Comments
           </button>
-          <button className="pp-m-b-share">
+          <button className="pp-m-b-comments">
             <FontAwesomeIcon className="f-h-house" icon={faFolder} />
             Share
           </button>
+          <DeletePost post={post} />
         </div>
       </div>
     </NavLink>

@@ -11,7 +11,7 @@
 }
 
 .navbar-container {
-  z-index: 1;
+  z-index: 10;
   display: flex;
   position: fixed;
   /* overflow: hidden; */
@@ -165,6 +165,11 @@
   width: 20px;
   height: 20px;
   padding-right: 5px;
+}
+.nc-r-d-user-pic {
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
 }
 
 .nc-r-dropdown2 {

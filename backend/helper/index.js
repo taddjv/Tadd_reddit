@@ -5,3 +5,5 @@ exports.callErr = (message, code, next) => {
   err.title = "Validation Error";
   return next(err);
 };
+
+exports.checkPassword = (oldP, newP) => {};

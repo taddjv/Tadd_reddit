@@ -16,6 +16,7 @@ import {
 import {
   faCommentAlt,
   faFolder,
+  faUser,
   faFileArchive,
 } from "@fortawesome/free-regular-svg-icons";
 
@@ -77,10 +78,14 @@ function PhotoPost({ post, user, userVotes, individual, community }) {
           <div className="pp-m-top-left">
             {!community && (
               <>
-                <img
-                  className="pp-m-t-l-logo"
-                  src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpgs"
-                />
+                {post.community.profilePicture ? (
+                  <img
+                    className="pp-m-t-l-logo"
+                    src={post.community.profilePicture}
+                  />
+                ) : (
+                  <FontAwesomeIcon className="pp-m-t-l-logo" icon={faUser} />
+                )}
                 <NavLink
                   to={`/r/${post.community.name}`}
                   className="pp-m-t-l-community"

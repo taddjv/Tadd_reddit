@@ -52,7 +52,11 @@ function NavBar({ isLoaded }) {
         className="nc-r-dropdown2 "
       >
         <div className="nc-r-left">
-          <FontAwesomeIcon className="nc-r-d-user" icon={faUser} />
+          {currentUser?.profilePicture ? (
+            <img className="nc-r-d-user-pic" src={currentUser.profilePicture} />
+          ) : (
+            <FontAwesomeIcon className="nc-r-d-user" icon={faUser} />
+          )}
         </div>
         <div className="nc-r-middle">
           <div className="n-c-r-m-top">
