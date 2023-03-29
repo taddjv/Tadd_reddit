@@ -172,7 +172,7 @@
 }
 
 .submitPost-right {
-  margin-top: 56px;
+  margin-top: 108px;
 }
 
 .suP-l-c-i-f-t-img {
@@ -186,4 +186,16 @@
   border: 1px solid red;
   background: rgb(255, 210, 210);
   color: red;
+}
+
+.suP-button {
+  height: 32px;
+  border: solid 1px#2884d6;
+  color: white;
+  border-radius: 500px;
+  background-color: #2884d6;
+  font-weight: 700;
+  padding: 0 18px;
+  margin-top: 20px;
+  cursor: pointer;
 }

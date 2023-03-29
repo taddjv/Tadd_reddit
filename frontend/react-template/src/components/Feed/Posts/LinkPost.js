@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import * as voteActions from "../../../store/votes";
-import * as postActions from "../../../store/posts";
-import * as subscriptionsActions from "../../../store/subscriptions";
+import {
+  upvotePost,
+  downvotePost,
+  subscribeViaPost,
+} from "../../../helper/posts";
 import moment from "moment";
 import { reactionCheck, userSubbed } from "../../../helper";
 import DeletePost from "./DeletePost";
@@ -27,28 +29,7 @@ import {
 function LinkPost({ post, user, userVotes, individual, community }) {
   const dispatch = useDispatch();
   const subscriptionStatus = useSelector((state) => state.subscriptions);
-  const upvote = (e) => {
-    e.preventDefault();
-    dispatch(voteActions.upvoteThePost(post, user)).then(async (res) => {
-      const data = await res;
-      dispatch(postActions.upvoteThePost(post._id, data));
-    });
-  };
-  const downvote = (e) => {
-    e.preventDefault();
-    dispatch(voteActions.downvoteThePost(post, user)).then(async (res) => {
-      const data = await res;
-      dispatch(postActions.downvoteThePost(post._id, data));
-    });
-  };
-  const subscribe = (e) => {
-    e.preventDefault();
-    dispatch(
-      subscriptionsActions.postTheSubscription(post.community._id, {
-        role: "member",
-      })
-    );
-  };
+
   const postClass = individual ? "sp-b-post" : "pp-link";
   const linkClass = individual ? "sb-b-m-link" : "pp-m-middle-link";
   const otherLinkClass = individual ? "sb-b-m-left-link" : "pp-m-m-left-link";
@@ -56,7 +37,7 @@ function LinkPost({ post, user, userVotes, individual, community }) {
   return (
     <NavLink to={`/post/${post._id}`} className={`posts-post ${postClass}`}>
       <div className={leftClass}>
-        <div onClick={upvote} className="pp-l-up">
+        <div onClick={upvotePost(post, user, dispatch)} className="pp-l-up">
           <FontAwesomeIcon
             className={`pp-l-up-logo ${
               reactionCheck(userVotes, post).upvote
@@ -67,7 +48,7 @@ function LinkPost({ post, user, userVotes, individual, community }) {
           />
         </div>
         <div className="pp-l-count">{post.upVotes - post.downVotes}</div>
-        <div onClick={downvote} className="pp-l-down">
+        <div onClick={downvotePost(post, user, dispatch)} className="pp-l-down">
           <FontAwesomeIcon
             className={`pp-l-down-logo ${
               reactionCheck(userVotes, post).downvote
@@ -108,7 +89,10 @@ function LinkPost({ post, user, userVotes, individual, community }) {
           </div>
           <div className="pp-m-top-right">
             {userSubbed(subscriptionStatus, post.community._id) ? null : (
-              <button onClick={subscribe} className="pp-m-t-r-button">
+              <button
+                onClick={subscribeViaPost(post, dispatch)}
+                className="pp-m-t-r-button"
+              >
                 Join
               </button>
             )}
@@ -135,18 +119,18 @@ function LinkPost({ post, user, userVotes, individual, community }) {
           </div>
         </div>
         <div className="pp-m-bottom">
-          <button className="pp-m-b-comments">
+          <button className="pp-m-b-button">
             <FontAwesomeIcon
               className="f-h-house pp-m-b-c-button"
               icon={faCommentAlt}
             />
             222 Comments
           </button>
-          <button className="pp-m-b-comments">
+          <button className="pp-m-b-button">
             <FontAwesomeIcon className="f-h-house" icon={faFolder} />
             Share
           </button>
-          <DeletePost post={post} />
+          {post.author._id === user._id && <DeletePost post={post} />}
         </div>
       </div>
     </NavLink>

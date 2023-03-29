@@ -18,6 +18,6 @@ router.get("/user/:userId", postsController.getUserPosts);
 router.get("/home", findUser, postsController.getHomePosts);
 router.get("/all", postsController.getAllPosts);
 router.get("/:postId", postsController.getSinglePost);
-// router.delete("/:postId",findUser, postsController)
+router.delete("/:postId", findUser, postsController.deletePost);
 
 module.exports = router;

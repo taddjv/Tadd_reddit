@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as communitiesActions from "../../store/communities";
+import ThemeCommunity from "./ThemeCommunity";
 
 import "./Community.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faClipboard } from "@fortawesome/free-regular-svg-icons";
+import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 
 function AboutCommunity({ community, user }) {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function AboutCommunity({ community, user }) {
 
   const [showDescEdit, setShowDescEdit] = useState(false);
   const [showComOps, setShowComOps] = useState(false);
-  const [newDesc, setNewDesc] = useState(community.description);
+  const [newDesc, setNewDesc] = useState("");
   const mod = user ? (community.owner === user._id ? user : null) : null;
   const description = community.description;
   const comDate = new Date(community.createdAt);
@@ -161,43 +162,7 @@ function AboutCommunity({ community, user }) {
           >
             Community options
           </button>
-          {showComOps && (
-            <>
-              <div className="ac-c-o-color1">
-                <input
-                  type="text"
-                  id="ac-c-o-color1"
-                  placeholder="Main Color (Hex Code)"
-                  value={null}
-                  onChange={
-                    null
-                    // (e) => setPassword(e.target.value)
-                  }
-                />
-              </div>
-              <div className="ac-c-o-color2">
-                <input
-                  type="text"
-                  id="ac-c-o-color2"
-                  placeholder="Secondary Color (Hex Code)"
-                  value={null}
-                  onChange={
-                    null
-                    // (e) => setPassword(e.target.value)
-                  }
-                />
-              </div>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowComOps(false);
-                }}
-                className="ac-c-d-ta-s"
-              >
-                Add Colors
-              </button>
-            </>
-          )}
+          {showComOps && <ThemeCommunity community={community} />}
         </div>
       </div>
     </>

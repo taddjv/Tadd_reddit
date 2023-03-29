@@ -1,7 +1,7 @@
 exports.callErr = (message, code, next) => {
   const err = Error("Validation Error");
   err.errors = [message];
-  err.status = 400;
+  err.status = code || 400;
   err.title = "Validation Error";
   return next(err);
 };

@@ -18,7 +18,8 @@ exports.getAllPosts = async (req, res) => {
   res.json(allPosts);
 };
 exports.getSubPosts = async (req, res) => {
-  const { communityId, sort } = req.params;
+  const { communityId } = req.params;
+  const { sort } = req.query;
 
   let sortQuery;
   if (sort === "Hot") {
@@ -200,4 +201,19 @@ exports.getUserPosts = async (req, res) => {
     .populate("author", "username")
     .sort(sortQuery);
   res.json(allPosts);
+};
+
+exports.deletePost = async (req, res, next) => {
+  const { user } = req;
+  const { postId } = req.params;
+  const post = await Post.findOne({ _id: postId });
+
+  if (!post) return callErr("Post not found", 403, next);
+
+  if (user._id.toString() === post.author.toString()) {
+    await Post.deleteOne(post);
+    res.json({ message: "deleted" });
+  } else {
+    return callErr("You do not own this post", 403, next);
+  }
 };

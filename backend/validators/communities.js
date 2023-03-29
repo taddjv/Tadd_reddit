@@ -8,7 +8,7 @@ const validateCommunityCreate = [
   check("name")
     .isLength({ max: 21 })
     .withMessage("Username must be between 3 and 20 characters"),
-  check("type")
+  check("contentType")
     .exists({ checkFalsy: true })
     .withMessage("A community type is required"),
   handleValidationErrors,

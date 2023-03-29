@@ -15,7 +15,12 @@ function CreateCommunity() {
 
   const [name, setName] = useState("");
   const [nameFinal, setNameFinal] = useState("");
-  const [type, setType] = useState("");
+
+  const [text, setText] = useState(false);
+  const [link, setLink] = useState(false);
+  const [photo, setPhoto] = useState(false);
+  const [video, setVideo] = useState(false);
+
   const [redir, setRedir] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -24,11 +29,22 @@ function CreateCommunity() {
 
     setNameFinal("");
     setErrors([]);
+    const contentType = [
+      text ? "text" : null,
+      link ? "link" : null,
+      photo ? "image" : null,
+      video ? "video" : null,
+    ].join(",");
 
-    return dispatch(communitiesActions.postTheCommunity({ name, type }))
+    return dispatch(
+      communitiesActions.postTheCommunity({
+        name,
+        contentType,
+      })
+    )
       .then(() => {
         setName("");
-        setType("");
+
         setNameFinal(name);
         setErrors([]);
         setRedir(true);
@@ -86,50 +102,40 @@ function CreateCommunity() {
             </div>
             <div className="cc-c-type">
               <div className="cc-c-t-title">Community type</div>
-              <div className="cc-c-t-public">
-                <input
-                  type="radio"
-                  id="public"
-                  name="cc-c-t"
-                  value={type}
-                  onChange={(e) => setType("public")}
-                />
-                <label for="public">
-                  <span className="cc-c-t-text1">Public</span>
-                  <span className="cc-c-t-text2">
-                    Anyone can view, post, and comment to this community
-                  </span>
-                </label>
-              </div>
 
-              <div className="cc-c-t-restricted">
-                <input
-                  type="radio"
-                  id="restricted"
-                  name="cc-c-t"
-                  value={type}
-                  onChange={(e) => setType("restricted")}
-                />
-                <label for="restricted">
-                  <span className="cc-c-t-text1">Restricted</span>
+              <div className="cc-c-t-public">
+                <input type="checkbox" onChange={() => setText(!text)} />
+                <label for="public">
+                  <span className="cc-c-t-text1">Text Posts</span>
                   <span className="cc-c-t-text2">
-                    Anyone can view this community, but only approved users can
-                    post
+                    Anyone can post text content
                   </span>
                 </label>
               </div>
-              <div className="cc-c-t-private">
-                <input
-                  type="radio"
-                  name="cc-c-t"
-                  id="private"
-                  value={type}
-                  onChange={(e) => setType("private")}
-                />
-                <label for="private">
-                  <span className="cc-c-t-text1">Private</span>
+              <div className="cc-c-t-public">
+                <input type="checkbox" onChange={() => setLink(!link)} />
+                <label for="public">
+                  <span className="cc-c-t-text1">Link Posts</span>
                   <span className="cc-c-t-text2">
-                    Only approved users can view and submit to this community
+                    Anyone can post content with links
+                  </span>
+                </label>
+              </div>
+              <div className="cc-c-t-public">
+                <input type="checkbox" onChange={() => setPhoto(!photo)} />
+                <label for="public">
+                  <span className="cc-c-t-text1">Picture Posts</span>
+                  <span className="cc-c-t-text2">
+                    Anyone can post picture content
+                  </span>
+                </label>
+              </div>
+              <div className="cc-c-t-public">
+                <input type="checkbox" onChange={() => setVideo(!video)} />
+                <label for="public">
+                  <span className="cc-c-t-text1">Video Posts</span>
+                  <span className="cc-c-t-text2">
+                    Anyone can post video content
                   </span>
                 </label>
               </div>

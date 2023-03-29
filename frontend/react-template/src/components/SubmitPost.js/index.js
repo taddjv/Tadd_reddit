@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import * as communitiesActions from "../../store/communities";
 import * as postsActions from "../../store/posts";
 import TextSubmit from "./TextSubmit";
@@ -23,6 +23,7 @@ import "./SubmitPost.css";
 const SubmitPost = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const history = useHistory();
 
   const { communityName } = params;
   const community = useSelector((state) => state.communities.community);
@@ -38,13 +39,13 @@ const SubmitPost = () => {
       async (res) => {
         const data = await res;
         dispatch(postsActions.getTheCommunityPosts(data._id));
-        if (data.contentType.split(",")[0] === "text") {
+        if (data.contentType.includes("text")) {
           setTextSelected(true);
-        } else if (data.contentType.split(",")[0] === "image") {
+        } else if (data.contentType.includes("image")) {
           setImageSelected(true);
-        } else if (data.contentType.split(",")[0] === "text") {
+        } else if (data.contentType.includes("video")) {
           setVideoSelected(true);
-        } else if (data.contentType.split(",")[0] === "link") {
+        } else if (data.contentType.includes("link")) {
           setLinkSelected(true);
         }
       }
@@ -169,6 +170,15 @@ const SubmitPost = () => {
             <div className="submitPost-right">
               <AboutCommunity community={community} user={currentUser} />
               <RulesCommunity community={community} user={currentUser} />
+              <button
+                className="suP-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  history.goBack();
+                }}
+              >
+                Go Back
+              </button>
             </div>
           </div>
         </div>

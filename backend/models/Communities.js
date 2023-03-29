@@ -9,10 +9,6 @@ const communitySchema = new Schema({
   description: {
     type: String,
   },
-  type: {
-    type: String,
-    required: true,
-  },
 
   rules: {
     type: Array,
@@ -20,6 +16,10 @@ const communitySchema = new Schema({
   contentType: {
     type: String,
     required: true,
+  },
+  colors: {
+    type: Array,
+    default: ["#0079d3", "#33a8ff"],
   },
   owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
   createdAt: {

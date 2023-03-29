@@ -119,7 +119,6 @@ const seedUsers = async () => {
 
 const seedCommunities = [
   {
-    type: "public",
     contentType: "text,image,video,link",
     rules: [
       {
@@ -145,7 +144,6 @@ const seedCommunities = [
       "Welcome to r/funny. This is a place where people can share media they fin hilarious.",
   },
   {
-    type: "public",
     contentType: "text",
     name: "askreddit",
     profilePicture:
@@ -164,7 +162,6 @@ const seedCommunities = [
       "r/askReddit is a nice community where people ask whatever they want to each other.",
   },
   {
-    type: "public",
     contentType: "image,link,video",
     name: "awww",
     profilePicture:
@@ -183,7 +180,6 @@ const seedCommunities = [
     description: "Come here if you intend on sharing something super cute.",
   },
   {
-    type: "public",
     contentType: "image,link,video,text",
     name: "music",
     profilePicture:
@@ -191,7 +187,6 @@ const seedCommunities = [
     description: "The musical side of Reddit!",
   },
   {
-    type: "public",
     contentType: "image",
     name: "pics",
     profilePicture:
@@ -199,7 +194,6 @@ const seedCommunities = [
     description: "Do you intend on sharing a jpeg file here ?",
   },
   {
-    type: "public",
     contentType: "image,link,video",
     name: "science",
     profilePicture:
@@ -208,7 +202,6 @@ const seedCommunities = [
       "Science is a systematic endeavor that builds and organizes knowledge in the form of testable explanations and predictions about the universe.",
   },
   {
-    type: "public",
     contentType: "link",
     name: "worldnews",
     profilePicture:
@@ -216,7 +209,6 @@ const seedCommunities = [
     description: "Anything related news around the world.",
   },
   {
-    type: "public",
     contentType: "video",
     name: "videos",
     profilePicture:
@@ -224,7 +216,6 @@ const seedCommunities = [
     description: "Do you intend on sharing a mp4 file here ?",
   },
   {
-    type: "public",
     contentType: "image,link,video",
     name: "todayilearned",
     profilePicture:
@@ -233,7 +224,6 @@ const seedCommunities = [
       "A community where people share info they've just recently learned.",
   },
   {
-    type: "public",
     contentType: "text",
     name: "jokes",
     profilePicture:

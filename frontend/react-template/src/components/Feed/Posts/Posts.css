@@ -206,14 +206,60 @@
   justify-content: center;
   text-align: center;
 }
-.pp-m-bottom > button:hover {
+
+.pp-m-b-button {
+  height: 36px;
+  background: none;
+  color: #878a8c;
+  border: none;
+  padding: 0 8px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.pp-m-b-button:hover {
   background-color: #e8e8e8;
 }
-.pp-m-b-error {
+.pp-m-b-delete {
+  height: 36px;
+  background: none;
   color: red;
+  border: none;
+  padding: 0 8px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
-.pp-m-b-error:hover {
+.pp-m-b-delete:hover {
   background: rgb(255, 210, 210);
+}
+.pp-m-b-edit {
+  height: 36px;
+  background: none;
+  color: #2884d6;
+  border: none;
+  padding: 0 8px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.pp-m-b-edit:hover {
+  background: #c2d4e4;
 }
 
 .pp-m-b-o-button {

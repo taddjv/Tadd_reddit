@@ -190,9 +190,13 @@ export const getTheHomePosts = (sort) => async (dispatch) => {
   }
 };
 export const deleteThePost = (postId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/communities`, {
+  const response = await csrfFetch(`/api/posts/${postId}`, {
     method: "DELETE",
   });
+
+  if (response.ok) {
+    dispatch(deletePost(postId));
+  }
 };
 
 const initialState = {};
@@ -256,6 +260,11 @@ const postsReducer = (state = initialState, action) => {
       action.payload.forEach((ele) => {
         newState[ele._id] = ele;
       });
+      return newState;
+    }
+    case DELETE_POST: {
+      let newState = { ...state };
+      delete newState[action.payload];
       return newState;
     }
     default:

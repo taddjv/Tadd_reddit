@@ -26,11 +26,11 @@ exports.getCommunities = async (req, res) => {
 };
 
 exports.createCommunity = async (req, res) => {
-  const { name, type } = req.body;
+  const { name, contentType } = req.body;
   const { user } = req;
   const newCommunity = new Community({
     name,
-    type,
+    contentType,
     owner: user,
   });
   await newCommunity.save();

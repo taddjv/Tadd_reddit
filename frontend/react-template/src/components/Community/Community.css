@@ -1,3 +1,12 @@
+:root {
+  --main: rgba(64, 174, 14, 0.564);
+  --theme2: rgba(65, 174, 14, 0.171);
+  --text1: rgba(0, 0, 0, 1);
+  --text2: rgba(255, 255, 255, 1);
+  --background1: rgb(241, 236, 234, 1);
+  --background2: rgba(255, 255, 255, 1);
+}
+
 .community {
   background: #dae0e6;
   height: 100vh;
@@ -220,6 +229,7 @@ input[type="file"] {
 .ac-c-d-text {
   font-size: 14px;
   margin-top: 16px;
+  overflow-wrap: break-word;
 }
 
 .ac-c-d-button {
@@ -320,10 +330,17 @@ input[type="file"] {
   background: #ededed;
 }
 
-.ac-c-o-color1,
-.ac-c-o-color2 {
+.ac-c-o-color {
   width: 286px;
   height: 34px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.ac-c-o-c-preview {
+  height: 24px;
+  width: 24px;
+  background-color: blue;
 }
 
 #ac-c-o-color1,
