@@ -1,7 +1,7 @@
 const Post = require("../models/Posts");
 const Subscription = require("../models/Subscriptions");
 const Community = require("../models/Communities");
-const { callErr } = require("../helper/index");
+const { callErr, sortQuery, votePost } = require("../helper/index");
 
 exports.getAllPosts = async (req, res) => {
   const { sort } = req.query;
@@ -20,17 +20,10 @@ exports.getAllPosts = async (req, res) => {
 exports.getSubPosts = async (req, res) => {
   const { communityId } = req.params;
   const { sort } = req.query;
-
-  let sortQuery;
-  if (sort === "Hot") {
-    sortQuery = { upVotes: -1, downVotes: 1 };
-  } else if (sort === "New") {
-    sortQuery = { createdAt: -1 };
-  }
   const allPosts = await Post.find({ community: communityId })
     .populate("author", "username")
     .populate("community")
-    .sort(sortQuery);
+    .sort(sortQuery(sort));
 
   res.json(allPosts);
 };
@@ -39,28 +32,17 @@ exports.putUpvote = async (req, res) => {
   const { status } = req.body;
   const post = await Post.findOne({ _id: postId });
 
-  const voteStatus = {
-    up: 0,
-    down: 0,
-  };
   if (status?.removed) {
     post.upVotes--;
-    voteStatus["up"]--;
-    await post.save();
   } else if (status?.edited) {
     post.upVotes++;
     post.downVotes--;
-    voteStatus["up"]++;
-    voteStatus["down"]--;
-    await post.save();
-  } else if (status.statusCode >= 400) {
-    return status;
   } else {
     post.upVotes++;
-    voteStatus["up"]++;
-    await post.save();
   }
-  res.json({ post, voteStatus });
+  await post.save();
+
+  res.json({ post, voteStatus: votePost(status, "up", "down") });
 };
 
 exports.putDownvote = async (req, res) => {
@@ -68,33 +50,22 @@ exports.putDownvote = async (req, res) => {
   const { status } = req.body;
   const post = await Post.findOne({ _id: postId });
 
-  const voteStatus = {
-    up: 0,
-    down: 0,
-  };
-
   if (status?.removed) {
     post.downVotes--;
-    voteStatus["down"]--;
-    await post.save();
   } else if (status?.edited) {
     post.upVotes--;
     post.downVotes++;
-    voteStatus["up"]--;
-    voteStatus["down"]++;
-    await post.save();
   } else {
     post.downVotes++;
-    voteStatus["down"]++;
-    await post.save();
   }
-  res.json({ post, voteStatus });
+  await post.save();
+  res.json({ post, voteStatus: votePost(status, "down", "up") });
 };
 
 exports.getSinglePost = async (req, res) => {
   const { postId } = req.params;
   const foundPost = await Post.findOne({ _id: postId })
-    .populate("community")
+    .populate("community", ["name", "profilePicture"])
     .populate("author", "username");
   res.json(foundPost);
 };
@@ -115,6 +86,7 @@ exports.postSubPost = async (req, res, next) => {
           content: content,
           author: user._id,
           community: communityId,
+          createdAt: Date.now(),
         });
         await newPost.save();
         res.json(newPost);
@@ -129,6 +101,7 @@ exports.postSubPost = async (req, res, next) => {
           content: content,
           author: user._id,
           community: communityId,
+          createdAt: Date.now(),
         });
         await newPost.save();
         res.json(newPost);
@@ -143,6 +116,7 @@ exports.postSubPost = async (req, res, next) => {
           content: content,
           author: user._id,
           community: communityId,
+          createdAt: Date.now(),
         });
         await newPost.save();
         res.json(newPost);
@@ -157,6 +131,7 @@ exports.postSubPost = async (req, res, next) => {
           content: content,
           author: user._id,
           community: communityId,
+          createdAt: Date.now(),
         });
         await newPost.save();
         res.json(newPost);

@@ -11,6 +11,7 @@ const UPVOTE_POST = "post/UPVOTE_POST";
 const DOWNVOTE_POST = "post/DOWNVOTE_POST";
 const SEARCH_POSTS = "post/SEARCH_POSTS";
 const GET_HOME_POSTS = "posts/GET_HOME_POSTS";
+const CLEAR = "posts/CLEAR";
 
 const getPosts = (posts) => {
   return {
@@ -76,6 +77,11 @@ const getHomePosts = (posts) => {
   return {
     type: GET_HOME_POSTS,
     payload: posts,
+  };
+};
+const clearPosts = () => {
+  return {
+    type: CLEAR,
   };
 };
 
@@ -198,6 +204,9 @@ export const deleteThePost = (postId) => async (dispatch) => {
     dispatch(deletePost(postId));
   }
 };
+export const clearThePosts = () => async (dispatch) => {
+  dispatch(clearPosts());
+};
 
 const initialState = {};
 const postsReducer = (state = initialState, action) => {
@@ -265,6 +274,10 @@ const postsReducer = (state = initialState, action) => {
     case DELETE_POST: {
       let newState = { ...state };
       delete newState[action.payload];
+      return newState;
+    }
+    case CLEAR: {
+      let newState = {};
       return newState;
     }
     default:

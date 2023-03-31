@@ -1,4 +1,5 @@
 const Community = require("../models/Communities");
+const Post = require("../models/Posts");
 
 exports.getCommunity = async (req, res) => {
   const { name } = req.params;
@@ -37,20 +38,31 @@ exports.createCommunity = async (req, res) => {
   res.json(newCommunity);
 };
 exports.deleteCommunity = async (req, res) => {
-  const { name } = req.params;
-  const foundCommunity = await Community.findOne({ name });
-  if (!foundCommunity) {
-    const err = new Error("Community couldn't be found");
-    err.status = 404;
-    return next(err);
-  }
+  const { id } = req.params;
+  const foundCommunity = await Community.findOne({ _id: id });
+  if (!foundCommunity) return callErr("Post not found", 403, next);
+  await Community.deleteOne(foundCommunity);
+  await Post.deleteMany({ community: id });
+  res.json({ message: "deleted" });
 };
 exports.editCommunity = async (req, res) => {
-  const { type, description, rule, detail } = req.body;
+  const {
+    type,
+    description,
+    rule,
+    detail,
+    colors,
+    contentType,
+    profilePicture,
+  } = req.body;
   const { user } = req;
   const { name } = req.params;
   const foundCommunity = await Community.findOne({ name });
 
+  foundCommunity.profilePicture =
+    profilePicture || foundCommunity.profilePicture;
+  foundCommunity.contentType = contentType || foundCommunity.contentType;
+  foundCommunity.colors = colors || foundCommunity.colors;
   foundCommunity.description = description || foundCommunity.description;
   foundCommunity.type = type || foundCommunity.type;
   if (rule) {

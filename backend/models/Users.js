@@ -43,9 +43,4 @@ userSchema.statics.verifyUser = (foundUser, password) => {
   return bcrypt.compareSync(password, foundUser.password);
 };
 
-userSchema.statics.cl = (input) => {
-  console.log(input);
-  console.log(userSchema.statics.gg());
-};
-
 module.exports = mongoose.model("User", userSchema);

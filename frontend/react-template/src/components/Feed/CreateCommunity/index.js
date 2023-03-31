@@ -15,11 +15,7 @@ function CreateCommunity() {
 
   const [name, setName] = useState("");
   const [nameFinal, setNameFinal] = useState("");
-
-  const [text, setText] = useState(false);
-  const [link, setLink] = useState(false);
-  const [photo, setPhoto] = useState(false);
-  const [video, setVideo] = useState(false);
+  const [type, setType] = useState([false, false, false, false]);
 
   const [redir, setRedir] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -30,10 +26,10 @@ function CreateCommunity() {
     setNameFinal("");
     setErrors([]);
     const contentType = [
-      text ? "text" : null,
-      link ? "link" : null,
-      photo ? "image" : null,
-      video ? "video" : null,
+      type[0] ? "text" : null,
+      type[1] ? "link" : null,
+      type[2] ? "image" : null,
+      type[3] ? "video" : null,
     ].join(",");
 
     return dispatch(
@@ -104,7 +100,12 @@ function CreateCommunity() {
               <div className="cc-c-t-title">Community type</div>
 
               <div className="cc-c-t-public">
-                <input type="checkbox" onChange={() => setText(!text)} />
+                <input
+                  type="checkbox"
+                  onChange={() => {
+                    setType([!type[0], type[1], type[2], type[3]]);
+                  }}
+                />
                 <label for="public">
                   <span className="cc-c-t-text1">Text Posts</span>
                   <span className="cc-c-t-text2">
@@ -113,7 +114,12 @@ function CreateCommunity() {
                 </label>
               </div>
               <div className="cc-c-t-public">
-                <input type="checkbox" onChange={() => setLink(!link)} />
+                <input
+                  type="checkbox"
+                  onChange={() =>
+                    setType([type[0], !type[1], type[2], type[3]])
+                  }
+                />
                 <label for="public">
                   <span className="cc-c-t-text1">Link Posts</span>
                   <span className="cc-c-t-text2">
@@ -122,7 +128,12 @@ function CreateCommunity() {
                 </label>
               </div>
               <div className="cc-c-t-public">
-                <input type="checkbox" onChange={() => setPhoto(!photo)} />
+                <input
+                  type="checkbox"
+                  onChange={() =>
+                    setType([type[0], type[1], !type[2], type[3]])
+                  }
+                />
                 <label for="public">
                   <span className="cc-c-t-text1">Picture Posts</span>
                   <span className="cc-c-t-text2">
@@ -131,7 +142,12 @@ function CreateCommunity() {
                 </label>
               </div>
               <div className="cc-c-t-public">
-                <input type="checkbox" onChange={() => setVideo(!video)} />
+                <input
+                  type="checkbox"
+                  onChange={() =>
+                    setType([type[0], type[1], type[2], !type[3]])
+                  }
+                />
                 <label for="public">
                   <span className="cc-c-t-text1">Video Posts</span>
                   <span className="cc-c-t-text2">

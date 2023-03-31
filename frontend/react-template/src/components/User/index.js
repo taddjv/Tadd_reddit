@@ -79,7 +79,7 @@ const User = () => {
                     container="user-add-photo"
                     drop="user-drop"
                     img="user-img"
-                    user={currentUser}
+                    type="user"
                   />
                 )}
 

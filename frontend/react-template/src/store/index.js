@@ -8,6 +8,7 @@ import postsReducer from "./posts";
 import votesReducer from "./votes";
 import searchReducer from "./search";
 import redditorsReducer from "./redditors";
+import commentsReducer from "./comments";
 
 const rootReducer = combineReducers({
   users: usersReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   votes: votesReducer,
   search: searchReducer,
   redditor: redditorsReducer,
+  comments: commentsReducer,
 });
 
 let enhancer;

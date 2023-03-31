@@ -1,6 +1,8 @@
 import * as postActions from "../store/posts";
 import * as voteActions from "../store/votes";
 import * as subscriptionsActions from "../store/subscriptions";
+import * as userActions from "../store/users";
+import * as redditorActions from "../store/redditors";
 
 export const upvotePost = (post, user, dispatch) => {
   const upvote = (e) => {
@@ -35,3 +37,4 @@ export const subscribeViaPost = (post, dispatch) => {
   };
   return subscribe;
 };
+//  export const uploadUserImage =()

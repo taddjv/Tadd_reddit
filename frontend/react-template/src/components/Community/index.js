@@ -3,15 +3,10 @@ import { NavLink, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as communitiesActions from "../../store/communities";
 import * as subscriptionsActions from "../../store/subscriptions";
-import * as postsActions from "../../store/posts";
 import * as userActions from "../../store/users";
-import { userSubbed, dataRender } from "../../helper";
+import { userSubbed, dataRender, setComColor } from "../../helper";
 
 import Posts from "../Feed/Posts";
-import PhotoPost from "../Feed/Posts/PhotoPost";
-import VideoPost from "../Feed/Posts/VideoPost";
-import LinkPost from "../Feed/Posts/LinkPost";
-import TextPost from "../Feed/Posts/TextPost";
 import AboutCommunity from "./AboutCommunity";
 import RulesCommunity from "./RulesCommunity";
 
@@ -19,13 +14,11 @@ import "./Community.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaperPlane,
-  faHandPointUp,
-  faStar,
-  faChartBar,
   faPlusSquare,
   faUser,
 } from "@fortawesome/free-regular-svg-icons";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import AddPhotoFrom from "../User/AddPhotoFrom";
 
 function Community() {
   const params = useParams();
@@ -33,12 +26,9 @@ function Community() {
   const history = useHistory();
   const { communityName } = params;
   const community = useSelector((state) => state.communities.community);
-  const posts = useSelector((state) => state.posts);
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
   const subscriptionStatus = useSelector((state) => state.subscriptions);
-
-  const [showPictureEdit, setShowPictureEdit] = useState(false);
 
   const [communityId, setCommunityId] = useState(null);
   const [isMod, setIsMod] = useState(false);
@@ -46,6 +36,12 @@ function Community() {
   const [showPosts, setShowPosts] = useState(false);
   const [showPost, setShowPost] = useState(false);
   const [subcount, setSubCount] = useState(null);
+
+  useEffect(() => {
+    if (community?.colors) {
+      setComColor(community.colors[0], community.colors[1]);
+    }
+  }, [community]);
 
   useEffect(() => {
     dispatch(communitiesActions.getTheCommunity(communityName)).then(
@@ -109,50 +105,13 @@ function Community() {
                       />
                     )}
                     {currentUser?._id === community?.owner && (
-                      <form
-                        // onSubmit={uploadImage}
-                        className="c-h-2-plus-container"
-                      >
-                        <FontAwesomeIcon
-                          onClick={() => setShowPictureEdit(!showPictureEdit)}
-                          className="c-h-2-plus"
-                          icon={faPlusSquare}
-                        />
-                        {showPictureEdit && (
-                          <div className="c-h-2-plus-dd">
-                            <input
-                              type="file"
-                              id="c-profile-input"
-                              accept="image/*"
-                              // onChange={imageToFile}
-                              // value={comImage}
-                            />
-                            <label
-                              for="c-profile-input"
-                              className="c-profile-input"
-                            >
-                              Add an Image
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Or Paste Image Url Here"
-                              onChange={(e) => {
-                                // setComImage2(e.target.value);
-                              }}
-                            />
-                            <div className="c-h-2-plus-dd-buttons">
-                              <button onClick={() => setShowPictureEdit(false)}>
-                                cancel
-                              </button>
-                              <button
-                              // onClick={uploadImage}
-                              >
-                                save
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </form>
+                      <AddPhotoFrom
+                        container="userr"
+                        drop="user-drop"
+                        img="user-img"
+                        type="community"
+                        community={community}
+                      />
                     )}
                   </div>
 
@@ -195,7 +154,7 @@ function Community() {
                   <FontAwesomeIcon className="c-b-p-post" icon={faPaperPlane} />
                 </div>
                 {communityId && (
-                  <Posts type="community" communityId={communityId} />
+                  <Posts type="community" community={community} />
                 )}
               </div>
               <div className="c-b-right">

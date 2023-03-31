@@ -112,7 +112,7 @@ function TextPost({ post, user, userVotes, individual, community }) {
             <FontAwesomeIcon className="f-h-house" icon={faFolder} />
             Share
           </button>
-          {post.author._id === user._id && <DeletePost post={post} />}
+          {post.author._id === user?._id && <DeletePost post={post} />}
         </div>
       </div>
     </NavLink>

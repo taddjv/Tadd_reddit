@@ -2,6 +2,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { searchRender, dataRender } from "../../../helper";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
+
 const SearchedData = ({ type, data }) => {
   return (
     <>
@@ -23,10 +27,27 @@ const SearchedData = ({ type, data }) => {
                     }
                     className="nc-r-s-r-content"
                   >
-                    <img
-                      className="nc-r-s-r-c-image"
-                      src={ele.profilePicture}
-                    />
+                    {ele.profilePicture ? (
+                      <img
+                        className="nc-r-s-r-c-image"
+                        src={ele.profilePicture}
+                      />
+                    ) : (
+                      <>
+                        {type === "Community" ? (
+                          <FontAwesomeIcon
+                            className="c-rc-community-logo"
+                            icon={faClipboardList}
+                          />
+                        ) : (
+                          <FontAwesomeIcon
+                            className="nc-r-s-r-c-image"
+                            icon={faUser}
+                          />
+                        )}
+                      </>
+                    )}
+
                     <div className="nc-r-s-r-c-name">
                       <div className="nc-r-s-r-c-n-1">
                         {type === "Community" && `r/${ele.name}`}

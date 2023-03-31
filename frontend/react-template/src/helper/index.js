@@ -52,3 +52,30 @@ export const searchRender = (obj, type) => {
 };
 
 export const validateUsername = (oldU, newU, user) => {};
+
+export const validateColor = (color) => {
+  const code = "01234567890abcdef";
+  const newColor = color.slice(1);
+
+  if (newColor.length > 6 || newColor.length < 3 || newColor.length === 5) {
+    return false;
+  }
+
+  for (let i = 0; i < newColor.length; i++) {
+    let number = newColor[i].toString();
+    if (!code.toLocaleLowerCase().includes(number.toLocaleLowerCase())) {
+      return false;
+    }
+  }
+  return true;
+};
+
+export const setPostColor = (color) => {
+  const colors = document.querySelector(":root");
+  colors.style.setProperty("--postColor", color);
+};
+export const setComColor = (color1, color2) => {
+  const colors = document.querySelector(":root");
+  colors.style.setProperty("--comTheme1", color1 || "#33a8ff");
+  colors.style.setProperty("--comTheme2", color2 || "#0079d3");
+};

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { dataRender } from "../../../helper";
+import { dataRender, setPostColor } from "../../../helper";
 import PhotoPost from "./PhotoPost";
 import VideoPost from "./VideoPost";
 import LinkPost from "./LinkPost";
@@ -9,32 +9,40 @@ import TextPost from "./TextPost";
 import * as postsActions from "../../../store/posts";
 import "./Posts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import {
   faHandPointUp,
   faStar,
   faChartBar,
 } from "@fortawesome/free-regular-svg-icons";
+import SpinLogo from "../../../images/SpinLogo";
 
-function Posts({ search, type, user, communityId }) {
+function Posts({ search, type, user, community }) {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const posts = useSelector((state) => state.posts);
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
-  const posts = useSelector((state) => state.posts);
+  const [load, setLoad] = useState(false);
   const [newPosts, setNewPosts] = useState(null);
+  const [empty, setEmpty] = useState(false);
   const [sort, setSort] = useState("Hot");
+
   useEffect(() => {
     if (type === "home") {
       dispatch(postsActions.getTheHomePosts(sort)).then(async (res) => {
         const data = await res;
+        if (!data.length) setEmpty(true);
+        setPostColor("#2884d6");
         setNewPosts(data);
       });
     }
     if (type === "all") {
       dispatch(postsActions.getThePosts(sort)).then(async (res) => {
         const data = await res;
+        if (!data.length) setEmpty(true);
+        setPostColor("#2884d6");
         setNewPosts(data);
       });
     }
@@ -42,22 +50,30 @@ function Posts({ search, type, user, communityId }) {
       dispatch(postsActions.getTheUserPosts(user._id, sort)).then(
         async (res) => {
           const data = await res;
+          if (!data.length) setEmpty(true);
+          setPostColor("#2884d6");
           setNewPosts(data);
         }
       );
     }
     if (type === "community") {
-      dispatch(postsActions.getTheCommunityPosts(communityId, sort)).then(
+      dispatch(postsActions.getTheCommunityPosts(community._id, sort)).then(
         async (res) => {
           const data = await res;
+          if (!data.length) setEmpty(true);
+          if (data.length) {
+            setPostColor(data[0].community.colors[1]);
+          }
           setNewPosts(data);
         }
       );
     }
     return () => {
       setNewPosts(null);
+      setEmpty(false);
+      dispatch(postsActions.clearThePosts());
     };
-  }, [history.location.pathname, sort, user]);
+  }, [history.location.pathname, sort, user, community]);
   return (
     <div className="posts">
       {!search && (
@@ -97,7 +113,7 @@ function Posts({ search, type, user, communityId }) {
         </>
       )}
 
-      {newPosts &&
+      {dataRender(posts).length ? (
         dataRender(posts).map((ele) => {
           switch (ele.type) {
             case "text":
@@ -125,7 +141,16 @@ function Posts({ search, type, user, communityId }) {
                 />
               );
           }
-        })}
+        })
+      ) : (
+        <>{!empty && <SpinLogo />}</>
+      )}
+      {empty && (
+        <div className="sr-r-left-nothing">
+          <FontAwesomeIcon className="sr-r-l-n-top" icon={faMagnifyingGlass} />
+          <div className="sr-r-l-n-middle">No posts yet !</div>
+        </div>
+      )}
     </div>
   );
 }

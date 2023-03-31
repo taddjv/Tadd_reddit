@@ -16,6 +16,12 @@ const commentSchema = new Schema({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    required: true,
+  },
+  parent: { type: Schema.Types.ObjectId, ref: "Comment" },
+  children: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   post: { type: Schema.Types.ObjectId, ref: "Post", required: true },
   createdAt: {

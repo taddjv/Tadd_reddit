@@ -69,8 +69,8 @@ export const postTheCommunity = (communityCredentials) => async (dispatch) => {
     dispatch(postCommunity(data));
   }
 };
-export const deleteTheCommunity = () => async (dispatch) => {
-  const response = await csrfFetch(`/api/communities`, {
+export const deleteTheCommunity = (id) => async (dispatch) => {
+  const response = await csrfFetch(`/api/communities/${id}`, {
     method: "DELETE",
   });
   if (response.ok) {

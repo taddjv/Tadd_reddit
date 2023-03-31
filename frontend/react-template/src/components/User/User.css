@@ -176,3 +176,15 @@
   align-self: flex-end;
   margin-top: 20px;
 }
+
+.c-h-2-plus-user {
+  position: absolute;
+  color: #2884d6;
+  background: white;
+  height: 18px;
+  width: 18px;
+  bottom: 15px;
+  left: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}

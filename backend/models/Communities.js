@@ -19,7 +19,7 @@ const communitySchema = new Schema({
   },
   colors: {
     type: Array,
-    default: ["#0079d3", "#33a8ff"],
+    default: ["#33a8ff", "#0079d3"],
   },
   owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
   createdAt: {

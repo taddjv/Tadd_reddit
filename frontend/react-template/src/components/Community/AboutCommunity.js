@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as communitiesActions from "../../store/communities";
@@ -7,6 +7,7 @@ import ThemeCommunity from "./ThemeCommunity";
 import "./Community.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
+import TypeCommunity from "./TypeCommunity";
 
 function AboutCommunity({ community, user }) {
   const dispatch = useDispatch();
@@ -28,7 +29,6 @@ function AboutCommunity({ community, user }) {
       setShowDescEdit(false);
     });
   };
-
   const comModDescription = description ? (
     <>
       {showDescEdit ? (
@@ -163,6 +163,7 @@ function AboutCommunity({ community, user }) {
             Community options
           </button>
           {showComOps && <ThemeCommunity community={community} />}
+          {showComOps && <TypeCommunity community={community} />}
         </div>
       </div>
     </>

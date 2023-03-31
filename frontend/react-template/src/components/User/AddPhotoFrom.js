@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../store/users";
 import * as redditorActions from "../../store/redditors";
+import * as communityActions from "../../store/communities";
 import { useEdit } from "../../context/EditContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 
-const AddPhotoFrom = ({ container, drop, img, user }) => {
+const AddPhotoFrom = ({ container, drop, img, type, community }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.users.user);
   const [showEdit, setShowEdit] = useState(false);
@@ -16,7 +17,7 @@ const AddPhotoFrom = ({ container, drop, img, user }) => {
   const [image, setImage] = useState(null);
   const [error, setError] = useState(false);
 
-  const uploadImage = (e) => {
+  const uploadUserImage = (e) => {
     e.preventDefault();
     if (image) {
       dispatch(
@@ -34,9 +35,31 @@ const AddPhotoFrom = ({ container, drop, img, user }) => {
       });
     }
   };
+  const uploadCommunityImage = (e) => {
+    e.preventDefault();
+    if (image) {
+      dispatch(
+        communityActions.patchTheCommunity(community.name, {
+          profilePicture: image,
+        })
+      ).then(async (res) => {
+        const data = await res;
+        setShowEdit(false);
+        setError(false);
+        setTempImage("");
+        setImage("");
+      });
+    }
+  };
   return (
     <div className={container}>
-      <form onSubmit={uploadImage} className="c-h-2-plus-container">
+      <form
+        onSubmit={
+          (type === "user" && uploadUserImage) ||
+          (type === "community" && uploadCommunityImage)
+        }
+        className="c-h-2-plus-container"
+      >
         <FontAwesomeIcon
           onClick={() => {
             setShowEdit(!showEdit);
@@ -44,7 +67,7 @@ const AddPhotoFrom = ({ container, drop, img, user }) => {
             setTempImage("");
             setImage("");
           }}
-          className="c-h-2-plus"
+          className="c-h-2-plus-user"
           icon={faPlusSquare}
         />
         {showEdit && (

@@ -24,6 +24,7 @@ const VideoSubmit = ({ community }) => {
     const data = {
       title: title,
       content: video,
+
     };
 
     dispatch(postsActions.postThePost(data, "video", community._id))
