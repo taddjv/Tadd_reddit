@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Route } from "react-router-dom";
 import UserPopProvider from "./context/UserPopcontext";
 import EditProvider from "./context/EditContext";
+import CommentProvider from "./context/CommentContext";
 import configureStore from "./store";
 import { restoreCSRF, csrfFetch } from "./store/csrf";
 
@@ -27,7 +28,9 @@ root.render(
       <EditProvider>
         <UserPopProvider>
           <BrowserRouter>
-            <App />
+            <CommentProvider>
+              <App />
+            </CommentProvider>
           </BrowserRouter>
         </UserPopProvider>
       </EditProvider>

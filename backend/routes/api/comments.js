@@ -8,7 +8,7 @@ router.get("/user/:userId", commentsController.getUserComments);
 router.get("/post/:postId", commentsController.getPostComments);
 router.get("/:commentId", commentsController.getComment);
 
-router.post("/", findUser, commentsController.postComment);
+router.post("/post/:postId", findUser, commentsController.postComment);
 
 router.put("/upvote/:commentId", findUser, commentsController.putUpvote);
 router.put("/downvote/:commentId", findUser, commentsController.putDownvote);

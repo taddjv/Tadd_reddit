@@ -10,6 +10,8 @@
   height: 100%;
   background: #dae0e6;
   margin: auto;
+  display: flex;
+  flex-direction: column;
 }
 .selectedPost-top {
   height: 48px;
@@ -86,14 +88,18 @@
 
 .selectedPost-bottom {
   padding: 0 108px;
+  /* margin: 32px 0; */
   padding-top: 32px;
-  height: calc(100vh - 48px);
+  height: calc(100% - 48px);
   display: flex;
   justify-content: space-between;
   overflow-y: scroll;
 }
 .selectedPost-bottom::-webkit-scrollbar {
   display: none;
+}
+.selectedPost-bottom > div {
+  height: 100%;
 }
 .sp-b-post {
   background: white;
@@ -133,6 +139,7 @@
   /* height: 100%; */
   background: white;
   margin-top: 16px;
+  margin-bottom: 32px;
   padding-top: 24px;
 }
 .sp-comments-comment {

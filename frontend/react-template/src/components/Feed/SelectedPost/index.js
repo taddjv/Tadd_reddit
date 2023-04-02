@@ -1,10 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import * as voteActions from "../../../store/votes";
 import * as postActions from "../../../store/posts";
 import * as communityActions from "../../../store/communities";
-import { reactionCheck, setPostColor, setComColor } from "../../../helper";
+import * as commentActions from "../../../store/comments";
+import {
+  reactionCheck,
+  setPostColor,
+  setComColor,
+  dataRender,
+} from "../../../helper";
+import { upvotePost, downvotePost } from "../../../helper/posts";
+import { comment } from "../../../helper/comments";
 import VideoPost from "../Posts/VideoPost";
 import PhotoPost from "../Posts/PhotoPost";
 import LinkPost from "../Posts/LinkPost";
@@ -16,6 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleUp, faX } from "@fortawesome/free-solid-svg-icons";
 
 import RulesCommunity from "../../Community/RulesCommunity";
+import SingleComment from "../../Comments/SingleComment";
 
 const SelectedPost = () => {
   const params = useParams();
@@ -27,25 +35,9 @@ const SelectedPost = () => {
   const community = useSelector((state) => state.communities.community);
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
+  const comments = useSelector((state) => state.comments);
 
-  const upvote = (e) => {
-    e.preventDefault();
-    dispatch(voteActions.upvoteThePost(post[id], currentUser)).then(
-      async (res) => {
-        const data = await res;
-        dispatch(postActions.upvoteThePost(post[id]._id, data));
-      }
-    );
-  };
-  const downvote = (e) => {
-    e.preventDefault();
-    dispatch(voteActions.downvoteThePost(post[id], currentUser)).then(
-      async (res) => {
-        const data = await res;
-        dispatch(postActions.downvoteThePost(post[id]._id, data));
-      }
-    );
-  };
+  const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
     dispatch(postActions.getTheSinglePost(id)).then(async (res) => {
@@ -57,19 +49,23 @@ const SelectedPost = () => {
           setPostColor(data.colors[1]);
         }
       );
+      dispatch(commentActions.getThePostComments(data._id));
     });
+    return () => {
+      dispatch(postActions.clearThePosts());
+      dispatch(commentActions.clearTheComments());
+    };
   }, []);
   return (
     <>
       <div onClick={() => history.goBack()} className="selectedPost-background">
-        {/* {post[id] && ( */}
         <div onClick={(e) => e.stopPropagation()} className="selectedPost">
           <div className="selectedPost-top">
             <div className="sp-t-left">
               {post[id] && (
                 <>
                   <FontAwesomeIcon
-                    onClick={upvote}
+                    onClick={upvotePost(post[id], currentUser, dispatch)}
                     className={`sp-t-l-upLogo        ${
                       reactionCheck(userVotes, post[id]).upvote
                         ? "sp-t-l-upLogo-voted"
@@ -82,7 +78,7 @@ const SelectedPost = () => {
                     {post[id].upVotes - post[id].downVotes}
                   </div>
                   <FontAwesomeIcon
-                    onClick={downvote}
+                    onClick={downvotePost(post[id], currentUser, dispatch)}
                     className={`sp-t-l-downLogo ${
                       reactionCheck(userVotes, post[id]).downvote
                         ? "sp-t-l-downLogo-voted"
@@ -140,20 +136,34 @@ const SelectedPost = () => {
                   )}
                 </>
               )}
-
               <div className="sp-comments">
                 <div className="sp-comments-comment">
                   <textarea
                     className="sp-c-c-input"
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
                     placeholder="What are your thoughts?"
                   ></textarea>
                   <div className="sp-c-c-bottom">
-                    <button className="sp-c-c-b-button">Comment</button>
+                    <button
+                      onClick={comment(
+                        newComment,
+                        post[id],
+                        dispatch,
+                        setNewComment
+                      )}
+                      className="sp-c-c-b-button"
+                    >
+                      Comment
+                    </button>
                   </div>
                 </div>
                 <div className="sp-comments-sort">
                   <button className="sp-c-s-button">Sort By: Best</button>
                 </div>
+                {dataRender(comments).map((ele) => (
+                  <SingleComment comment={ele} />
+                ))}
               </div>
             </div>
             <div className="selectedPost-bottom-right">
@@ -166,7 +176,6 @@ const SelectedPost = () => {
             </div>
           </div>
         </div>
-        {/* )} */}
       </div>
     </>
   );

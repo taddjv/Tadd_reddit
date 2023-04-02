@@ -1,10 +1,15 @@
-const { seedCommunities, seedPosts, seedUsers } = require("./data");
+const {
+  seedCommunities,
+  seedPosts,
+  seedUsers,
+  seedComments,
+} = require("./data");
 const mongoose = require("mongoose");
 const User = require("../models/Users");
 const Community = require("../models/Communities");
 const Subscription = require("../models/Subscriptions");
 const Post = require("../models/Posts");
-const Subscriptions = require("../models/Subscriptions");
+const Comment = require("../models/Comments");
 require("dotenv").config();
 
 mongoose.connect(
@@ -18,6 +23,7 @@ mongoose.connect(
 
 const seedDB = async () => {
   await User.deleteMany({});
+  await Comment.deleteMany({});
   await Community.deleteMany({});
   await Post.deleteMany({});
   await Subscription.deleteMany({});
@@ -62,6 +68,17 @@ const seedDB = async () => {
         type: ele.type,
         author: allUsers[i],
         community: allCommunities[i || 2],
+      };
+    })
+  );
+  const allPosts = await Post.find({});
+  await Comment.insertMany(
+    seedComments.map((comment, i) => {
+      return {
+        content: comment.content,
+        author: allUsers[i],
+        post: allPosts[0],
+        type: "main",
       };
     })
   );

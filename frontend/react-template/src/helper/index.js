@@ -33,7 +33,10 @@ export const dataRender = (obj) => {
 export const reactionCheck = (userData, post) => {
   let final = {};
   for (let vote in userData) {
-    if (userData[vote].post === post._id) {
+    if (
+      userData[vote]["post"] === post._id ||
+      userData[vote]["comment"] === post._id
+    ) {
       final["upvote"] = userData[vote].upvote;
       final["downvote"] = userData[vote].downvote;
     }
@@ -78,4 +81,8 @@ export const setComColor = (color1, color2) => {
   const colors = document.querySelector(":root");
   colors.style.setProperty("--comTheme1", color1 || "#33a8ff");
   colors.style.setProperty("--comTheme2", color2 || "#0079d3");
+};
+
+export const isOwner = (thing, user) => {
+  return thing.author._id === user._id;
 };

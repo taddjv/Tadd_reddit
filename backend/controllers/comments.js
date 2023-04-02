@@ -29,7 +29,10 @@ exports.getUserComments = async (req, res) => {
 
 exports.getPostComments = async (req, res) => {
   const { postId } = req.params;
-  const comments = await Comment.find({ post: postId });
+  const comments = await Comment.find({ post: postId }).populate("author", [
+    "profilePicture",
+    "username",
+  ]);
   res.json(comments);
 };
 
@@ -69,23 +72,29 @@ exports.putDownvote = async (req, res) => {
 
 exports.postComment = async (req, res, next) => {
   const { postId } = req.params;
-  const { content } = req.body;
+  const { content, type } = req.body;
   const { user } = req;
 
-  const newComment = new Comment({ content, author: user._id, post: postId });
+  const newComment = new Comment({
+    content,
+    type,
+    author: user._id,
+    post: postId,
+  });
   await newComment.save();
   res.json(newComment);
 };
 
 exports.editComment = async (req, res, next) => {
   const { commentId } = req.params;
-  const { content } = req.body;
+  const { content, type } = req.body;
   const { user } = req;
   const comment = await Comment.findOne({
     _id: commentId,
-  });
+  }).populate("author", ["profilePicture", "username"]);
+
   if (!comment) return callErr("Comment not found", 400, next);
-  if (comment.author !== user._id)
+  if (comment.author._id.toString() !== user._id.toString())
     return callErr("Not your comment", 403, next);
   comment.content = content;
   await comment.save();
@@ -102,5 +111,5 @@ exports.deleteComment = async (req, res, next) => {
   if (comment.author.toString() !== user._id.toString())
     return callErr("Not your comment", 403, next);
   await Comment.deleteOne(comment);
-  res.json({ message: "deleted" });
+  res.json(comment);
 };

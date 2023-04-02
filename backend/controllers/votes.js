@@ -62,3 +62,58 @@ exports.downvotePost = async (req, res) => {
     res.json(newDownvote);
   }
 };
+exports.upvoteComment = async (req, res) => {
+  const { commentId } = req.params;
+  const { user } = req.body;
+
+  const vote = await Vote.findOne({ comment: commentId, user: user._id });
+  if (vote) {
+    if (vote.upvote) {
+      await vote.delete();
+      res.json({ removed: vote._id });
+    }
+    if (vote.downvote) {
+      vote.upvote = true;
+      vote.downvote = false;
+      await vote.save();
+      res.json({ edited: vote });
+    }
+  } else {
+    const newUpvote = new Vote({
+      upvote: true,
+      downvote: false,
+      comment: commentId,
+      user: user._id,
+    });
+    await newUpvote.save();
+    res.json(newUpvote);
+  }
+};
+exports.downvoteComment = async (req, res) => {
+  const { commentId } = req.params;
+  const { user } = req.body;
+
+  const vote = await Vote.findOne({ comment: commentId, user: user._id });
+
+  if (vote) {
+    if (vote.downvote) {
+      await vote.delete();
+      res.json({ removed: vote._id });
+    }
+    if (vote.upvote) {
+      vote.downvote = true;
+      vote.upvote = false;
+      await vote.save();
+      res.json({ edited: vote });
+    }
+  } else {
+    const newDownvote = new Vote({
+      upvote: false,
+      downvote: true,
+      comment: commentId,
+      user: user._id,
+    });
+    await newDownvote.save();
+    res.json(newDownvote);
+  }
+};

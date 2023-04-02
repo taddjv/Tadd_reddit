@@ -40,10 +40,10 @@ const postComment = (comment) => {
     payload: comment,
   };
 };
-const voteComment = (comment) => {
+const voteComment = (comment, vote) => {
   return {
     type: VOTE_COMMENT,
-    payload: comment,
+    payload: { comment, vote },
   };
 };
 const editComment = (comment) => {
@@ -110,8 +110,8 @@ export const getThePostComments = (postId) => async (dispatch) => {
     return data;
   }
 };
-export const postTheComment = (content) => async (dispatch) => {
-  const response = await csrfFetch(`/api/comments/`, {
+export const postTheComment = (content, post) => async (dispatch) => {
+  const response = await csrfFetch(`/api/comments/post/${post._id}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -127,7 +127,7 @@ export const postTheComment = (content) => async (dispatch) => {
   }
 };
 export const upvoteTheComment = (commentId, vote) => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/upvote/${commentId}`, {
+  const response = await csrfFetch(`/api/comments/upvote/${commentId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -137,11 +137,11 @@ export const upvoteTheComment = (commentId, vote) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
 
-    dispatch(voteComment(data.post, data.voteStatus));
+    dispatch(voteComment(data.comment, data.voteStatus));
   }
 };
 export const downvoteTheComment = (commentId, vote) => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/downvote/${commentId}`, {
+  const response = await csrfFetch(`/api/comments/downvote/${commentId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -151,7 +151,7 @@ export const downvoteTheComment = (commentId, vote) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
 
-    dispatch(voteComment(data.post, data.voteStatus));
+    dispatch(voteComment(data.comment, data.voteStatus));
   }
 };
 export const editTheComment = (content, commentId) => async (dispatch) => {
@@ -185,7 +185,7 @@ export const deleteTheComment = (commentId) => async (dispatch) => {
     return data;
   }
 };
-export const clearTheCommentss = () => async (dispatch) => {
+export const clearTheComments = () => async (dispatch) => {
   dispatch(clearComments());
 };
 
@@ -226,8 +226,9 @@ const commentsReducer = (state = initialState, action) => {
     }
     case VOTE_COMMENT: {
       let newState = { ...state };
-      //   newState[action.payload.post._id].upVotes += action.payload.vote.up;
-      //   newState[action.payload.post._id].downVotes += action.payload.vote.down;
+      newState[action.payload.comment._id].upVotes += action.payload.vote.up;
+      newState[action.payload.comment._id].downVotes +=
+        action.payload.vote.down;
       return newState;
     }
     case EDIT_COMMENT: {
@@ -237,7 +238,7 @@ const commentsReducer = (state = initialState, action) => {
     }
     case DELETE_COMMENT: {
       let newState = { ...state };
-      delete newState[action.payload];
+      delete newState[action.payload._id];
       return newState;
     }
     case CLEAR: {

@@ -14,6 +14,7 @@ import SelectedPost from "./components/Feed/SelectedPost";
 import SubmitPost from "./components/SubmitPost.js";
 import SearchResults from "./components/SearchResults/index";
 import User from "./components/User";
+import Comments from "./components/Comments";
 
 function App() {
   const dispatch = useDispatch();
@@ -68,10 +69,14 @@ function App() {
             <SubmitPost />
           </div>
         </Route>
-        <Route exact path="/test">
+        {/* <Route exact path="/test">
           <div className="App">
             <SubmitPost />
           </div>
+        </Route> */}
+        <Route exact path="/test">
+          {/* <SelectedPost /> */}
+          <Comments />
         </Route>
       </Switch>
     </>
