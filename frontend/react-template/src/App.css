@@ -19,6 +19,10 @@
   background: #dae0e6;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 a {
   color: inherit;
   text-decoration: none;

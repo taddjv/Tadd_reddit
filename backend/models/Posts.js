@@ -32,6 +32,12 @@ const postSchema = new Schema({
   link: {
     type: String,
   },
+  commentCount: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   community: { type: Schema.Types.ObjectId, ref: "Community", required: true },
   createdAt: {

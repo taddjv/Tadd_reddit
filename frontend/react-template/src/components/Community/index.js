@@ -5,6 +5,7 @@ import * as communitiesActions from "../../store/communities";
 import * as subscriptionsActions from "../../store/subscriptions";
 import * as userActions from "../../store/users";
 import { userSubbed, dataRender, setComColor } from "../../helper";
+import { usePop } from "../../context/UserPopcontext";
 
 import Posts from "../Feed/Posts";
 import AboutCommunity from "./AboutCommunity";
@@ -29,6 +30,7 @@ function Community() {
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
   const subscriptionStatus = useSelector((state) => state.subscriptions);
+  const { setDropUser, setShowLogin } = usePop();
 
   const [communityId, setCommunityId] = useState(null);
   const [isMod, setIsMod] = useState(false);
@@ -134,7 +136,13 @@ function Community() {
             <div className="community-body">
               <div className="c-b-left">
                 <div
-                  onClick={() => history.push(`/r/${community.name}/submit`)}
+                  onClick={
+                    currentUser
+                      ? () => history.push(`/r/${community.name}/submit`)
+                      : () => {
+                          setShowLogin(true);
+                        }
+                  }
                   className="c-b-post"
                 >
                   {currentUser?.profilePicture ? (

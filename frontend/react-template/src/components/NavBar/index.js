@@ -32,7 +32,8 @@ function NavBar({ isLoaded }) {
   const currentUser = useSelector((state) => state.users.user);
   const nonMemberProfile = (
     <button
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         setDropUser(!dropUser);
       }}
       className="nc-r-dropdown"
@@ -46,7 +47,8 @@ function NavBar({ isLoaded }) {
     <>
       <div></div>
       <button
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           setDropUser(!dropUser);
         }}
         className="nc-r-dropdown2 "
@@ -89,12 +91,6 @@ function NavBar({ isLoaded }) {
             <RedditLogo />
             <RedditLogo2 />
           </div>
-          {/* <div className="home-button">
-            <button className="nc-l-button">
-              <FontAwesomeIcon className="nc-l-b-house" icon={faHouse} />
-              <span className="nc-l-b-text">Home</span>
-            </button>
-          </div> */}
         </NavLink>
         <SearchBar />
 

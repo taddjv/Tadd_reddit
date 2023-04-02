@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import {
   upvotePost,
   downvotePost,
@@ -9,35 +9,50 @@ import {
 import moment from "moment";
 import { reactionCheck, userSubbed } from "../../../helper";
 import DeletePost from "./DeletePost";
+import { usePop } from "../../../context/UserPopcontext";
 
 import "./Posts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowAltCircleDown,
   faArrowAltCircleUp,
-  faEllipsis,
   faLink,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCommentAlt,
   faFolder,
-  faFileArchive,
   faUser,
   faArrowAltCircleRight,
 } from "@fortawesome/free-regular-svg-icons";
 
 function LinkPost({ post, user, userVotes, individual, community }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const subscriptionStatus = useSelector((state) => state.subscriptions);
+
+  const { setShowLogin } = usePop();
 
   const postClass = individual ? "sp-b-post" : "pp-link";
   const linkClass = individual ? "sb-b-m-link" : "pp-m-middle-link";
   const otherLinkClass = individual ? "sb-b-m-left-link" : "pp-m-m-left-link";
   const leftClass = individual ? "sp-b-left" : "pp-left";
   return (
-    <NavLink to={`/post/${post._id}`} className={`posts-post ${postClass}`}>
+    <div
+      onClick={() => history.push(`/post/${post._id}`)}
+      className={`posts-post ${postClass}`}
+    >
       <div className={leftClass}>
-        <div onClick={upvotePost(post, user, dispatch)} className="pp-l-up">
+        <div
+          onClick={
+            user
+              ? upvotePost(post, user, dispatch)
+              : (e) => {
+                  e.stopPropagation();
+                  setShowLogin(true);
+                }
+          }
+          className="pp-l-up"
+        >
           <FontAwesomeIcon
             className={`pp-l-up-logo ${
               reactionCheck(userVotes, post).upvote
@@ -48,7 +63,17 @@ function LinkPost({ post, user, userVotes, individual, community }) {
           />
         </div>
         <div className="pp-l-count">{post.upVotes - post.downVotes}</div>
-        <div onClick={downvotePost(post, user, dispatch)} className="pp-l-down">
+        <div
+          onClick={
+            user
+              ? downvotePost(post, user, dispatch)
+              : (e) => {
+                  e.stopPropagation();
+                  setShowLogin(true);
+                }
+          }
+          className="pp-l-down"
+        >
           <FontAwesomeIcon
             className={`pp-l-down-logo ${
               reactionCheck(userVotes, post).downvote
@@ -72,15 +97,24 @@ function LinkPost({ post, user, userVotes, individual, community }) {
                 ) : (
                   <FontAwesomeIcon className="pp-m-t-l-logo" icon={faUser} />
                 )}
-                <NavLink
-                  to={`/r/${post.community.name}`}
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    history.push(`/r/${post.community.name}`);
+                  }}
                   className="pp-m-t-l-community"
                 >
                   r/{post.community.name}
-                </NavLink>
+                </div>
               </>
             )}
-            <div className="pp-m-t-l-user">
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                history.push(`/u/${post.author.username}`);
+              }}
+              className="pp-m-t-l-user"
+            >
               Posted by u/
               {post.author.username +
                 " " +
@@ -90,7 +124,14 @@ function LinkPost({ post, user, userVotes, individual, community }) {
           <div className="pp-m-top-right">
             {userSubbed(subscriptionStatus, post.community._id) ? null : (
               <button
-                onClick={subscribeViaPost(post, dispatch)}
+                onClick={
+                  user
+                    ? subscribeViaPost(post, dispatch)
+                    : (e) => {
+                        e.stopPropagation();
+                        setShowLogin(true);
+                      }
+                }
                 className="pp-m-t-r-button"
               >
                 Join
@@ -133,7 +174,7 @@ function LinkPost({ post, user, userVotes, individual, community }) {
           {post.author._id === user?._id && <DeletePost post={post} />}
         </div>
       </div>
-    </NavLink>
+    </div>
   );
 }
 

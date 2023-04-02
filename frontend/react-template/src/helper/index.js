@@ -84,5 +84,5 @@ export const setComColor = (color1, color2) => {
 };
 
 export const isOwner = (thing, user) => {
-  return thing.author._id === user._id;
+  return thing.author._id === user?._id;
 };

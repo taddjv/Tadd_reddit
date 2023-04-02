@@ -73,7 +73,8 @@ const seedDB = async () => {
   );
   const allPosts = await Post.find({});
   await Comment.insertMany(
-    seedComments.map((comment, i) => {
+    seedComments.map(async (comment, i) => {
+      console.log(i, allPosts[0]._id);
       return {
         content: comment.content,
         author: allUsers[i],

@@ -1,6 +1,7 @@
 const Post = require("../models/Posts");
 const Subscription = require("../models/Subscriptions");
 const Community = require("../models/Communities");
+const Comment = require("../models/Comments");
 const { callErr, sortQuery, votePost } = require("../helper/index");
 
 exports.getAllPosts = async (req, res) => {
@@ -23,7 +24,12 @@ exports.getSubPosts = async (req, res) => {
   const allPosts = await Post.find({ community: communityId })
     .populate("author", "username")
     .populate("community")
+    .populate("comments")
     .sort(sortQuery(sort));
+  // .exec();
+  // console.log(allPosts[0]);
+  // const comments = await Comment.find({ post: allPosts[0]._id });
+  // console.log(comments);
 
   res.json(allPosts);
 };
@@ -64,9 +70,12 @@ exports.putDownvote = async (req, res) => {
 
 exports.getSinglePost = async (req, res) => {
   const { postId } = req.params;
+
   const foundPost = await Post.findOne({ _id: postId })
     .populate("community", ["name", "profilePicture"])
-    .populate("author", "username");
+    .populate("author", "username")
+    .populate();
+
   res.json(foundPost);
 };
 exports.postSubPost = async (req, res, next) => {

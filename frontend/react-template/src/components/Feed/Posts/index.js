@@ -24,7 +24,6 @@ function Posts({ search, type, user, community }) {
   const posts = useSelector((state) => state.posts);
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
-  const [load, setLoad] = useState(false);
   const [newPosts, setNewPosts] = useState(null);
   const [empty, setEmpty] = useState(false);
   const [sort, setSort] = useState("Hot");

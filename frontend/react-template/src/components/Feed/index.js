@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import Posts from "./Posts";
 import Communities from "./Communities";
 import Trending from "./Trending";
-import * as postsActions from "../../store/posts";
+import { usePop } from "../../context/UserPopcontext";
 
 import "./Feed.css";
 
@@ -12,9 +12,10 @@ function Feed({ type }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const posts = useSelector((state) => state.posts);
+  const { setDropUser } = usePop();
 
   return (
-    <div className="feed">
+    <div onClick={() => setDropUser(false)} className="feed">
       <div className="feed-child">
         {/* {type === "home" && <Trending />} */}
         <div className="feed-bottom">

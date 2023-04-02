@@ -124,6 +124,7 @@
   border-radius: 500px;
   background-color: white;
   font-weight: 700;
+  cursor: pointer;
 }
 .nc-r-signup:hover {
   background-color: #f6fafd;
@@ -137,6 +138,7 @@
   border-radius: 500px;
   background-color: #2884d6;
   font-weight: 700;
+  cursor: pointer;
 }
 .nc-r-login:hover {
   background-color: #2884d6;

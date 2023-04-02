@@ -17,10 +17,15 @@ import PhotoPost from "../Posts/PhotoPost";
 import LinkPost from "../Posts/LinkPost";
 import TextPost from "../Posts/TextPost";
 import AboutCommunity from "../../Community/AboutCommunity";
+import { usePop } from "../../../context/UserPopcontext";
 
 import "./SelectedPost.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowAltCircleUp, faX } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowAltCircleDown,
+  faArrowAltCircleUp,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
 
 import RulesCommunity from "../../Community/RulesCommunity";
 import SingleComment from "../../Comments/SingleComment";
@@ -30,7 +35,7 @@ const SelectedPost = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = params;
-
+  const { setDropUser, setShowLogin } = usePop();
   const post = useSelector((state) => state.posts);
   const community = useSelector((state) => state.communities.community);
   const currentUser = useSelector((state) => state.users.user);
@@ -58,14 +63,32 @@ const SelectedPost = () => {
   }, []);
   return (
     <>
-      <div onClick={() => history.goBack()} className="selectedPost-background">
-        <div onClick={(e) => e.stopPropagation()} className="selectedPost">
+      <div
+        onClick={() => {
+          history.goBack();
+        }}
+        className="selectedPost-background"
+      >
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            setDropUser(false);
+          }}
+          className="selectedPost"
+        >
           <div className="selectedPost-top">
             <div className="sp-t-left">
               {post[id] && (
                 <>
                   <FontAwesomeIcon
-                    onClick={upvotePost(post[id], currentUser, dispatch)}
+                    onClick={
+                      currentUser
+                        ? upvotePost(post[id], currentUser, dispatch)
+                        : (e) => {
+                            e.stopPropagation();
+                            setShowLogin(true);
+                          }
+                    }
                     className={`sp-t-l-upLogo        ${
                       reactionCheck(userVotes, post[id]).upvote
                         ? "sp-t-l-upLogo-voted"
@@ -78,20 +101,32 @@ const SelectedPost = () => {
                     {post[id].upVotes - post[id].downVotes}
                   </div>
                   <FontAwesomeIcon
-                    onClick={downvotePost(post[id], currentUser, dispatch)}
+                    onClick={
+                      currentUser
+                        ? downvotePost(post[id], currentUser, dispatch)
+                        : (e) => {
+                            e.stopPropagation();
+                            setShowLogin(true);
+                          }
+                    }
                     className={`sp-t-l-downLogo ${
                       reactionCheck(userVotes, post[id]).downvote
                         ? "sp-t-l-downLogo-voted"
                         : null
                     }`}
-                    icon={faArrowAltCircleUp}
+                    icon={faArrowAltCircleDown}
                   />
                   <div className="sp-t-l-title">{post[id].title}</div>
                   <div className="sp-t-l-type">{post[id].type}</div>
                 </>
               )}
             </div>
-            <button className="sp-t-right">
+            <button
+              onClick={() => {
+                history.goBack();
+              }}
+              className="sp-t-right"
+            >
               <FontAwesomeIcon className="sp-t-r-x" icon={faX} />
               Close
             </button>

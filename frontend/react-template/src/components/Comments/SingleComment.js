@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import * as voteActions from "../../store/votes";
 import * as commentActions from "../../store/comments";
 import { reactionCheck, isOwner } from "../../helper";
 import { upvoteComment, downvoteComment, remove } from "../../helper/comments";
+import { usePop } from "../../context/UserPopcontext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,7 +16,7 @@ import { faComment, faUser } from "@fortawesome/free-regular-svg-icons";
 
 const SingleComment = ({ comment }) => {
   const dispatch = useDispatch();
-
+  const { setDropUser } = usePop();
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
 
@@ -111,6 +111,7 @@ const SingleComment = ({ comment }) => {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
+                    setDropUser(false);
                     setShowOp(!showOp);
                   }}
                   className="pp-m-b-button commentOption"

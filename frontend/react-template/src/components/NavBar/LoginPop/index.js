@@ -10,7 +10,8 @@ import { Redirect } from "react-router-dom";
 import "./LoginPop.css";
 
 function LoginPop() {
-  const { showLogin, setShowLogin, showSignin, setShowSignin } = usePop();
+  const { showLogin, setShowLogin, showSignin, setShowSignin, setDropUser } =
+    usePop();
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState("");
@@ -37,9 +38,15 @@ function LoginPop() {
   };
   return (
     <>
-      (
-      <div className="lc-background">
-        <form className="lc-container" onSubmit={handleSubmit}>
+      <div className="lc-background" onClick={() => setShowLogin(false)}>
+        <form
+          className="lc-container"
+          onClick={(e) => {
+            e.stopPropagation();
+            setDropUser(false);
+          }}
+          onSubmit={handleSubmit}
+        >
           <button
             onClick={() => {
               setShowLogin(false);
@@ -110,7 +117,6 @@ function LoginPop() {
           </div>
         </form>
       </div>
-      )
     </>
   );
 }

@@ -7,6 +7,7 @@ import TextSubmit from "./TextSubmit";
 import ImageSubmit from "./ImageSubmit";
 import VideoSubmit from "./VideoSubmit";
 import LinkSubmit from "./LinkSubmit";
+import { usePop } from "../../context/UserPopcontext";
 
 import AboutCommunity from "../Community/AboutCommunity";
 import RulesCommunity from "../Community/RulesCommunity";
@@ -24,6 +25,7 @@ const SubmitPost = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
+  const { setDropUser } = usePop();
 
   const { communityName } = params;
   const community = useSelector((state) => state.communities.community);
@@ -56,7 +58,13 @@ const SubmitPost = () => {
     <>
       {community && (
         <div className="submitPost-Container">
-          <div onClick={(e) => e.stopPropagation()} className="submitPost">
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setDropUser(false);
+            }}
+            className="submitPost"
+          >
             <div className="submitPost-left">
               <div className="suP-l-title">Create a Post</div>
               <div className="suP-l-content">

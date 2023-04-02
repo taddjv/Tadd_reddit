@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import {
   upvotePost,
   downvotePost,
@@ -21,18 +21,36 @@ import {
   faUser,
   faFileArchive,
 } from "@fortawesome/free-regular-svg-icons";
+import DeletePost from "./DeletePost";
+import { usePop } from "../../../context/UserPopcontext";
 
 function PhotoPost({ post, user, userVotes, individual, community }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const subscriptionStatus = useSelector((state) => state.subscriptions);
+
+  const { setShowLogin } = usePop();
 
   const postClass = individual ? "sp-b-post" : "pp-photo";
   const photoClass = individual ? "sp-b-photo" : "pp-m-m-photo";
   const leftClass = individual ? "sp-b-left" : "pp-left";
   return (
-    <NavLink to={`/post/${post._id}`} className={`posts-post ${postClass}`}>
+    <div
+      onClick={() => history.push(`/post/${post._id}`)}
+      className={`posts-post ${postClass}`}
+    >
       <div className={leftClass}>
-        <div onClick={upvotePost(post, user, dispatch)} className="pp-l-up">
+        <div
+          onClick={
+            user
+              ? upvotePost(post, user, dispatch)
+              : (e) => {
+                  e.stopPropagation();
+                  setShowLogin(true);
+                }
+          }
+          className="pp-l-up"
+        >
           <FontAwesomeIcon
             className={`pp-l-up-logo ${
               reactionCheck(userVotes, post).upvote
@@ -43,7 +61,17 @@ function PhotoPost({ post, user, userVotes, individual, community }) {
           />
         </div>
         <div className="pp-l-count">{post.upVotes - post.downVotes}</div>
-        <div onClick={downvotePost(post, user, dispatch)} className="pp-l-down">
+        <div
+          onClick={
+            user
+              ? downvotePost(post, user, dispatch)
+              : (e) => {
+                  e.stopPropagation();
+                  setShowLogin(true);
+                }
+          }
+          className="pp-l-down"
+        >
           <FontAwesomeIcon
             className={`pp-l-down-logo ${
               reactionCheck(userVotes, post).downvote
@@ -67,15 +95,24 @@ function PhotoPost({ post, user, userVotes, individual, community }) {
                 ) : (
                   <FontAwesomeIcon className="pp-m-t-l-logo" icon={faUser} />
                 )}
-                <NavLink
-                  to={`/r/${post.community.name}`}
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    history.push(`/r/${post.community.name}`);
+                  }}
                   className="pp-m-t-l-community"
                 >
                   r/{post.community.name}
-                </NavLink>
+                </div>
               </>
             )}
-            <div className="pp-m-t-l-user">
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                history.push(`/u/${post.author.username}`);
+              }}
+              className="pp-m-t-l-user"
+            >
               Posted by u/
               {post.author.username +
                 " " +
@@ -85,7 +122,14 @@ function PhotoPost({ post, user, userVotes, individual, community }) {
           <div className="pp-m-top-right">
             {userSubbed(subscriptionStatus, post.community._id) ? null : (
               <button
-                onClick={subscribeViaPost(post, dispatch)}
+                onClick={
+                  user
+                    ? subscribeViaPost(post, dispatch)
+                    : (e) => {
+                        e.stopPropagation();
+                        setShowLogin(true);
+                      }
+                }
                 className="pp-m-t-r-button"
               >
                 Join
@@ -110,9 +154,10 @@ function PhotoPost({ post, user, userVotes, individual, community }) {
             <FontAwesomeIcon className="f-h-house" icon={faFolder} />
             Share
           </button>
+          {post.author._id === user?._id && <DeletePost post={post} />}
         </div>
       </div>
-    </NavLink>
+    </div>
   );
 }
 

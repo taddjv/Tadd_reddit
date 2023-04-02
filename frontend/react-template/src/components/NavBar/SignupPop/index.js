@@ -9,7 +9,8 @@ import { faX, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./SignupPop.css";
 
 function SignupPop() {
-  const { showSignin, setShowSignin, showLogin, setShowLogin } = usePop();
+  const { showSignin, setShowSignin, showLogin, setShowLogin, setDropUser } =
+    usePop();
   const [formSelect, setFormSelect] = useState(true);
   const dispatch = useDispatch();
 
@@ -41,8 +42,14 @@ function SignupPop() {
 
   return (
     <>
-      <div className="lc-background">
-        <form className="lc-container1">
+      <div onClick={() => setShowSignin(false)} className="lc-background">
+        <form
+          onClick={(e) => {
+            e.stopPropagation();
+            setDropUser(false);
+          }}
+          className="lc-container1"
+        >
           <button
             onClick={() => {
               setShowSignin(false);

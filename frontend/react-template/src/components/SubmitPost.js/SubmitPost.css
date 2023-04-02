@@ -5,7 +5,7 @@
   bottom: 0;
   background: #dae0e6;
   overflow: scroll;
-  z-index: 100;
+  /* z-index: 100; */
 }
 /* .submitPost-Container::-webkit-scrollbar {
     display: none;
