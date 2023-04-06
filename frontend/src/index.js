@@ -25,15 +25,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <EditProvider>
-        <UserPopProvider>
-          <BrowserRouter>
-            <CommentProvider>
-              <App />
-            </CommentProvider>
-          </BrowserRouter>
-        </UserPopProvider>
-      </EditProvider>
+      <UserPopProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </UserPopProvider>
     </Provider>
   </React.StrictMode>
 );
