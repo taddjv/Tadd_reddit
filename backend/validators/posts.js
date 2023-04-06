@@ -1,6 +1,5 @@
 const { handleValidationErrors } = require("../utils/validation");
 const { check } = require("express-validator");
-const { faL } = require("@fortawesome/free-solid-svg-icons");
 
 const validatePostCreate = [
   check("title")
