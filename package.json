@@ -18,7 +18,6 @@
   "bugs": {
     "url": "https://github.com/taddjv/Tadd_reddit/issues"
   },
-  "homepage": "https://github.com/taddjv/Tadd_reddit#readme",
   "dependencies": {
     "csurf": "^1.11.0"
   }
