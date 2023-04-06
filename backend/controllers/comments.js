@@ -24,7 +24,9 @@ exports.getUserComments = async (req, res) => {
   const { userId } = req.params;
   const { sort } = req.query;
 
-  const comments = await Comment.find({ author: userId }).sort(sortQuery(sort));
+  const comments = await Comment.find({ author: userId })
+    .populate("author", ["profilePicture", "username"])
+    .sort(sortQuery(sort));
   res.json(comments);
 };
 

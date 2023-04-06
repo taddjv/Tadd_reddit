@@ -139,10 +139,10 @@ function AboutCommunity({ community, user }) {
             <div className="ac-c-s-m-number">{community.subCount}</div>
             <div className="ac-c-s-m-text">Members</div>
           </div>
-          <div className="ac-c-s-rank">
+          {/* <div className="ac-c-s-rank">
             <div className="ac-c-s-r-number">2nd</div>
             <div className="ac-c-s-r-text">Ranked by Size</div>
-          </div>
+          </div> */}
         </div>
         <div className="ac-c-post">
           <button
@@ -190,10 +190,10 @@ function AboutCommunity({ community, user }) {
             <div className="ac-c-s-m-number">{community.subCount}</div>
             <div className="ac-c-s-m-text">Members</div>
           </div>
-          <div className="ac-c-s-rank">
+          {/* <div className="ac-c-s-rank">
             <div className="ac-c-s-r-number">2nd</div>
             <div className="ac-c-s-r-text">Ranked by Size</div>
-          </div>
+          </div> */}
         </div>
         <div className="ac-c-post">
           <button
@@ -228,10 +228,10 @@ function AboutCommunity({ community, user }) {
             <div className="ac-c-s-m-number">{community.subCount}</div>
             <div className="ac-c-s-m-text">Members</div>
           </div>
-          <div className="ac-c-s-rank">
+          {/* <div className="ac-c-s-rank">
             <div className="ac-c-s-r-number">2nd</div>
             <div className="ac-c-s-r-text">Ranked by Size</div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

@@ -76,6 +76,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  margin-top: 16px;
 }
 .sr-r-l-n-top {
   height: 112px;
@@ -127,4 +128,5 @@
   border-radius: 4px;
   border: 0.5px solid var(--greyColor4);
   margin-bottom: 8px;
+  margin-top: 16px;
 }
