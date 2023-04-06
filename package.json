@@ -8,7 +8,15 @@
     "start": "node backend/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taddjv/Tadd_reddit.git"
+  },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taddjv/Tadd_reddit/issues"
+  },
+  "homepage": "https://github.com/taddjv/Tadd_reddit#readme"
 }

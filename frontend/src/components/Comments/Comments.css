@@ -1,0 +1,141 @@
+.comment {
+  display: flex;
+  width: 740px;
+  gap: 16px;
+  padding: 16px;
+  color: var(--mainFontColor);
+}
+
+.comment-left {
+  width: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.co-l-picture {
+  width: 36px;
+  height: 36px;
+  border-radius: 100%;
+  margin-bottom: 16px;
+}
+.co-l-line {
+  width: 2px;
+  height: 100%;
+  background: var(--mainFontColor);
+}
+.comment-right {
+  width: 100%;
+}
+.co-r-top {
+  height: 24px;
+}
+.co-r-t-name {
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 16px;
+}
+.co-r-time {
+  font-size: 12px;
+  color: #7c7c7c;
+}
+.co-r-middle {
+  width: 100%;
+}
+.co-r-middle-input {
+  width: 100%;
+  height: 200px;
+  font-size: 16px;
+  resize: none;
+  border: 1px solid var(--greyColor3);
+  border-radius: 4px;
+}
+.co-r-middle-input:focus {
+  outline: none;
+}
+.co-r-bottom {
+  display: flex;
+  align-items: center;
+}
+
+.co-r-b-up,
+.co-r-b-down {
+  height: 20px;
+  width: 20px;
+  margin: auto 0;
+  background: var(--mainColor);
+  color: #7c7c7c;
+  cursor: pointer;
+}
+.co-r-b-up:hover {
+  color: #cc3800;
+}
+.co-r-b-down:hover {
+  color: #5a74cc;
+}
+.co-r-b-up-voted {
+  color: #cc3800;
+}
+.co-r-b-down-voted {
+  color: #5a74cc;
+}
+.co-r-b-count {
+  margin: 0 4px;
+}
+
+.commentOption {
+  position: relative;
+}
+.co-drop {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  width: 116px;
+  background: var(--mainColor);
+  border: 1px solid var(--greyColor3);
+  border-radius: 4px;
+}
+.co-d-button-edit,
+.co-d-button-delete {
+  width: 100%;
+  height: 40px;
+  color: #878a8c;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.co-d-button-edit {
+  border-bottom: 1px solid var(--greyColor3);
+}
+.co-d-button-edit:hover {
+  background: #c2d4e4;
+}
+.co-d-button-delete:hover {
+  background: rgb(255, 210, 210);
+}
+
+.co-d-button-confirm,
+.co-d-button-cancel {
+  height: 36px;
+  background: none;
+  color: #878a8c;
+  border: none;
+  padding: 0 8px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.co-d-button-confirm:hover {
+  background: #c2d4e4;
+}
+.co-d-button-cancel:hover {
+  background: rgb(255, 210, 210);
+}
+.empty-comment {
+  width: 100%;
+  height: 14px;
+}
