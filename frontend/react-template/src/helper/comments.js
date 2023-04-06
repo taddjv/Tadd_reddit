@@ -33,7 +33,10 @@ export const downvoteComment = (comment, currentUser, dispatch) => {
 export const remove = (comment, dispatch) => {
   return (e) => {
     e.preventDefault();
-    dispatch(commentActions.deleteTheComment(comment._id));
+    dispatch(commentActions.deleteTheComment(comment._id)).then(async (res) => {
+      const data = await res;
+      dispatch(postActions.getTheSinglePost(data.post));
+    });
   };
 };
 
@@ -43,8 +46,10 @@ export const comment = (comment, post, dispatch, func) => {
     if (comment) {
       dispatch(
         commentActions.postTheComment({ content: comment, type: "main" }, post)
-      ).then(() => {
+      ).then(async (res) => {
         func("");
+        const data = await res;
+        dispatch(postActions.getTheSinglePost(data.post));
       });
     }
   };

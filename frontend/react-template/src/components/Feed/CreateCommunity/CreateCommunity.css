@@ -13,11 +13,12 @@
   transform: translate(-50%, -50%);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  color: var(--mainFontColor);
 }
 
 .cc-container {
   width: 512px;
-  background: white;
+  background: var(--mainColor);
   padding: 16px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -69,6 +70,8 @@
   padding-left: 24px;
   border: 1.5px solid #f1f2f4;
   border-radius: 5px;
+  background: var(--mainColor);
+  color: var(--mainFontColor);
 }
 
 .cc-c-n-i-label {
@@ -125,6 +128,7 @@
   align-items: center;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  background: var(--greyColor7);
 }
 
 .cc-c-b-cancel,
@@ -139,13 +143,14 @@
   outline: inherit;
 }
 .cc-c-b-create {
-  background: #0079d3;
-  color: white;
+  background: var(--accentColor);
+  color: var(--mainColor);
   border: none;
   margin-right: 16px;
 }
 .cc-c-b-cancel {
-  color: #0079d3;
-  border: 1px solid #0079d3;
+  color: var(--accentColor);
+  border: 1px solid var(--accentColor);
   margin-right: 12px;
+  background: var(--mainColor);
 }

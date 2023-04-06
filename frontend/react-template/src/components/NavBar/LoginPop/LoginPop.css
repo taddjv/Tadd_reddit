@@ -8,7 +8,7 @@
 }
 
 .lc-container {
-  background: white;
+  background: var(--mainColor);
   width: 400px;
   border-radius: 15px;
 
@@ -16,6 +16,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: var(--mainFontColor);
 }
 
 .lc-c-exit {
@@ -78,8 +79,9 @@
   height: 46px;
   border: none;
   border-radius: 500px;
-  background: #f6f7f8;
+  background: var(--greyColor1);
   padding: 12px;
+  color: var(--mainFontColor);
 
   /* margin-bottom: 16px; */
   transition: 1s;
@@ -115,8 +117,8 @@
 .lc-c-b-button {
   width: 280px;
   height: 40px;
-  background: #d93b01;
-  color: white;
+  background: rgb(0, 208, 61);
+  color: var(--mainColor);
   border-radius: 500px;
   margin: 12px 0;
 
@@ -128,7 +130,7 @@
 }
 
 .lc-c-b-button:hover {
-  background: #df5a28;
+  background: rgb(101, 220, 137);
 }
 
 .lc-c-b-text {
@@ -137,7 +139,7 @@
 }
 
 .lc-c-b-text > u {
-  color: #2884d6;
+  color: var(--accentColor);
   cursor: pointer;
 }
 
@@ -147,10 +149,13 @@
 
 .lc-c-m-errors {
   list-style-type: none;
+  height: 35px;
+  display: flex;
 }
 .lc-c-m-errors > li {
   color: #fb133a;
   font-size: 12px;
   width: 240px;
   margin: auto;
+  text-align: center;
 }

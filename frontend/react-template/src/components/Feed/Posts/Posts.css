@@ -1,26 +1,27 @@
 .posts {
   width: 640px;
   max-height: 100%;
-  background: #dae0e6;
+  background: var(--backColor);
   grid-area: posts;
   /* margin-top: 20px; */
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding-top: 16px;
+  color: var(--mainFontColor);
 }
 .posts-title {
   font-size: 14px;
 }
 .posts-post {
-  background: white;
+  background: var(--mainColor);
   border-radius: 4px;
-  border: #cccccc 0.5px solid;
+  border: var(--greyColor4) 0.5px solid;
   max-height: 676px;
   width: 640px;
   display: flex;
   text-decoration: none;
-  color: black;
+  color: var(--mainFontColor);
 }
 .posts-post:hover {
   border: #898989 0.5px solid;
@@ -31,13 +32,14 @@
 .posts-sorter {
   width: 640px;
   height: 61px;
-  border: #cccccc 0.5px solid;
+  border: var(--greyColor4) 0.5px solid;
   border-radius: 4px;
-  background: white;
+  background: var(--mainColor);
   padding: 10px 12px;
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--secFontColor);
 }
 .p-s-option {
   height: 32px;
@@ -48,7 +50,7 @@
   appearance: none;
   -ms-appearance: none; */
 
-  background: white;
+  background: var(--mainColor);
   color: inherit;
   border: none;
   padding: 6px 8px;
@@ -61,8 +63,8 @@
 }
 /* color: var(--postColor); */
 .p-s-chosen {
-  color: var(--postColor);
-  background: #f6f7f8;
+  color: var(--accentColor);
+  background: var(--greyColor1);
   padding: 6px 8px;
 }
 .p-s-new,
@@ -75,7 +77,7 @@
   margin-left: auto;
 }
 .p-s-option:hover {
-  background: #ededed;
+  background: var(--greyColor2);
 }
 .ps-o-new-logo,
 .ps-o-top-logo {
@@ -85,7 +87,7 @@
 .pp-left {
   width: 40px;
   height: 100%;
-  background: #f8f9fa;
+  background: var(--greyColor7);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -104,8 +106,8 @@
   height: 20px;
   width: 20px;
   margin: auto 0;
-  background: #f8f9fa;
-  color: black;
+  background: var(--greyColor7);
+  color: var(--mainFontColor);
 }
 .pp-l-up-logo-voted {
   color: #cc3800;
@@ -157,8 +159,8 @@
   height: 24px;
   border-radius: 500px;
   border: none;
-  color: white;
-  background: var(--postColor);
+  color: var(--mainColor);
+  background: var(--accentColor);
   cursor: pointer;
 }
 
@@ -288,7 +290,7 @@
 .p-m-m-r-link {
   height: 100px;
   width: 144px;
-  border: var(--postColor) 0.5px solid;
+  border: var(--accentColor) 0.5px solid;
   position: relative;
   border-radius: 4px;
 }
@@ -297,13 +299,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--postColor);
+  color: var(--accentColor);
 }
 .p-m-m-r-l-logo-container {
   position: absolute;
   bottom: 0;
   right: 0;
-  background: var(--postColor);
+  background: var(--accentColor);
   height: 20px;
   width: 20px;
   border-top-left-radius: 4px;
@@ -312,7 +314,7 @@
   height: 14px;
   width: 14px;
   margin: 3px;
-  color: white;
+  color: var(--mainColor);
 }
 
 .pp-text {
@@ -328,4 +330,8 @@
 .f-h-logo {
   width: 20px;
   height: 20px;
+}
+.empty-post {
+  width: 100%;
+  height: 14px;
 }

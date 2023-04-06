@@ -5,6 +5,7 @@ const GET_COMMUNITIES = "communities/GET_COMMUNITIES";
 const POST_COMMUNITY = "communities/POST_COMMUNITY";
 const DELETE_COMMUNITY = "communities/DELETE_COMMUNITY";
 const PATCH_COMMUNITY = "communities/PATCH_COMMUNITY";
+const CLEAR = "communities/CLEAR";
 
 const getCommunity = (community) => {
   return {
@@ -34,6 +35,11 @@ const patchCommunity = (community) => {
   return {
     type: PATCH_COMMUNITY,
     payload: community,
+  };
+};
+const clearCommunities = () => {
+  return {
+    type: CLEAR,
   };
 };
 
@@ -91,6 +97,9 @@ export const patchTheCommunity =
       dispatch(patchCommunity(data));
     }
   };
+export const clearTheCommunities = () => async (dispatch) => {
+  dispatch(clearCommunities());
+};
 
 const initialState = { community: null };
 const communitiesReducer = (state = initialState, action) => {
@@ -101,8 +110,11 @@ const communitiesReducer = (state = initialState, action) => {
       newState.community = action.payload;
       return newState;
     case GET_COMMUNITIES:
-      newState = Object.assign({}, state);
-      newState.community = action.payload;
+      newState = {};
+      action.payload.forEach((ele) => {
+        newState[ele._id] = ele;
+      });
+      // newState.community = action.payload;
       return newState;
     case POST_COMMUNITY:
       newState = Object.assign({}, state);
@@ -116,6 +128,11 @@ const communitiesReducer = (state = initialState, action) => {
       newState = Object.assign({}, state);
       newState.community = action.payload;
       return newState;
+    case CLEAR: {
+      let newState = { ...state };
+      newState.community = null;
+      return newState;
+    }
     default:
       return state;
   }

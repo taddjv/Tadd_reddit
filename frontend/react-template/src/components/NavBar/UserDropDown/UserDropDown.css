@@ -1,25 +1,26 @@
 .udd-container {
   width: 210px;
-  border: 0.5px solid #eceff1;
+  border: 0.5px solid var(--greyColor3);
   padding: auto;
   border-radius: 2px;
   position: absolute;
   top: 31px;
   left: -141px;
   z-index: 10000;
-  background: white;
+  background: var(--mainColor);
+  color: var(--mainFontColor);
 }
 
 .udd-container2 {
   width: 210px;
-  border: 0.5px solid #eceff1;
+  border: 0.5px solid var(--greyColor3);
   padding: auto;
   border-radius: 2px;
   position: absolute;
   top: 37px;
   left: -88px;
   z-index: 10000;
-  background: white;
+  background: var(--mainColor);
 }
 
 .udd-mode,
@@ -50,6 +51,6 @@
 .udd-log:hover,
 .udd-profile:hover,
 .udd-community:hover {
-  background: #2884d6;
-  color: white;
+  background: var(--accentColor);
+  color: var(--mainColor);
 }

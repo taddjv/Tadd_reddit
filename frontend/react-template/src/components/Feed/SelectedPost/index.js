@@ -28,19 +28,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import RulesCommunity from "../../Community/RulesCommunity";
-import SingleComment from "../../Comments/SingleComment";
+import CommentSort from "./CommentSort";
 
 const SelectedPost = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = params;
-  const { setDropUser, setShowLogin } = usePop();
+  const { setDropUser, setShowLogin, commentSort } = usePop();
   const post = useSelector((state) => state.posts);
   const community = useSelector((state) => state.communities.community);
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
-  const comments = useSelector((state) => state.comments);
 
   const [newComment, setNewComment] = useState("");
 
@@ -54,13 +53,18 @@ const SelectedPost = () => {
           setPostColor(data.colors[1]);
         }
       );
-      dispatch(commentActions.getThePostComments(data._id));
+      // dispatch(commentActions.getThePostComments(data._id, commentSort));
     });
     return () => {
       dispatch(postActions.clearThePosts());
       dispatch(commentActions.clearTheComments());
     };
   }, []);
+  useEffect(() => {
+    if (post[id]) {
+      dispatch(commentActions.getThePostComments(post[id]._id, commentSort));
+    }
+  }, [commentSort, post[id]]);
   return (
     <>
       <div
@@ -181,25 +185,29 @@ const SelectedPost = () => {
                   ></textarea>
                   <div className="sp-c-c-bottom">
                     <button
-                      onClick={comment(
-                        newComment,
-                        post[id],
-                        dispatch,
-                        setNewComment
-                      )}
+                      onClick={
+                        currentUser
+                          ? comment(
+                              newComment,
+                              post[id],
+                              dispatch,
+                              setNewComment
+                            )
+                          : (e) => {
+                              setNewComment("");
+                              e.stopPropagation();
+                              setShowLogin(true);
+                            }
+                      }
                       className="sp-c-c-b-button"
                     >
                       Comment
                     </button>
                   </div>
                 </div>
-                <div className="sp-comments-sort">
-                  <button className="sp-c-s-button">Sort By: Best</button>
-                </div>
-                {dataRender(comments).map((ele) => (
-                  <SingleComment comment={ele} />
-                ))}
+                <CommentSort />
               </div>
+              <div className="empty-comment"></div>
             </div>
             <div className="selectedPost-bottom-right">
               {community && (

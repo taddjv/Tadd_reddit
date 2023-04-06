@@ -44,12 +44,6 @@ const seedDB = async () => {
   );
 
   const allCommunities = await Community.find({});
-  // allCommunities.forEach((ele, i) => {
-  //   if (i < 3) {
-  //     allUsers[0]["subscriptions"].push(ele._id);
-  //     ele.subscribers.push(allUsers[0]._id);
-  //   }
-  // });
   await Subscription.insertMany(
     allCommunities.map((comm, i) => {
       return {
@@ -72,17 +66,19 @@ const seedDB = async () => {
     })
   );
   const allPosts = await Post.find({});
+
   await Comment.insertMany(
-    seedComments.map(async (comment, i) => {
-      console.log(i, allPosts[0]._id);
+    seedComments.map((comment, i) => {
+      allPosts[0].commentCount++;
       return {
         content: comment.content,
         author: allUsers[i],
-        post: allPosts[0],
+        post: allPosts[0]._id,
         type: "main",
       };
     })
   );
+  await allPosts[0].save();
 };
 
 seedDB().then(() => {

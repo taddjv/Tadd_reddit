@@ -31,14 +31,10 @@ function SignupPop() {
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.message === "Validation Error")
-          setErrors([data.errors]);
+          setErrors([data.errors[0]]);
         else if (data && data.message) setErrors([data.message]);
       });
   };
-
-  useEffect(() => {
-    formSetter(formSelect);
-  }, [formSelect]);
 
   return (
     <>
@@ -48,71 +44,9 @@ function SignupPop() {
             e.stopPropagation();
             setDropUser(false);
           }}
-          className="lc-container1"
+          onSubmit={handleSubmit}
+          className="lc-container2"
         >
-          <button
-            onClick={() => {
-              setShowSignin(false);
-            }}
-            className="lc-c-exit"
-          >
-            <FontAwesomeIcon className="lc-c-x" icon={faX} />
-          </button>
-          <div className="lc-c-top">
-            <h1 className="lc-c-t-title">Sign Up</h1>
-            <p className="lc-c-t-text">
-              By continuing, you agree are setting up a Reddit account and agree
-              to our User Agreement and Privacy Policy.
-            </p>
-          </div>
-          <div className="lc-c-middle">
-            <div className="lc-c-m-email">
-              <input
-                type="text"
-                id="lc-c-m-email"
-                placeholder=" "
-                // value={}
-                // onChange={(e) => set...(e.target.value)}
-                required
-              />
-              <label className="lc-c-m-email-label" for="lc-c-m-email">
-                Email
-              </label>
-            </div>
-
-            <div className="lc-c-bottom">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setFormSelect(false);
-                }}
-                className="lc-c-b-button"
-              >
-                Continue
-              </button>
-              <p className="lc-c-b-text">
-                Already a redditor?{" "}
-                <u
-                  onClick={() => {
-                    setShowLogin(!showLogin);
-                    setShowSignin(!showSignin);
-                  }}
-                >
-                  Log In
-                </u>
-              </p>
-            </div>
-          </div>
-        </form>
-        <form onSubmit={handleSubmit} className="lc-container2">
-          <button
-            onClick={() => {
-              setFormSelect(true);
-            }}
-            className="lc-c-back"
-          >
-            <FontAwesomeIcon className="lc-c-x" icon={faArrowLeft} />
-          </button>
           <button
             onClick={() => {
               setShowSignin(!showSignin);
@@ -125,9 +59,19 @@ function SignupPop() {
             <h1 className="lc-c-t-title">Create your username and password</h1>
             <p className="lc-c-t-text">
               Reddit is anonymous, so your username is what you’ll go by here.
-              Choose wisely—because once you get a name, you can’t change it.
+              {/* Choose wisely—because once you get a name, you can’t change it. */}
             </p>
           </div>
+          <ul className="lc-c-m-errors">
+            {errors.map((error, idx) => {
+              return (
+                <>
+                  <li key={idx}>{error}</li>
+                  <br />
+                </>
+              );
+            })}
+          </ul>
           <div className="lc-c-middle">
             <div className="lc-c-m-username">
               <input
@@ -142,11 +86,6 @@ function SignupPop() {
                 Username
               </label>
             </div>
-            <ul className="lc-c-m-errors">
-              {errors.map((error, idx) => (
-                <li key={idx}>{error}</li>
-              ))}
-            </ul>
             <div className="lc-c-m-password">
               <input
                 type="password"

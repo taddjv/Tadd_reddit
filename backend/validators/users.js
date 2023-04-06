@@ -6,7 +6,7 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .withMessage("Username is required"),
   check("username")
-    .isLength({ min: 4, max: 20 })
+    .isLength({ min: 3, max: 20 })
     .withMessage("Username must be between 3 and 20 characters"),
   check("username").not().isEmail().withMessage("Username cannot be an email."),
   check("password")
@@ -24,7 +24,7 @@ const validateLogin = [
     .notEmpty()
     .withMessage("username is required"),
   check("username")
-    .isLength({ min: 4, max: 20 })
+    .isLength({ min: 3, max: 20 })
     .withMessage("Username must be between 3 and 20 characters"),
   check("password")
     .exists({ checkFalsy: true })

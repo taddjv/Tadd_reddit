@@ -18,6 +18,14 @@ function SearchBar() {
   const [search, setSearch] = useState(null);
 
   const [showX, stShowX] = useState(false);
+
+  useEffect(() => {
+    const bar = document.querySelector(".nc-r-search");
+    if (search) {
+      bar.style.backgroundColor = "var(--mainColor)";
+      bar.style.border = "solid 0.5px var(--accentColor)";
+    }
+  }, [search]);
   return (
     <>
       <div className="nc-middle">
@@ -28,9 +36,9 @@ function SearchBar() {
               placeholder="Search Reddit"
               value={search}
               onChange={(e) => {
-                dispatch(searchActions.searchTheCommunity(e.target.value));
-                dispatch(searchActions.searchTheUser(e.target.value));
                 if (e.target.value) {
+                  dispatch(searchActions.searchTheCommunity(e.target.value));
+                  dispatch(searchActions.searchTheUser(e.target.value));
                   setSearch(e.target.value);
                 } else {
                   setSearch(null);

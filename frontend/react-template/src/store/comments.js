@@ -100,10 +100,13 @@ export const getTheUserComments = (userId, sort) => async (dispatch) => {
     return data;
   }
 };
-export const getThePostComments = (postId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/comments/post/${postId}`, {
-    method: "GET",
-  });
+export const getThePostComments = (postId, sort) => async (dispatch) => {
+  const response = await csrfFetch(
+    `/api/comments/post/${postId}/?sort=${sort}`,
+    {
+      method: "GET",
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(getPostComments(data));
@@ -121,6 +124,7 @@ export const postTheComment = (content, post) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(postComment(data));
+    return data;
   } else {
     const data = await response.json();
     return data;
@@ -180,6 +184,7 @@ export const deleteTheComment = (commentId) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(deleteComment(data));
+    return data;
   } else {
     const data = await response.json();
     return data;

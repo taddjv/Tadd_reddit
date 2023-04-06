@@ -148,7 +148,7 @@ function PhotoPost({ post, user, userVotes, individual, community }) {
               className="f-h-house pp-m-b-c-button"
               icon={faCommentAlt}
             />
-            222 Comments
+            {post.commentCount} Comments
           </button>
           <button className="pp-m-b-button">
             <FontAwesomeIcon className="f-h-house" icon={faFolder} />

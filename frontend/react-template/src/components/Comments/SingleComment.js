@@ -6,6 +6,7 @@ import { reactionCheck, isOwner } from "../../helper";
 import { upvoteComment, downvoteComment, remove } from "../../helper/comments";
 import { usePop } from "../../context/UserPopcontext";
 
+import "./Comments.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowAltCircleDown,
@@ -14,9 +15,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faComment, faUser } from "@fortawesome/free-regular-svg-icons";
 
-const SingleComment = ({ comment }) => {
+const SingleComment = ({ comment, name }) => {
   const dispatch = useDispatch();
-  const { setDropUser } = usePop();
+  const { setDropUser, setShowLogin } = usePop();
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
 
@@ -34,7 +35,10 @@ const SingleComment = ({ comment }) => {
   };
 
   return (
-    <div onClick={() => setShowOp(false)} className="comment">
+    <div
+      onClick={() => setShowOp(false)}
+      className={name ? "comment-search" : "comment"}
+    >
       <div className="comment-left">
         {comment.author.profilePicture ? (
           <img className="co-l-picture" src={comment.author.profilePicture} />
@@ -72,7 +76,14 @@ const SingleComment = ({ comment }) => {
                 ? "co-r-b-up-voted"
                 : null
             }`}
-            onClick={upvoteComment(comment, currentUser, dispatch)}
+            onClick={
+              currentUser
+                ? upvoteComment(comment, currentUser, dispatch)
+                : (e) => {
+                    e.stopPropagation();
+                    setShowLogin(true);
+                  }
+            }
             icon={faArrowAltCircleUp}
           />
 
@@ -85,7 +96,14 @@ const SingleComment = ({ comment }) => {
                 ? "co-r-b-down-voted"
                 : null
             }`}
-            onClick={downvoteComment(comment, currentUser, dispatch)}
+            onClick={
+              currentUser
+                ? downvoteComment(comment, currentUser, dispatch)
+                : (e) => {
+                    e.stopPropagation();
+                    setShowLogin(true);
+                  }
+            }
             icon={faArrowAltCircleDown}
           />
           <button className="pp-m-b-button">

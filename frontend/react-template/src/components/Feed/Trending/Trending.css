@@ -15,7 +15,7 @@
 .tending-feed {
   display: flex;
   justify-content: space-between;
-  color: white;
+  color: var(--mainColor);
 }
 .tending-article {
   width: 238px;
@@ -48,7 +48,7 @@
 .t-a-c-logo {
   height: 16px;
   width: 16px;
-  background: white;
+  background: var(--mainColor);
   border-radius: 100%;
   margin-right: 4px;
 }

@@ -5,7 +5,18 @@
   --tempTheme2: none;
   --tempTheme1: none;
 
-  --postColor: none;
+  --mainColor: none;
+  --greyColor1: none;
+  --greyColor2: none;
+  --greyColor3: none;
+  --greyColor4: none;
+  --greyColor5: none;
+  --greyColor6: none;
+  --backColor: none;
+  --accentColor: none;
+
+  --mainFontColor: none;
+  --secFontColor: rgba(117, 117, 117, 1);
 }
 * {
   box-sizing: border-box;
@@ -16,7 +27,7 @@
 
 .App {
   height: 100vh;
-  background: #dae0e6;
+  background: var(--backColor);
 }
 
 body::-webkit-scrollbar {

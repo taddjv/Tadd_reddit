@@ -11,6 +11,8 @@ exports.getAllPosts = async (req, res) => {
     sortQuery = { upVotes: -1, downVotes: 1 };
   } else if (sort === "New") {
     sortQuery = { createdAt: -1 };
+  } else if (sort === "Comment") {
+    sortQuery = { commentCount: -1 };
   }
   const allPosts = await Post.find()
     .populate("community")
@@ -26,10 +28,6 @@ exports.getSubPosts = async (req, res) => {
     .populate("community")
     .populate("comments")
     .sort(sortQuery(sort));
-  // .exec();
-  // console.log(allPosts[0]);
-  // const comments = await Comment.find({ post: allPosts[0]._id });
-  // console.log(comments);
 
   res.json(allPosts);
 };
@@ -160,12 +158,14 @@ exports.searchPosts = async (req, res) => {
 };
 exports.getHomePosts = async (req, res) => {
   const { user } = req;
+  const { sort } = req.query;
   const foundCommunities = await Subscription.find({ user: user });
   const allPosts = await Post.find({
     community: { $in: foundCommunities.map((ele) => ele.community.toString()) },
   })
     .populate("community")
-    .populate("author", "username");
+    .populate("author", "username")
+    .sort(sortQuery(sort));
   if (allPosts.length) {
     res.json(allPosts);
   } else {

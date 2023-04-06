@@ -19,9 +19,9 @@ exports.checkSearch = (search) => {
 };
 
 exports.sortQuery = (sort) => {
-  if (sort === "Hot") {
+  if (["Hot", "Best"].includes(sort)) {
     return { upVotes: -1, downVotes: 1 };
-  } else if (sort === "New") {
+  } else if (["New", "Newest"].includes(sort)) {
     return { createdAt: -1 };
   }
 };

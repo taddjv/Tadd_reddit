@@ -1,6 +1,6 @@
 .lc-container1,
 .lc-container2 {
-  background: white;
+  background: var(--mainColor);
   width: 400px;
   border-radius: 15px;
   display: block;
@@ -9,6 +9,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: var(--mainFontColor);
 }
 
 .lc-c-back {
@@ -45,7 +46,7 @@
   height: 46px;
   border: none;
   border-radius: 500px;
-  background: #f6f7f8;
+  background: var(--greyColor1);
   padding: 12px;
 }
 

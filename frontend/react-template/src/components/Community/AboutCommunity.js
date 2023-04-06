@@ -15,7 +15,7 @@ function AboutCommunity({ community, user }) {
 
   const [showDescEdit, setShowDescEdit] = useState(false);
   const [showComOps, setShowComOps] = useState(false);
-  const [newDesc, setNewDesc] = useState("");
+  const [newDesc, setNewDesc] = useState(community.description);
   const mod = user ? (community.owner === user._id ? user : null) : null;
   const description = community.description;
   const comDate = new Date(community.createdAt);

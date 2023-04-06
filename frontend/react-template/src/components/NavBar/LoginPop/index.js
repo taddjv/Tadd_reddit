@@ -62,6 +62,14 @@ function LoginPop() {
               to our User Agreement and Privacy Policy.
             </p>
           </div>
+          <ul className="lc-c-m-errors">
+            {errors.map((error, idx) => (
+              <>
+                <li key={idx}>{error}</li>
+                <br />
+              </>
+            ))}
+          </ul>
           <div className="lc-c-middle">
             <div className="lc-c-m-username">
               <input
@@ -76,14 +84,7 @@ function LoginPop() {
                 Username
               </label>
             </div>
-            <ul className="lc-c-m-errors">
-              {errors.map((error, idx) => (
-                <>
-                  <li key={idx}>{error}</li>
-                  <br />
-                </>
-              ))}
-            </ul>
+
             <div className="lc-c-m-password">
               <input
                 type="password"

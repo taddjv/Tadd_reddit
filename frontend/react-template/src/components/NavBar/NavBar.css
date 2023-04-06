@@ -9,6 +9,9 @@
   margin: 14px 0;
   margin-right: 32px;
 }
+.reddit-logo {
+  height: 32px;
+}
 
 .navbar-container {
   z-index: 10;
@@ -21,8 +24,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  border-bottom: 1px solid #eceff1;
-  background-color: white;
+  border-bottom: 1px solid var(--greyColor3);
+  background: var(--mainColor);
 }
 
 .nc-left {
@@ -45,7 +48,7 @@
 }
 .nc-l-button {
   padding: 0;
-  background: white;
+  background: var(--mainColor);
   border: none;
   border-radius: 0;
   outline: none;
@@ -77,19 +80,19 @@
 .nc-r-search {
   width: 645px;
   height: 40px;
-  background-color: #f6f7f8;
+  background-color: var(--greyColor1);
   border-radius: 500px;
-  border: #eceff1 solid 0.25px;
+  border: var(--greyColor3) solid 0.25px;
   display: flex;
   position: relative;
 }
 .nc-r-search:hover {
-  background-color: white;
-  border: solid 0.5px#2884d6;
+  background-color: var(--mainColor);
+  border: solid 0.5px var(--accentColor);
 }
 .nc-r-search:focus-within {
-  background-color: white;
-  border: solid 0.5px#2884d6;
+  background-color: var(--mainColor);
+  border: solid 0.5px var(--accentColor);
 }
 .nc-r-search-drop {
   border-bottom-left-radius: 0;
@@ -119,10 +122,10 @@
 .nc-r-signup {
   width: 118px;
   height: 30px;
-  border: solid 1px#2884d6;
-  color: #2884d6;
+  border: solid 1px var(--accentColor);
+  color: var(--accentColor);
   border-radius: 500px;
-  background-color: white;
+  background-color: var(--mainColor);
   font-weight: 700;
   cursor: pointer;
 }
@@ -133,15 +136,15 @@
 .nc-r-login {
   width: 118px;
   height: 30px;
-  border: solid 1px#2884d6;
-  color: white;
+  border: solid 1px var(--accentColor);
+  color: var(--mainColor);
   border-radius: 500px;
-  background-color: #2884d6;
+  background-color: var(--accentColor);
   font-weight: 700;
   cursor: pointer;
 }
 .nc-r-login:hover {
-  background-color: #2884d6;
+  background-color: var(--accentColor);
 }
 
 .nc-r-dropdown {
@@ -154,12 +157,11 @@
   outline: inherit;
   width: 70px;
   height: 32px;
-  color: #878a8c;
-  border: 1px solid white;
+  border: 1px solid var(--mainColor);
 }
 
 .nc-r-dropdown:hover {
-  border: 1px solid #eceff1;
+  border: 1px solid var(--greyColor3);
   border-radius: 2px;
 }
 
@@ -167,6 +169,7 @@
   width: 20px;
   height: 20px;
   padding-right: 5px;
+  color: var(--greyColor5);
 }
 .nc-r-d-user-pic {
   width: 28px;
@@ -184,7 +187,7 @@
   outline: inherit;
   height: 38px;
   color: #878a8c;
-  border: 1px solid white;
+  border: 1px solid var(--mainColor);
   font-size: 12px;
   display: flex;
   align-items: center;
@@ -194,32 +197,33 @@
 }
 
 .nc-r-dropdown2:hover {
-  border: 1px solid #eceff1;
+  border: 1px solid var(--greyColor3);
   border-radius: 2px;
 }
 .nc-r-s-results-container {
-  border: 1px solid #2884d6;
+  border: 1px solid var(--accentColor);
   border-top: none;
-  background: #dae0e6;
+  background: var(--backColor);
   position: absolute;
   top: 38px;
   left: -1px;
   width: 100%;
   font-weight: 500;
   width: calc(100% + 2px);
+  color: var(--mainFontColor);
 }
 
 .nc-r-s-results {
   width: 100%;
   font-weight: 500;
   margin-bottom: 2px;
-  background: white;
+  background: var(--mainColor);
   padding: 8px 16px;
 }
 .nc-r-s-results-2 {
   width: 100%;
   font-weight: 300;
-  background: white;
+  background: var(--mainColor);
   padding: 8px 16px;
   display: block;
 }

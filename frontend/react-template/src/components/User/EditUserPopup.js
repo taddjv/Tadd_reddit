@@ -110,7 +110,7 @@ const EditUserPopup = (user) => {
       <div className="eup-error">{error1}</div>
       <input
         className="eup-input"
-        type="text"
+        type="password"
         placeholder="CURRENT PASSWORD"
         onChange={(e) => {
           setError1(null);
@@ -122,7 +122,7 @@ const EditUserPopup = (user) => {
       <div className="eup-error">{error2}</div>
       <input
         className="eup-input"
-        type="text"
+        type="password"
         placeholder="NEW PASSWORD"
         onChange={(e) => {
           setError2(null);
@@ -134,7 +134,7 @@ const EditUserPopup = (user) => {
       <div className="eup-error">{error3}</div>
       <input
         className="eup-input"
-        type="text"
+        type="password"
         placeholder="CONFIRM NEW PASSWORD"
         onChange={(e) => {
           if (e.target.value) {
@@ -167,7 +167,12 @@ const EditUserPopup = (user) => {
   return (
     <div>
       <FontAwesomeIcon
-        onClick={() => setShow(true)}
+        onClick={() => {
+          setShow(true);
+          setError1(null);
+          setError2(null);
+          setError3(null);
+        }}
         className="u-c-c-m1-logo"
         icon={faUserEdit}
       />

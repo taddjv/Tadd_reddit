@@ -28,7 +28,7 @@ const ImageSubmit = ({ community }) => {
 
     dispatch(postsActions.postThePost(data, "image", community._id))
       .then(() => {
-        history.goBack();
+        history.push(`/r/${community.name}`);
       })
       .catch(async (res) => {
         const data = await res.json();

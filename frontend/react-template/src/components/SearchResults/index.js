@@ -2,16 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory, NavLink } from "react-router-dom";
 import Posts from "../Feed/Posts";
+import SingleComment from "../Comments/SingleComment";
 import SearchedData2 from "./SearchedData2";
 import * as postsActions from "../../store/posts";
 import * as searchActions from "../../store/search";
+import * as commentCations from "../../store/comments";
 import { searchRender, dataRender } from "../../helper";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleXmark,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "./SearchResults.css";
 
 const SearchResults = () => {
@@ -21,17 +20,18 @@ const SearchResults = () => {
   const { search } = params;
   const posts = useSelector((state) => state.posts);
   const searchRes = useSelector((state) => state.search);
+  const comments = useSelector((state) => state.comments);
 
   const [chosen, setChosen] = useState("posts");
 
   const [postFilter, setPostFilter] = useState("Relevance");
   const [postSort, setPostSort] = useState("All Time");
 
-
   useEffect(() => {
     dispatch(postsActions.searchThePosts({ search }));
     dispatch(searchActions.searchTheCommunity(search));
     dispatch(searchActions.searchTheUser(search));
+    dispatch(commentCations.getTheComments(search, "New"));
   }, [history.location.pathname]);
 
   return (
@@ -60,21 +60,47 @@ const SearchResults = () => {
           <button className="sr-q-button">{postSort}</button>
         </div> */}
         <div className="sr-results">
-          <div className="sr-r-left">
-            {dataRender(posts).length ? (
-              <Posts posts={posts} search={true} />
-            ) : (
-              <div className="sr-r-left-nothing">
-                <FontAwesomeIcon
-                  className="sr-r-l-n-top"
-                  icon={faMagnifyingGlass}
-                />
-                <div className="sr-r-l-n-middle">
-                  Hm... we couldn’t find any results for “{search}”
+          {chosen === "posts" && (
+            <div className="sr-r-left">
+              {dataRender(posts).length ? (
+                <Posts posts={posts} search={true} />
+              ) : (
+                <div className="sr-r-left-nothing">
+                  <FontAwesomeIcon
+                    className="sr-r-l-n-top"
+                    icon={faMagnifyingGlass}
+                  />
+                  <div className="sr-r-l-n-middle">
+                    Hm... we couldn’t find any results for “{search}”
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
+          {chosen === "comments" && (
+            <div className="sr-r-left">
+              {dataRender(comments).length ? (
+                <>
+                  {dataRender(comments).map((ele) => (
+                    <SingleComment comment={ele} name="comment-search" />
+                  ))}
+                </>
+              ) : (
+                <div className="sr-r-left-nothing">
+                  <FontAwesomeIcon
+                    className="sr-r-l-n-top"
+                    icon={faMagnifyingGlass}
+                  />
+                  <div className="sr-r-l-n-middle">
+                    Hm... we couldn’t find any results for “{search}”
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+          {/* {dataRender(comments).map((ele) => (
+                  <SingleComment comment={ele} />
+                ))} */}
 
           <div className="sr-r-right">
             {searchRes.community ? (

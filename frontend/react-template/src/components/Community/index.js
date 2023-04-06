@@ -83,6 +83,8 @@ function Community() {
     e.preventDefault();
     dispatch(subscriptionsActions.deleteTheSubscription(community._id));
   };
+
+  console.log(community);
   return (
     <>
       {community && (

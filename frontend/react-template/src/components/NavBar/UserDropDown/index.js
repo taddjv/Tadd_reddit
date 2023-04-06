@@ -6,13 +6,24 @@ import "./UserDropDown.css";
 import { usePop } from "../../../context/UserPopcontext";
 import * as usersActions from "../../../store/users";
 import { useDispatch } from "react-redux";
+import { setLight, setDark, checkMode } from "../../../helper";
 
 function UserDropDown({ member, user }) {
   const dispatch = useDispatch();
+
   const { setShowLogin, showCommunity, setShowCommunity } = usePop();
   const nonMemberDrop = (
     <div className="udd-container">
-      <div className="udd-mode">
+      <div
+        onClick={() => {
+          if (checkMode() === "light") {
+            setDark();
+          } else {
+            setLight();
+          }
+        }}
+        className="udd-mode"
+      >
         <FontAwesomeIcon className="udd-moon" icon={faMoon} />
         <p className="udd-m-text">Change Mode</p>
       </div>
@@ -29,7 +40,16 @@ function UserDropDown({ member, user }) {
   );
   const memberDrop = (
     <div className="udd-container2">
-      <div className="udd-mode">
+      <div
+        onClick={() => {
+          if (checkMode() === "light") {
+            setDark();
+          } else {
+            setLight();
+          }
+        }}
+        className="udd-mode"
+      >
         <FontAwesomeIcon className="udd-moon" icon={faMoon} />
         <p className="udd-m-text">Change Mode</p>
       </div>

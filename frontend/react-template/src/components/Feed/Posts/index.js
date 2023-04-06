@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { dataRender, setPostColor } from "../../../helper";
+import { dataRender, setPostColor, checkMode } from "../../../helper";
 import PhotoPost from "./PhotoPost";
 import VideoPost from "./VideoPost";
 import LinkPost from "./LinkPost";
@@ -24,7 +24,6 @@ function Posts({ search, type, user, community }) {
   const posts = useSelector((state) => state.posts);
   const currentUser = useSelector((state) => state.users.user);
   const userVotes = useSelector((state) => state.votes);
-  const [newPosts, setNewPosts] = useState(null);
   const [empty, setEmpty] = useState(false);
   const [sort, setSort] = useState("Hot");
 
@@ -33,16 +32,12 @@ function Posts({ search, type, user, community }) {
       dispatch(postsActions.getTheHomePosts(sort)).then(async (res) => {
         const data = await res;
         if (!data.length) setEmpty(true);
-        setPostColor("#2884d6");
-        setNewPosts(data);
       });
     }
     if (type === "all") {
       dispatch(postsActions.getThePosts(sort)).then(async (res) => {
         const data = await res;
         if (!data.length) setEmpty(true);
-        setPostColor("#2884d6");
-        setNewPosts(data);
       });
     }
     if (type === "user") {
@@ -50,8 +45,6 @@ function Posts({ search, type, user, community }) {
         async (res) => {
           const data = await res;
           if (!data.length) setEmpty(true);
-          setPostColor("#2884d6");
-          setNewPosts(data);
         }
       );
     }
@@ -63,15 +56,19 @@ function Posts({ search, type, user, community }) {
           if (data.length) {
             setPostColor(data[0].community.colors[1]);
           }
-          setNewPosts(data);
         }
       );
     }
-    return () => {
-      setNewPosts(null);
-      setEmpty(false);
-      dispatch(postsActions.clearThePosts());
-    };
+
+    if (history.location.pathname.startsWith("/search/")) {
+      return;
+    } else {
+      return () => {
+        checkMode();
+        setEmpty(false);
+        dispatch(postsActions.clearThePosts());
+      };
+    }
   }, [history.location.pathname, sort, user, community]);
   return (
     <div className="posts">
@@ -99,14 +96,14 @@ function Posts({ search, type, user, community }) {
               New
             </button>
             <button
-              onClick={() => setSort("Top")}
-              className={`p-s-option ${sort === "Top" && "p-s-chosen"}`}
+              onClick={() => setSort("Comment")}
+              className={`p-s-option ${sort === "Comment" && "p-s-chosen"}`}
             >
               <FontAwesomeIcon
                 className="f-h-house ps-o-top-logo"
                 icon={faChartBar}
               />
-              Top
+              Most Comments
             </button>
           </div>
         </>
@@ -150,6 +147,7 @@ function Posts({ search, type, user, community }) {
           <div className="sr-r-l-n-middle">No posts yet !</div>
         </div>
       )}
+      <div className="empty-post"></div>
     </div>
   );
 }

@@ -15,7 +15,7 @@ router.post(
   postsController.postSubPost
 );
 router.get("/user/:userId", postsController.getUserPosts);
-router.get("/home", findUser, postsController.getHomePosts);
+router.get("/home", postsController.getHomePosts);
 router.get("/all", postsController.getAllPosts);
 router.get("/:postId", postsController.getSinglePost);
 router.delete("/:postId", findUser, postsController.deletePost);

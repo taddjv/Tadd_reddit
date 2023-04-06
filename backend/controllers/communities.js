@@ -22,7 +22,7 @@ exports.getCommunity = async (req, res) => {
 };
 
 exports.getCommunities = async (req, res) => {
-  const foundCommunities = await Community.find();
+  const foundCommunities = await Community.find().limit(5);
   res.json(foundCommunities);
 };
 
@@ -78,8 +78,7 @@ exports.editCommunity = async (req, res) => {
 exports.searchCommunities = async (req, res) => {
   const { search } = req.params;
   const foundCommunities = await Community.find({
-    name: new RegExp(`(${search})`, "i"),
+    name: { $regex: `${search}`, $options: "i" },
   });
-
   res.json(foundCommunities);
 };

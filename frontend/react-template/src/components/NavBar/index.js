@@ -10,11 +10,14 @@ import SearchBar from "./SearchBar/index";
 import { usePop } from "../../context/UserPopcontext";
 import LoginPop from "./LoginPop";
 import CreateCommunity from "../Feed/CreateCommunity";
+import { checkMode } from "../../helper";
 
 import SignupPop from "./SignupPop";
 import UserDropDown from "./UserDropDown";
 import * as usersActions from "../../store/users";
 
+import Logo from "../../images/greenitLogo.png";
+import Logo2 from "../../images/greenitLogo2.png";
 import "./NavBar.css";
 
 function NavBar({ isLoaded }) {
@@ -39,7 +42,7 @@ function NavBar({ isLoaded }) {
       className="nc-r-dropdown"
     >
       <FontAwesomeIcon className="nc-r-d-user" icon={faUser} />
-      <FontAwesomeIcon icon={faChevronDown} />
+      <FontAwesomeIcon className="nc-r-d-user" icon={faChevronDown} />
       {dropUser && <UserDropDown member={currentUser !== null} />}
     </button>
   );
@@ -87,10 +90,11 @@ function NavBar({ isLoaded }) {
 
       <div className="navbar-container">
         <NavLink exact to="/" className="nc-left">
-          <div className="reddit-logo">
-            <RedditLogo />
-            <RedditLogo2 />
-          </div>
+          {checkMode() === "light" ? (
+            <img className="reddit-logo" src={Logo} />
+          ) : (
+            <img className="reddit-logo" src={Logo2} />
+          )}
         </NavLink>
         <SearchBar />
 

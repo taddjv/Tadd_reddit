@@ -7,6 +7,7 @@ export default function UserPopProvider({ children }) {
   const [showSignin, setShowSignin] = useState(false);
   const [showCommunity, setShowCommunity] = useState(false);
   const [dropUser, setDropUser] = useState(false);
+  const [commentSort, setCommentSort] = useState("Newest");
   return (
     <UserPopContext.Provider
       value={{
@@ -18,6 +19,8 @@ export default function UserPopProvider({ children }) {
         setDropUser,
         showCommunity,
         setShowCommunity,
+        commentSort,
+        setCommentSort,
       }}
     >
       {children}

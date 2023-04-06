@@ -8,7 +8,7 @@
 .selectedPost {
   width: 1280px;
   height: 100%;
-  background: #dae0e6;
+  background: var(--backColor);
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -24,7 +24,6 @@
 .sp-t-left {
   width: 740px;
   height: 100%;
-  /* background: blue; */
   display: flex;
   align-items: center;
 }
@@ -55,12 +54,12 @@
   color: #5a74cc;
 }
 .sp-t-l-count {
-  color: #dae0e6;
+  color: rgba(215, 218, 220, 1);
   padding: 0 4px;
   text-align: center;
 }
 .sp-t-l-title {
-  color: #dae0e6;
+  color: rgba(215, 218, 220, 1);
   padding: 0 8px;
   white-space: nowrap;
   overflow: hidden;
@@ -70,7 +69,7 @@
   height: 16px;
   font-size: 12px;
   font-weight: 500;
-  background: #dae0e6;
+  background: rgba(215, 218, 220, 1);
   padding: 0 4px;
   border-radius: 2px;
 }
@@ -78,7 +77,7 @@
 .sp-t-right {
   padding: 0 4px;
   font-weight: 500;
-  color: #dae0e6;
+  color: rgba(215, 218, 220, 1);
   background: none;
   border: none;
   cursor: pointer;
@@ -103,7 +102,7 @@
   height: 100%;
 }
 .sp-b-post {
-  background: white;
+  background: var(--mainColor);
   border-radius: 4px;
   max-height: 676px;
   width: 740px;
@@ -138,10 +137,12 @@
 .sp-comments {
   width: 740px;
   /* height: 100%; */
-  background: white;
+  background: var(--mainColor);
   margin-top: 16px;
   margin-bottom: 32px;
   padding-top: 24px;
+  border-radius: 4px;
+  border: var(--greyColor4) 0.5px solid;
 }
 .sp-comments-comment {
   height: 170px;
@@ -153,11 +154,13 @@
 .sp-c-c-input {
   height: 100%;
   width: 100%;
-  border: 1px solid #eceff1;
+  border: 1px solid var(--greyColor3);
   border-radius: 4px;
   padding: 16px;
   font-size: 14px;
   padding-bottom: 48px;
+  background: var(--mainColor);
+  color: var(--mainFontColor);
 }
 .sp-c-c-input:focus {
   outline: none;
@@ -167,7 +170,7 @@
   height: 32px;
   width: calc(100% - 2px);
   position: absolute;
-  background: #f6f7f8;
+  background: var(--greyColor1);
   bottom: 0;
   margin: 1px;
   display: flex;
@@ -178,8 +181,8 @@
 }
 .sp-c-c-b-button {
   padding: 2px 8px;
-  background: #2884d6;
-  color: white;
+  background: var(--accentColor);
+  color: var(--mainColor);
   font-weight: 500;
   border: none;
   border-radius: 500px;
@@ -192,6 +195,27 @@
 .sp-c-s-button {
   background: none;
   border: none;
-  color: #2884d6;
+  color: var(--accentColor);
   font-weight: 500;
+  cursor: pointer;
+  width: fit-content;
+  position: relative;
+}
+
+.sp-c-s-drop {
+  border-radius: 4px;
+  border: var(--greyColor4) 0.5px solid;
+  position: absolute;
+  background: var(--mainColor);
+  margin-top: 8px;
+}
+.sp-c-s-drop-button {
+  width: 102px;
+  height: 34px;
+  text-align: center;
+  font-size: 14px;
+  padding: 8px 0;
+}
+.sp-c-s-drop-button:hover {
+  background: var(--greyColor2);
 }

@@ -3,7 +3,7 @@
   width: 100vw;
   position: fixed;
   bottom: 0;
-  background: #dae0e6;
+  background: var(--backColor);
   overflow: scroll;
   /* z-index: 100; */
 }
@@ -23,15 +23,15 @@
   font-weight: 400;
   padding-bottom: 14px;
   margin-bottom: 14px;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid var(--mainColor);
 }
 .suP-l-content {
-  background: white;
+  background: var(--mainColor);
   border-radius: 5px;
 }
 .suP-l-c-selector {
   display: flex;
-  border-bottom: 1px solid #eceff1;
+  border-bottom: 1px solid var(--greyColor3);
 }
 .suP-l-c-s-choice {
   flex: 1;
@@ -39,7 +39,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: white;
+  background: var(--mainColor);
   border: none;
   color: #878a8c;
   cursor: pointer;
@@ -50,7 +50,7 @@
   cursor: not-allowed;
 }
 .suP-l-c-s-choice:not(:last-child) {
-  border-right: 1px solid #eceff1;
+  border-right: 1px solid var(--greyColor3);
 }
 .suP-l-c-s-choice:first-child {
   border-top-left-radius: 4px;
@@ -73,7 +73,7 @@
 .suP-l-c-i-title {
   width: calc(100% - 32px);
   height: 36px;
-  border: 1px solid #eceff1;
+  border: 1px solid var(--greyColor3);
   padding: 16px;
   margin-top: 16px;
   border-radius: 4px;
@@ -92,10 +92,10 @@
 }
 .suP-l-s-button {
   height: 32px;
-  border: solid 1px#2884d6;
-  color: white;
+  border: solid 1px var(--accentColor);
+  color: var(--mainColor);
   border-radius: 500px;
-  background-color: #2884d6;
+  background-color: var(--accentColor);
   font-weight: 700;
   padding: 0 18px;
   margin-left: 8px;
@@ -109,10 +109,10 @@
 }
 .suP-l-s-button2 {
   height: 32px;
-  border: solid 2px#2884d6;
-  color: #2884d6;
+  border: solid 2pxvar (--accentColor);
+  color: var(--accentColor);
   border-radius: 500px;
-  background-color: white;
+  background-color: var(--mainColor);
   font-weight: 700;
   padding: 0 18px;
   margin-left: 8px;
@@ -128,7 +128,7 @@
   height: 280px;
   width: calc(100% - 32px);
   margin-top: 16px;
-  border: 1px dotted #eceff1;
+  border: 1px dotted var(--greyColor3);
   border-radius: 5px;
   position: relative;
   display: flex;
@@ -140,7 +140,7 @@
   bottom: 0;
   height: 32px;
   width: 100%;
-  background: #f6f7f8;
+  background: var(--greyColor1);
   display: flex;
   align-items: center;
 }
@@ -160,7 +160,7 @@
   /* height: 48px; */
   width: calc(100% - 32px);
   margin-top: 16px;
-  border: 1px solid #eceff1;
+  border: 1px solid var(--greyColor3);
   border-radius: 5px;
   padding: 16px;
 }
@@ -178,7 +178,7 @@
 .suP-l-c-i-f-t-img {
   /* width: 700px; */
   max-height: 200px;
-  border: 3px solid #2884d6;
+  border: 3px solid var(--accentColor);
   border-radius: 12px;
 }
 
@@ -190,10 +190,10 @@
 
 .suP-button {
   height: 32px;
-  border: solid 1px#2884d6;
-  color: white;
+  border: solid 1px var(--accentColor);
+  color: var(--mainColor);
   border-radius: 500px;
-  background-color: #2884d6;
+  background-color: var(--accentColor);
   font-weight: 700;
   padding: 0 18px;
   margin-top: 20px;
