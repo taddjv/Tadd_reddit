@@ -26,6 +26,7 @@
     "multer": "^1.4.5-lts.1",
     "per-env": "^1.0.2",
     "react-html5video": "^2.5.1",
+    "sequelize": "^6.30.0",
     "valid-image-url": "^0.1.4"
   },
   "devDependencies": {
