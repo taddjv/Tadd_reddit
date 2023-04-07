@@ -8,7 +8,6 @@ import Posts from "../Feed/Posts/index";
 import SingleComment from "../Comments/SingleComment";
 import EditUserPopup from "./EditUserPopup";
 import AddPhotoFrom from "./AddPhotoFrom";
-import { useEdit } from "../../context/EditContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -24,8 +23,6 @@ const User = () => {
   const params = useParams();
   const history = useNavigate();
   const location = useLocation();
-
-  const { showUserPicEdit, setShowUserPicEdit } = useEdit();
 
   const { username } = params;
   const currentUser = useSelector((state) => state.users.user);

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../store/users";
 import * as redditorActions from "../../store/redditors";
 import * as communityActions from "../../store/communities";
-import { useEdit } from "../../context/EditContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";

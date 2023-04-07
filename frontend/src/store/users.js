@@ -78,9 +78,12 @@ export const logoutTheUser = () => async (dispatch) => {
   }
 };
 export const restoreTheUser = () => async (dispatch) => {
-  const response = await csrfFetch(`/api/users/restore`, {
-    method: "GET",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/users/restore`,
+    {
+      method: "GET",
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(restoreUser(data));
