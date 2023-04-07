@@ -86,9 +86,12 @@ const clearPosts = () => {
 };
 
 export const getThePosts = (sort) => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/all/?sort=${sort}`, {
-    method: "GET",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/posts/all/?sort=${sort}`,
+    {
+      method: "GET",
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(getPosts(data));
@@ -96,9 +99,12 @@ export const getThePosts = (sort) => async (dispatch) => {
   }
 };
 export const getTheUserPosts = (userId, sort) => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/user/${userId}/?sort=${sort}`, {
-    method: "GET",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/posts/user/${userId}/?sort=${sort}`,
+    {
+      method: "GET",
+    }
+  );
   const data = await response.json();
   if (response.ok) {
     dispatch(getUserPosts(data));
@@ -107,7 +113,7 @@ export const getTheUserPosts = (userId, sort) => async (dispatch) => {
 };
 export const getTheCommunityPosts = (communityId, sort) => async (dispatch) => {
   const response = await csrfFetch(
-    `/api/posts/community/${communityId}/?sort=${sort}`,
+    `https://greenit-api.onrender.com/api/posts/community/${communityId}/?sort=${sort}`,
     {
       method: "GET",
     }
@@ -119,9 +125,12 @@ export const getTheCommunityPosts = (communityId, sort) => async (dispatch) => {
   }
 };
 export const getTheSinglePost = (postId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/${postId}`, {
-    method: "GET",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/posts/${postId}`,
+    {
+      method: "GET",
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(getSinglePost(data));
@@ -129,13 +138,16 @@ export const getTheSinglePost = (postId) => async (dispatch) => {
   }
 };
 export const upvoteThePost = (postId, vote) => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/upvote/${postId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ status: vote }),
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/posts/upvote/${postId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: vote }),
+    }
+  );
   if (response.ok) {
     const data = await response.json();
 
@@ -143,13 +155,16 @@ export const upvoteThePost = (postId, vote) => async (dispatch) => {
   }
 };
 export const downvoteThePost = (postId, vote) => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/downvote/${postId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ status: vote }),
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/posts/downvote/${postId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: vote }),
+    }
+  );
   if (response.ok) {
     const data = await response.json();
 
@@ -159,13 +174,16 @@ export const downvoteThePost = (postId, vote) => async (dispatch) => {
 export const postThePost =
   (postData, type, communityId) => async (dispatch) => {
     const { title, content } = postData;
-    const response = await csrfFetch(`/api/posts/community/${communityId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title: title, content: content, type: type }),
-    });
+    const response = await csrfFetch(
+      `https://greenit-api.onrender.com/api/posts/community/${communityId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title: title, content: content, type: type }),
+      }
+    );
     if (response.ok) {
       const data = await response.json();
       dispatch(postPost(data));
@@ -177,18 +195,24 @@ export const postThePost =
 export const searchThePosts =
   ({ search }) =>
   async (dispatch) => {
-    const response = await csrfFetch(`/api/posts/search/${search}`, {
-      method: "GET",
-    });
+    const response = await csrfFetch(
+      `https://greenit-api.onrender.com/api/posts/search/${search}`,
+      {
+        method: "GET",
+      }
+    );
     if (response.ok) {
       const data = await response.json();
       dispatch(searchPosts(data));
     }
   };
 export const getTheHomePosts = (sort) => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/home/?sort=${sort}`, {
-    method: "GET",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/posts/home/?sort=${sort}`,
+    {
+      method: "GET",
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(getHomePosts(data));
@@ -196,9 +220,12 @@ export const getTheHomePosts = (sort) => async (dispatch) => {
   }
 };
 export const deleteThePost = (postId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/posts/${postId}`, {
-    method: "DELETE",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/posts/${postId}`,
+    {
+      method: "DELETE",
+    }
+  );
 
   if (response.ok) {
     dispatch(deletePost(postId));

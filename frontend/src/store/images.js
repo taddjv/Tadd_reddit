@@ -10,13 +10,16 @@ const postImage = (image) => {
 };
 
 export const postTheImage = (image) => async (dispatch) => {
-  const response = await csrfFetch(`/api/upload`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(image),
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/upload`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(image),
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(postImage(data));

@@ -44,9 +44,12 @@ const clearCommunities = () => {
 };
 
 export const getTheCommunity = (name) => async (dispatch) => {
-  const response = await csrfFetch(`/api/communities/${name}`, {
-    method: "GET",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/communities/${name}`,
+    {
+      method: "GET",
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(getCommunity(data));
@@ -54,44 +57,56 @@ export const getTheCommunity = (name) => async (dispatch) => {
   }
 };
 export const getTheCommunities = () => async (dispatch) => {
-  const response = await csrfFetch(`/api/communities`, {
-    method: "GET",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/communities`,
+    {
+      method: "GET",
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(getCommunities(data));
   }
 };
 export const postTheCommunity = (communityCredentials) => async (dispatch) => {
-  const response = await csrfFetch(`/api/communities`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(communityCredentials),
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/communities`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(communityCredentials),
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(postCommunity(data));
   }
 };
 export const deleteTheCommunity = (id) => async (dispatch) => {
-  const response = await csrfFetch(`/api/communities/${id}`, {
-    method: "DELETE",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/communities/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
   if (response.ok) {
     dispatch(deleteCommunity());
   }
 };
 export const patchTheCommunity =
   (name, communityCredentials) => async (dispatch) => {
-    const response = await csrfFetch(`/api/communities/${name}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(communityCredentials),
-    });
+    const response = await csrfFetch(
+      `https://greenit-api.onrender.com/api/communities/${name}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(communityCredentials),
+      }
+    );
     if (response.ok) {
       const data = await response.json();
       dispatch(patchCommunity(data));

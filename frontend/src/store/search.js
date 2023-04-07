@@ -17,9 +17,12 @@ const searchUser = (users) => {
 };
 
 export const searchTheCommunity = (search) => async (dispatch) => {
-  const response = await csrfFetch(`/api/communities/search/${search}`, {
-    method: "GET",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/communities/search/${search}`,
+    {
+      method: "GET",
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(searchCommunity(data));
@@ -27,9 +30,12 @@ export const searchTheCommunity = (search) => async (dispatch) => {
   }
 };
 export const searchTheUser = (search) => async (dispatch) => {
-  const response = await csrfFetch(`/api/users/search/${search}`, {
-    method: "GET",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.com/api/users/search/${search}`,
+    {
+      method: "GET",
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(searchUser(data));

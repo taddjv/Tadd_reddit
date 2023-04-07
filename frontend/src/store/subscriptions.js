@@ -32,7 +32,7 @@ const deleteSubscription = (id) => {
 
 export const getTheUsersS = (communityId) => async (dispatch) => {
   const response = await csrfFetch(
-    `/api/subscriptions/community/${communityId}`,
+    `https://greenit-api.onrender.comhttps://greenit-api.onrender.com/api/suscriptions/community/${communityId}`,
     {
       method: "GET",
     }
@@ -44,9 +44,12 @@ export const getTheUsersS = (communityId) => async (dispatch) => {
   }
 };
 export const getTheCommunitiesS = (userId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/subscriptions/user/${userId}`, {
-    method: "GET",
-  });
+  const response = await csrfFetch(
+    `https://greenit-api.onrender.comhttps://greenit-api.onrender.com/api/suscriptions/user/${userId}`,
+    {
+      method: "GET",
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     dispatch(getCommunitiesS(data));
@@ -54,7 +57,7 @@ export const getTheCommunitiesS = (userId) => async (dispatch) => {
 };
 export const postTheSubscription = (communityId, role) => async (dispatch) => {
   const response = await csrfFetch(
-    `/api/subscriptions/community/${communityId}`,
+    `https://greenit-api.onrender.comhttps://greenit-api.onrender.com/api/suscriptions/community/${communityId}`,
     {
       method: "POST",
       headers: {
@@ -70,7 +73,7 @@ export const postTheSubscription = (communityId, role) => async (dispatch) => {
 };
 export const deleteTheSubscription = (communityId) => async (dispatch) => {
   const response = await csrfFetch(
-    `/api/subscriptions/community/${communityId}`,
+    `https://greenit-api.onrender.comhttps://greenit-api.onrender.com/api/suscriptions/community/${communityId}`,
     {
       method: "DELETE",
     }
