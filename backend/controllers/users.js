@@ -52,7 +52,7 @@ exports.postUserLog = async (req, res) => {
     });
   } else {
     if (User.verifyUser(foundUser, password)) {
-      foundUser.token = setTokenCookie(res, foundUser);
+      foundUser["token"] = setTokenCookie(res, foundUser);
       // const token = setTokenCookie(res, foundUser);
       console.log(foundUser);
       res.json(foundUser);
