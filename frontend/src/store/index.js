@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
 });
 
 let enhancer;
-
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "production") {
   enhancer = applyMiddleware(thunk);
 } else {
