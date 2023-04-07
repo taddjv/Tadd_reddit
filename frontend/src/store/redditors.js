@@ -17,7 +17,7 @@ const editRedditor = (user) => {
 };
 
 export const getTheRedditor = (user) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/users/${user}`,
     {
       method: "GET",
@@ -31,7 +31,7 @@ export const getTheRedditor = (user) => async (dispatch) => {
 };
 export const editTheRedditor =
   (userCredentials, userId) => async (dispatch) => {
-    const response = await csrfFetch(
+    const response = await fetch(
       `https://greenit-api.onrender.com/api/users/${userId}`,
       {
         method: "PUT",

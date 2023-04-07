@@ -17,7 +17,7 @@ const searchUser = (users) => {
 };
 
 export const searchTheCommunity = (search) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/communities/search/${search}`,
     {
       method: "GET",
@@ -30,7 +30,7 @@ export const searchTheCommunity = (search) => async (dispatch) => {
   }
 };
 export const searchTheUser = (search) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/users/search/${search}`,
     {
       method: "GET",

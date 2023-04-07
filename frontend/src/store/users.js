@@ -44,7 +44,7 @@ const editUser = (user) => {
 };
 
 export const signupTheUser = (userCredentials) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/users/signup`,
     {
       method: "POST",
@@ -60,7 +60,7 @@ export const signupTheUser = (userCredentials) => async (dispatch) => {
   }
 };
 export const loginTheUser = (userCredentials) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/users/login`,
     {
       method: "POST",
@@ -71,13 +71,13 @@ export const loginTheUser = (userCredentials) => async (dispatch) => {
     }
   );
   const data = await response.json();
-  console.log(data);
+  console.log(data, "login");
   if (response.ok) {
     dispatch(loginUser(data));
   }
 };
 export const logoutTheUser = () => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/users/logout`,
     {
       method: "DELETE",
@@ -88,7 +88,7 @@ export const logoutTheUser = () => async (dispatch) => {
   }
 };
 export const restoreTheUser = () => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/users/restore`,
     {
       method: "GET",
@@ -96,12 +96,13 @@ export const restoreTheUser = () => async (dispatch) => {
   );
   if (response.ok) {
     const data = await response.json();
+    console.log(data, "restore");
     dispatch(restoreUser(data));
     return data;
   }
 };
 export const addTheRecent = (userId, community) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/users/${userId}/add-recent`,
     {
       method: "POST",

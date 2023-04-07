@@ -65,7 +65,7 @@ const clearComments = () => {
 };
 
 export const getTheComment = (commentId) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/comments/commentId/${commentId}`,
     {
       method: "GET",
@@ -78,7 +78,7 @@ export const getTheComment = (commentId) => async (dispatch) => {
   }
 };
 export const getTheComments = (search, sort) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/comments/search/${search}/?sort=${sort}`,
     {
       method: "GET",
@@ -91,7 +91,7 @@ export const getTheComments = (search, sort) => async (dispatch) => {
   }
 };
 export const getTheUserComments = (userId, sort) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/comments/user/${userId}/?sort=${sort}`,
     {
       method: "GET",
@@ -104,7 +104,7 @@ export const getTheUserComments = (userId, sort) => async (dispatch) => {
   }
 };
 export const getThePostComments = (postId, sort) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/comments/post/${postId}/?sort=${sort}`,
     {
       method: "GET",
@@ -117,7 +117,7 @@ export const getThePostComments = (postId, sort) => async (dispatch) => {
   }
 };
 export const postTheComment = (content, post) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/comments/post/${post._id}`,
     {
       method: "POST",
@@ -137,7 +137,7 @@ export const postTheComment = (content, post) => async (dispatch) => {
   }
 };
 export const upvoteTheComment = (commentId, vote) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/comments/upvote/${commentId}`,
     {
       method: "PUT",
@@ -154,7 +154,7 @@ export const upvoteTheComment = (commentId, vote) => async (dispatch) => {
   }
 };
 export const downvoteTheComment = (commentId, vote) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/comments/downvote/${commentId}`,
     {
       method: "PUT",
@@ -171,7 +171,7 @@ export const downvoteTheComment = (commentId, vote) => async (dispatch) => {
   }
 };
 export const editTheComment = (content, commentId) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/comments/${commentId}`,
     {
       method: "PUT",
@@ -190,7 +190,7 @@ export const editTheComment = (content, commentId) => async (dispatch) => {
   }
 };
 export const deleteTheComment = (commentId) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/comments/${commentId}`,
     {
       method: "DELETE",

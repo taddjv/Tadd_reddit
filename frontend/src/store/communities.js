@@ -44,7 +44,7 @@ const clearCommunities = () => {
 };
 
 export const getTheCommunity = (name) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/communities/${name}`,
     {
       method: "GET",
@@ -57,7 +57,7 @@ export const getTheCommunity = (name) => async (dispatch) => {
   }
 };
 export const getTheCommunities = () => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/communities`,
     {
       method: "GET",
@@ -69,7 +69,7 @@ export const getTheCommunities = () => async (dispatch) => {
   }
 };
 export const postTheCommunity = (communityCredentials) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/communities`,
     {
       method: "POST",
@@ -85,7 +85,7 @@ export const postTheCommunity = (communityCredentials) => async (dispatch) => {
   }
 };
 export const deleteTheCommunity = (id) => async (dispatch) => {
-  const response = await csrfFetch(
+  const response = await fetch(
     `https://greenit-api.onrender.com/api/communities/${id}`,
     {
       method: "DELETE",
@@ -97,7 +97,7 @@ export const deleteTheCommunity = (id) => async (dispatch) => {
 };
 export const patchTheCommunity =
   (name, communityCredentials) => async (dispatch) => {
-    const response = await csrfFetch(
+    const response = await fetch(
       `https://greenit-api.onrender.com/api/communities/${name}`,
       {
         method: "PATCH",

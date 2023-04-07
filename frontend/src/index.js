@@ -6,19 +6,19 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Route } from "react-router-dom";
 import UserPopProvider from "./context/UserPopcontext";
 import configureStore from "./store";
-import { restoreCSRF, csrfFetch } from "./store/csrf";
+// import { restoreCSRF, csrfFetch } from "./store/csrf";
 
 import * as usersActions from "./store/users";
 
 const store = configureStore();
 
-if (process.env.NODE_ENV !== "production") {
-  restoreCSRF();
+// if (process.env.NODE_ENV !== "production") {
+//   restoreCSRF();
 
-  window.csrfFetch = csrfFetch;
-  window.store = store;
-  window.usersActions = usersActions;
-}
+//   window.csrfFetch = csrfFetch;
+//   window.store = store;
+//   window.usersActions = usersActions;
+// }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
