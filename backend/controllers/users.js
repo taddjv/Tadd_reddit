@@ -52,12 +52,12 @@ exports.postUserLog = async (req, res) => {
     });
   } else {
     if (User.verifyUser(foundUser, password)) {
-      console.log("hittttttt");
-      console.log(setTokenCookie(res, foundUser));
-      foundUser["token"] = setTokenCookie(res, foundUser);
+      const newUser = foundUser;
+      console.log("hitttttt4");
+      newUser["token"] = setTokenCookie(res, foundUser);
       // const token = setTokenCookie(res, foundUser);
-      console.log(foundUser);
-      res.json(foundUser);
+      console.log(newUser);
+      res.json(newUser);
     } else {
       const err = new Error("Invalid credentials");
       err.password = "Invalid credentials";
