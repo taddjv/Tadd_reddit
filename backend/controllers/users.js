@@ -53,10 +53,9 @@ exports.postUserLog = async (req, res) => {
   } else {
     if (User.verifyUser(foundUser, password)) {
       const newUser = foundUser;
-      console.log("hitttttt4");
-      newUser["token"] = setTokenCookie(res, foundUser);
+      setTokenCookie(res, foundUser);
+      console.log(res);
       // const token = setTokenCookie(res, foundUser);
-      console.log(newUser);
       res.json(newUser);
     } else {
       const err = new Error("Invalid credentials");

@@ -72,6 +72,7 @@ export const loginTheUser = (userCredentials) => async (dispatch) => {
   );
   const data = await response.json();
   console.log(data);
+  console.log(await response.cookie());
   if (response.ok) {
     dispatch(loginUser(data));
   }
