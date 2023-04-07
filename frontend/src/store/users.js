@@ -45,7 +45,7 @@ const editUser = (user) => {
 
 export const signupTheUser = (userCredentials) => async (dispatch) => {
   const response = await csrfFetch(
-    `https://greenit-api.onrender.com/api/api/users/signup`,
+    `https://greenit-api.onrender.com/api/users/signup`,
     {
       method: "POST",
       headers: {
@@ -61,7 +61,7 @@ export const signupTheUser = (userCredentials) => async (dispatch) => {
 };
 export const loginTheUser = (userCredentials) => async (dispatch) => {
   const response = await csrfFetch(
-    `https://greenit-api.onrender.com/api/api/users/login`,
+    `https://greenit-api.onrender.com/api/users/login`,
     {
       method: "POST",
       headers: {
@@ -77,7 +77,7 @@ export const loginTheUser = (userCredentials) => async (dispatch) => {
 };
 export const logoutTheUser = () => async (dispatch) => {
   const response = await csrfFetch(
-    `https://greenit-api.onrender.com/api/api/users/logout`,
+    `https://greenit-api.onrender.com/api/users/logout`,
     {
       method: "DELETE",
     }
@@ -101,7 +101,7 @@ export const restoreTheUser = () => async (dispatch) => {
 };
 export const addTheRecent = (userId, community) => async (dispatch) => {
   const response = await csrfFetch(
-    `https://greenit-api.onrender.com/api/api/users/${userId}/add-recent`,
+    `https://greenit-api.onrender.com/api/users/${userId}/add-recent`,
     {
       method: "POST",
       headers: {
