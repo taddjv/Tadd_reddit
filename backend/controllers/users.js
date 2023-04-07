@@ -52,7 +52,8 @@ exports.postUserLog = async (req, res) => {
     });
   } else {
     if (User.verifyUser(foundUser, password)) {
-      const token = setTokenCookie(res, foundUser);
+      foundUser.token = setTokenCookie(res, foundUser);
+      // const token = setTokenCookie(res, foundUser);
       res.json(foundUser);
     } else {
       const err = new Error("Invalid credentials");

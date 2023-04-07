@@ -71,7 +71,7 @@ export const loginTheUser = (userCredentials) => async (dispatch) => {
     }
   );
   const data = await response.json();
-  console.log(data, "login");
+  console.log(data);
   if (response.ok) {
     dispatch(loginUser(data));
   }
@@ -96,7 +96,6 @@ export const restoreTheUser = () => async (dispatch) => {
   );
   if (response.ok) {
     const data = await response.json();
-    console.log(data, "restore");
     dispatch(restoreUser(data));
     return data;
   }
