@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 if (!isProduction) {
-  app.use(cors());
+  app.use(cors({ origin: "https://greenit.onrender.com" }));
 }
 
 app.use(
