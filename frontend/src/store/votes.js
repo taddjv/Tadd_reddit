@@ -39,7 +39,7 @@ const downvoteComment = (id) => {
 
 export const getTheUserVotes = (userId) => async (dispatch) => {
   const response = await csrfFetch(
-    `https://greenit-api.onrender.comhttps://greenit-api.onrender.com/api/votes/user/${userId}`,
+    `https://greenit-api.onrender.com/api/votes/user/${userId}`,
     {
       method: "GET",
     }
@@ -52,7 +52,7 @@ export const getTheUserVotes = (userId) => async (dispatch) => {
 export const upvoteThePost = (post, user) => async (dispatch) => {
   const postId = post._id;
   const response = await csrfFetch(
-    `https://greenit-api.onrender.comhttps://greenit-api.onrender.com/api/votes/post/${postId}/upvote/`,
+    `https://greenit-api.onrender.com/api/votes/post/${postId}/upvote/`,
     {
       method: "POST",
       headers: {
@@ -70,7 +70,7 @@ export const upvoteThePost = (post, user) => async (dispatch) => {
 export const downvoteThePost = (post, user) => async (dispatch) => {
   const postId = post._id;
   const response = await csrfFetch(
-    `https://greenit-api.onrender.comhttps://greenit-api.onrender.com/api/votes/post/${postId}/downvote/`,
+    `https://greenit-api.onrender.com/api/votes/post/${postId}/downvote/`,
     {
       method: "POST",
       headers: {
@@ -87,7 +87,7 @@ export const downvoteThePost = (post, user) => async (dispatch) => {
 };
 export const upvoteTheComment = (comment, user) => async (dispatch) => {
   const response = await csrfFetch(
-    `https://greenit-api.onrender.comhttps://greenit-api.onrender.com/api/votes/comment/${comment._id}/upvote/`,
+    `https://greenit-api.onrender.com/api/votes/comment/${comment._id}/upvote/`,
     {
       method: "POST",
       headers: {
@@ -104,7 +104,7 @@ export const upvoteTheComment = (comment, user) => async (dispatch) => {
 };
 export const downvoteTheComment = (comment, user) => async (dispatch) => {
   const response = await csrfFetch(
-    `https://greenit-api.onrender.comhttps://greenit-api.onrender.com/api/votes/comment/${comment._id}/downvote/`,
+    `https://greenit-api.onrender.com/api/votes/comment/${comment._id}/downvote/`,
     {
       method: "POST",
       headers: {
