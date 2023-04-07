@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": " cd frontend && npm install && npm run build && cd ../backend && npm install",
+    "build": "cd backend && npm install && cd ../frontend && npm install && npm run build",
     "start": "node backend/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,5 +18,5 @@
   "bugs": {
     "url": "https://github.com/taddjv/Tadd_reddit/issues"
   },
-  "homepage": "https://greenit.onrender.com"
+  "homepage": "."
 }
