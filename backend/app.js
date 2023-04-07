@@ -22,9 +22,9 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 
-if (!isProduction) {
-  app.use(cors({ origin: "*" }));
-}
+// if (!isProduction) {
+app.use(cors({ origin: "*" }));
+// }
 
 app.use(
   helmet.crossOriginResourcePolicy({
