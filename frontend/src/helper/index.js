@@ -135,3 +135,19 @@ export const url = "https://greenit-api.onrender.com";
 // export const url = "http://localhost:8000";
 
 export const token = document.cookie.split(";")[0].slice(6);
+
+export const validSearch = (search) => {
+  const special = ` !"#$%&'()*+,-./:;<=>?@[\\]^_{|}~${"`"}`;
+
+  for (let j = 0; j < search.length; j++) {
+    const letter = search[j];
+
+    for (let i = 0; i < special.length; i++) {
+      const character = special[i];
+      if (character === letter) {
+        return false;
+      }
+    }
+  }
+  return true;
+};

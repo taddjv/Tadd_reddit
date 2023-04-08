@@ -56,6 +56,7 @@ export const signupTheUser = (userCredentials) => async (dispatch) => {
   const data = await response.json();
   if (response.ok) {
     dispatch(signupUser(data));
+    return data;
   } else {
     return data;
   }
@@ -72,6 +73,7 @@ export const loginTheUser = (userCredentials) => async (dispatch) => {
   if (response.ok) {
     document.cookie = `token=${data.token}`;
     dispatch(loginUser(data.user));
+    return data;
   } else {
     return data;
   }

@@ -30,19 +30,26 @@ function Posts({ search, type, user, community }) {
 
   useEffect(() => {
     if (type === "home") {
+      setPostColor("rgba(40, 132, 214, 1)");
       dispatch(postsActions.getTheHomePosts(sort)).then(async (res) => {
         const data = await res;
-        console.log(data);
-        if (!data.length) setEmpty(true);
+
+        if (data.message) {
+          dispatch(postsActions.getThePosts(sort)).then(() => {
+            if (!data.length) setEmpty(true);
+          });
+        }
       });
     }
     if (type === "all") {
+      setPostColor("rgba(40, 132, 214, 1)");
       dispatch(postsActions.getThePosts(sort)).then(async (res) => {
         const data = await res;
         if (!data.length) setEmpty(true);
       });
     }
     if (type === "user") {
+      setPostColor("rgba(40, 132, 214, 1)");
       dispatch(postsActions.getTheUserPosts(user._id, sort)).then(
         async (res) => {
           const data = await res;
@@ -55,9 +62,7 @@ function Posts({ search, type, user, community }) {
         async (res) => {
           const data = await res;
           if (!data.length) setEmpty(true);
-          if (data.length) {
-            setPostColor(data[0].community.colors[1]);
-          }
+          setPostColor(community.colors[1]);
         }
       );
     }
@@ -71,7 +76,7 @@ function Posts({ search, type, user, community }) {
         dispatch(postsActions.clearThePosts());
       };
     }
-  }, [location.pathname, sort, user, community]);
+  }, [location.pathname, sort, user, community, currentUser]);
   return (
     <div className="posts">
       {!search && (

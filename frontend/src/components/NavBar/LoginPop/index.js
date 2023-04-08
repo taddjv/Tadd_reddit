@@ -4,6 +4,8 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 
 import { usePop } from "../../../context/UserPopcontext";
 import * as usersActions from "../../../store/users";
+import * as subscriptionActions from "../../../store/subscriptions";
+import * as voteActions from "../../../store/votes";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 
@@ -34,6 +36,8 @@ function LoginPop() {
           setErrors([]);
           setShowLogin(false);
           dispatch(usersActions.restoreTheUser());
+          dispatch(subscriptionActions.getTheCommunitiesS(data.user._id));
+          dispatch(voteActions.getTheUserVotes(data.user._id));
         }
       }
     );

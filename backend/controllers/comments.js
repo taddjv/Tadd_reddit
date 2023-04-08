@@ -84,6 +84,7 @@ exports.postComment = async (req, res, next) => {
     type,
     author: user._id,
     post: postId,
+    createdAt: new Date(),
   });
   const post = await Post.findOne({ _id: postId });
 

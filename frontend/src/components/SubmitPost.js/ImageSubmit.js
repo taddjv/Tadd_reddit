@@ -24,6 +24,7 @@ const ImageSubmit = ({ community }) => {
     const data = {
       title: title,
       content: image,
+      createdAt: new Date(),
     };
 
     dispatch(postsActions.postThePost(data, "image", community._id))

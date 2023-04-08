@@ -17,6 +17,7 @@ const TextSubmit = ({ community }) => {
     const data = {
       title: title,
       content: text,
+      createdAt: new Date(),
     };
 
     dispatch(postsActions.postThePost(data, "text", community._id))

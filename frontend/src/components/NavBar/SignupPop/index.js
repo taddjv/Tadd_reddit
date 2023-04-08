@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { usePop } from "../../../context/UserPopcontext";
 import { formSetter } from "../../../helper";
 import * as usersActions from "../../../store/users";
+import * as subscriptionActions from "../../../store/subscriptions";
+import * as voteActions from "../../../store/votes";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,9 +11,7 @@ import { faX, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./SignupPop.css";
 
 function SignupPop() {
-  const { showSignin, setShowSignin, showLogin, setShowLogin, setDropUser } =
-    usePop();
-  const [formSelect, setFormSelect] = useState(true);
+  const { showSignin, setShowSignin, setDropUser } = usePop();
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState("");
@@ -36,6 +36,8 @@ function SignupPop() {
             setErrors([]);
             setShowSignin(false);
             dispatch(usersActions.restoreTheUser());
+            dispatch(subscriptionActions.getTheCommunitiesS(data.user._id));
+            dispatch(voteActions.getTheUserVotes(data.user._id));
           }
         }
       );

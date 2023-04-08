@@ -18,6 +18,7 @@ const LinkSubmit = ({ community }) => {
     const data = {
       title: title,
       content: link,
+      createdAt: new Date(),
     };
 
     dispatch(postsActions.postThePost(data, "link", community._id)).then(

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as searchActions from "../../../store/search";
 import SearchedData from "./SearchedData";
+import { validSearch } from "../../../helper";
 
 import {
   faCircleXmark,
@@ -12,20 +13,26 @@ import {
 
 function SearchBar() {
   const dispatch = useDispatch();
-
+  const history = useNavigate();
   const searchResults = useSelector((state) => state.search);
 
   const [search, setSearch] = useState(null);
+  const [error, setError] = useState(false);
 
   const [showX, stShowX] = useState(false);
 
   useEffect(() => {
     const bar = document.querySelector(".nc-r-search");
-    if (search) {
+    if (error) {
+      bar.style.backgroundColor = "rgb(255, 210, 210)";
+    } else if (search) {
       bar.style.backgroundColor = "var(--mainColor)";
       bar.style.border = "solid 0.5px var(--accentColor)";
+    } else {
+      bar.style.backgroundColor = "var(--greyColor1)";
+      bar.style.border = "var(--greyColor3) solid 0.25px";
     }
-  }, [search]);
+  }, [search, error]);
   return (
     <>
       <div className="nc-middle">
@@ -36,9 +43,14 @@ function SearchBar() {
               placeholder="Search Reddit"
               value={search}
               onChange={(e) => {
+                setError(false);
                 if (e.target.value) {
-                  dispatch(searchActions.searchTheCommunity(e.target.value));
-                  dispatch(searchActions.searchTheUser(e.target.value));
+                  if (validSearch(e.target.value)) {
+                    dispatch(searchActions.searchTheCommunity(e.target.value));
+                    dispatch(searchActions.searchTheUser(e.target.value));
+                  } else {
+                    setError(true);
+                  }
                   setSearch(e.target.value);
                 } else {
                   setSearch(null);
@@ -49,7 +61,11 @@ function SearchBar() {
           {search && (
             <>
               <div
-                onClick={() => setSearch("")}
+                onClick={() => {
+                  if (!error) {
+                    setSearch("");
+                  }
+                }}
                 className="nc-r-s-results-container"
               >
                 {searchResults.community && (
@@ -61,13 +77,16 @@ function SearchBar() {
                 {searchResults.user && (
                   <SearchedData type="User" data={searchResults.user} />
                 )}
-                <NavLink
-                  exact
-                  to={`/search/${search}`}
+                <div
+                  onClick={() => {
+                    if (!error) {
+                      history(`/search/${search}`);
+                    }
+                  }}
                   className="nc-r-s-results-2"
                 >
                   <div className="nc-r-s-r-content">search for "{search}"</div>
-                </NavLink>
+                </div>
               </div>
             </>
           )}

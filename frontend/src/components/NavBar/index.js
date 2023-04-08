@@ -15,6 +15,8 @@ import { checkMode } from "../../helper";
 import SignupPop from "./SignupPop";
 import UserDropDown from "./UserDropDown";
 import * as usersActions from "../../store/users";
+import * as subscriptionActions from "../../store/subscriptions";
+import * as voteActions from "../../store/votes";
 
 import Logo from "../../images/greenitLogo.png";
 import Logo2 from "../../images/greenitLogo2.png";
@@ -109,7 +111,13 @@ function NavBar({ isLoaded }) {
                       username: "demo",
                       password: "password",
                     })
-                  );
+                  ).then(async (res) => {
+                    const data = await res;
+                    dispatch(
+                      subscriptionActions.getTheCommunitiesS(data.user._id)
+                    );
+                    dispatch(voteActions.getTheUserVotes(data.user._id));
+                  });
                 }}
                 className="nc-r-signup"
               >

@@ -80,9 +80,9 @@
 .nc-r-search {
   width: 645px;
   height: 40px;
-  background-color: var(--greyColor1);
+  /* background-color: var(--greyColor1); */
   border-radius: 500px;
-  border: var(--greyColor3) solid 0.25px;
+  /* border: var(--greyColor3) solid 0.25px; */
   display: flex;
   position: relative;
 }
@@ -93,6 +93,9 @@
 .nc-r-search:focus-within {
   background-color: var(--mainColor);
   border: solid 0.5px var(--accentColor);
+}
+.nc-r-search-e {
+  background: rgb(255, 210, 210);
 }
 .nc-r-search-drop {
   border-bottom-left-radius: 0;
