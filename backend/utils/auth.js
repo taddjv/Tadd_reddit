@@ -26,7 +26,7 @@ const setTokenCookie = (res, user) => {
 
 const findUser = (req, res, next) => {
   const { token } = req.cookies;
-  console.log(req);
+  console.log(req.headers.authentication);
   req.user = null;
 
   if (token) {
