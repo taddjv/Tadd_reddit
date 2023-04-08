@@ -26,6 +26,7 @@ const setTokenCookie = (res, user) => {
 
 const findUser = (req, res, next) => {
   const { token } = req.cookies;
+  console.log(req);
   req.user = null;
 
   if (token) {

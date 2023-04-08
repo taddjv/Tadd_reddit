@@ -71,10 +71,9 @@ export const loginTheUser = (userCredentials) => async (dispatch) => {
     }
   );
   const data = await response.json();
-  console.log(data);
-  console.log(await response.cookie());
+  document.cookie = `token=${data.token}`;
   if (response.ok) {
-    dispatch(loginUser(data));
+    dispatch(loginUser(data.user));
   }
 };
 export const logoutTheUser = () => async (dispatch) => {
@@ -88,11 +87,14 @@ export const logoutTheUser = () => async (dispatch) => {
     dispatch(logoutUser());
   }
 };
-export const restoreTheUser = () => async (dispatch) => {
+export const restoreTheUser = (token) => async (dispatch) => {
   const response = await fetch(
     `https://greenit-api.onrender.com/api/users/restore`,
     {
       method: "GET",
+      headers: {
+        Authentication: token,
+      },
     }
   );
   if (response.ok) {

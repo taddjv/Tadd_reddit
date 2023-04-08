@@ -24,7 +24,9 @@ function App() {
   useEffect(() => {
     checkMode();
 
-    dispatch(usersActions.restoreTheUser()).then(async (res) => {
+    dispatch(
+      usersActions.restoreTheUser(document.cookie.split(";")[0].slice(6))
+    ).then(async (res) => {
       const data = await res;
       dispatch(subscriptionsActions.getTheCommunitiesS(data._id));
       dispatch(votesActions.getTheUserVotes(data._id));
