@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";
+import { url, token } from "../helper";
 
 const GET_USERS_S = "subscriptions/GET_USERS_S";
 const GET_COMMUNITIES_S = "subscriptions/GET_COMMUNITIES_S";
@@ -32,7 +32,7 @@ const deleteSubscription = (id) => {
 
 export const getTheUsersS = (communityId) => async (dispatch) => {
   const response = await fetch(
-    `https://greenit-api.onrender.com/api/suscriptions/community/${communityId}`,
+    `${url}/api/suscriptions/community/${communityId}`,
     {
       method: "GET",
     }
@@ -44,12 +44,9 @@ export const getTheUsersS = (communityId) => async (dispatch) => {
   }
 };
 export const getTheCommunitiesS = (userId) => async (dispatch) => {
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/suscriptions/user/${userId}`,
-    {
-      method: "GET",
-    }
-  );
+  const response = await fetch(`${url}/api/suscriptions/user/${userId}`, {
+    method: "GET",
+  });
   if (response.ok) {
     const data = await response.json();
     dispatch(getCommunitiesS(data));
@@ -57,7 +54,7 @@ export const getTheCommunitiesS = (userId) => async (dispatch) => {
 };
 export const postTheSubscription = (communityId, role) => async (dispatch) => {
   const response = await fetch(
-    `https://greenit-api.onrender.com/api/suscriptions/community/${communityId}`,
+    `${url}/api/suscriptions/community/${communityId}`,
     {
       method: "POST",
       headers: {
@@ -73,7 +70,7 @@ export const postTheSubscription = (communityId, role) => async (dispatch) => {
 };
 export const deleteTheSubscription = (communityId) => async (dispatch) => {
   const response = await fetch(
-    `https://greenit-api.onrender.com/api/suscriptions/community/${communityId}`,
+    `${url}/api/suscriptions/community/${communityId}`,
     {
       method: "DELETE",
     }

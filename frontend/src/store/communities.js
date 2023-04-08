@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";
+import { url, token } from "../helper";
 
 const GET_COMMUNITY = "communities/GET_COMMUNITY";
 const GET_COMMUNITIES = "communities/GET_COMMUNITIES";
@@ -44,12 +44,9 @@ const clearCommunities = () => {
 };
 
 export const getTheCommunity = (name) => async (dispatch) => {
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/communities/${name}`,
-    {
-      method: "GET",
-    }
-  );
+  const response = await fetch(`${url}/api/communities/${name}`, {
+    method: "GET",
+  });
   if (response.ok) {
     const data = await response.json();
     dispatch(getCommunity(data));
@@ -57,56 +54,52 @@ export const getTheCommunity = (name) => async (dispatch) => {
   }
 };
 export const getTheCommunities = () => async (dispatch) => {
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/communities`,
-    {
-      method: "GET",
-    }
-  );
+  const response = await fetch(`${url}/api/communities`, {
+    method: "GET",
+  });
   if (response.ok) {
     const data = await response.json();
     dispatch(getCommunities(data));
   }
 };
 export const postTheCommunity = (communityCredentials) => async (dispatch) => {
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/communities`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(communityCredentials),
-    }
-  );
+  const response = await fetch(`${url}/api/communities`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authentication: token,
+    },
+    body: JSON.stringify(communityCredentials),
+  });
+  const data = await response.json();
+  console.log(response);
   if (response.ok) {
-    const data = await response.json();
     dispatch(postCommunity(data));
+  } else {
+    return data;
   }
 };
 export const deleteTheCommunity = (id) => async (dispatch) => {
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/communities/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
+  const response = await fetch(`${url}/api/communities/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authentication: token,
+    },
+  });
   if (response.ok) {
     dispatch(deleteCommunity());
   }
 };
 export const patchTheCommunity =
   (name, communityCredentials) => async (dispatch) => {
-    const response = await fetch(
-      `https://greenit-api.onrender.com/api/communities/${name}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(communityCredentials),
-      }
-    );
+    const response = await fetch(`${url}/api/communities/${name}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authentication: token,
+      },
+      body: JSON.stringify(communityCredentials),
+    });
     if (response.ok) {
       const data = await response.json();
       dispatch(patchCommunity(data));

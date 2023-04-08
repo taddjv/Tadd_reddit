@@ -37,22 +37,20 @@ function CreateCommunity() {
         name,
         contentType,
       })
-    )
-      .then(() => {
+    ).then(async (res) => {
+      const data = await res;
+      console.log(data);
+      if (data?.message === "Validation Error") setErrors([data.errors]);
+      else if (data?.message) setErrors([data.message]);
+      else {
         setName("");
-
         setNameFinal(name);
         setErrors([]);
         setRedir(true);
         setShowCommunity(false);
         history(`/r/${name}`);
-      })
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.message === "Validation Error")
-          setErrors([data.errors]);
-        else if (data && data.message) setErrors([data.message]);
-      });
+      }
+    });
   };
 
   return (

@@ -30,7 +30,7 @@ exports.postUserSign = async (req, res) => {
 
     const token = setTokenCookie(res, newUser);
 
-    res.json(newUser);
+    res.json({ user: newUser, token: token });
   }
 };
 //Log in

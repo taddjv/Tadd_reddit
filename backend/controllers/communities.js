@@ -1,5 +1,6 @@
 const Community = require("../models/Communities");
 const Post = require("../models/Posts");
+const { callErr } = require("../helper");
 
 exports.getCommunity = async (req, res) => {
   const { name } = req.params;
@@ -26,9 +27,13 @@ exports.getCommunities = async (req, res) => {
   res.json(foundCommunities);
 };
 
-exports.createCommunity = async (req, res) => {
+exports.createCommunity = async (req, res, next) => {
   const { name, contentType } = req.body;
   const { user } = req;
+
+  const foundCommunity = await Community.findOne({ name: name });
+  if (foundCommunity) return callErr("Community already exists", 401, next);
+
   const newCommunity = new Community({
     name,
     contentType,

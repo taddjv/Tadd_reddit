@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";
+import { url, token } from "../helper";
 
 const POST_IMAGE = "images/POST_IMAGE";
 

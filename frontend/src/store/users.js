@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";
+import { url, token } from "../helper";
 
 const SIGNUP_USER = "users/SIGNUP_USER";
 const LOGIN_USER = "users/LOGIN_USER";
@@ -44,59 +44,52 @@ const editUser = (user) => {
 };
 
 export const signupTheUser = (userCredentials) => async (dispatch) => {
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/users/signup`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userCredentials),
-    }
-  );
+  const response = await fetch(`${url}/api/users/signup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userCredentials),
+  });
+  const data = await response.json();
   if (response.ok) {
-    const data = await response.json();
     dispatch(signupUser(data));
+  } else {
+    return data;
   }
 };
 export const loginTheUser = (userCredentials) => async (dispatch) => {
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/users/login`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userCredentials),
-    }
-  );
+  const response = await fetch(`${url}/api/users/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userCredentials),
+  });
   const data = await response.json();
-  document.cookie = `token=${data.token}`;
   if (response.ok) {
+    document.cookie = `token=${data.token}`;
     dispatch(loginUser(data.user));
+  } else {
+    return data;
   }
 };
 export const logoutTheUser = () => async (dispatch) => {
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/users/logout`,
-    {
-      method: "DELETE",
-    }
-  );
+  const response = await fetch(`${url}/api/users/logout`, {
+    method: "DELETE",
+  });
   if (response.ok) {
+    document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     dispatch(logoutUser());
   }
 };
-export const restoreTheUser = (token) => async (dispatch) => {
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/users/restore`,
-    {
-      method: "GET",
-      headers: {
-        Authentication: token,
-      },
-    }
-  );
+export const restoreTheUser = () => async (dispatch) => {
+  const response = await fetch(`${url}/api/users/restore`, {
+    method: "GET",
+    headers: {
+      Authentication: token,
+    },
+  });
   if (response.ok) {
     const data = await response.json();
     dispatch(restoreUser(data));
@@ -104,16 +97,14 @@ export const restoreTheUser = (token) => async (dispatch) => {
   }
 };
 export const addTheRecent = (userId, community) => async (dispatch) => {
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/users/${userId}/add-recent`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(community),
-    }
-  );
+  const response = await fetch(`${url}/api/users/${userId}/add-recent`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authentication: token,
+    },
+    body: JSON.stringify(community),
+  });
   const data = await response.json();
   if (response.ok) {
     dispatch(addRecent(data));

@@ -16,24 +16,31 @@ function SignupPop() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [match, setMatch] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(usersActions.signupTheUser({ username, password }))
-      .then(() => {
-        setUsername("");
-        setPassword("");
-        setErrors([]);
-        setShowSignin(false);
-      })
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.message === "Validation Error")
-          setErrors([data.errors[0]]);
-        else if (data && data.message) setErrors([data.message]);
-      });
+    if (match) {
+      return dispatch(usersActions.signupTheUser({ username, password })).then(
+        async (res) => {
+          const data = await res;
+          if (data?.message === "Validation Error") {
+            setErrors([data.errors]);
+          } else if (data?.message) {
+            setErrors([data.message]);
+          } else {
+            setUsername("");
+            setPassword("");
+            setErrors([]);
+            setShowSignin(false);
+          }
+        }
+      );
+    } else {
+      setErrors(["Passwords aren't matching"]);
+    }
   };
 
   return (
@@ -97,6 +104,26 @@ function SignupPop() {
               />
               <label className="lc-c-m-password-label" for="lc-c-m-password">
                 Password
+              </label>
+            </div>
+            <div className="lc-c-m-password">
+              <input
+                type="password"
+                id="lc-c-m-password"
+                placeholder=" "
+                onChange={(e) => {
+                  if (e.target.value) {
+                    if (e.target.value === password) {
+                      setMatch(true);
+                    } else {
+                      setMatch(false);
+                    }
+                  }
+                }}
+                required
+              />
+              <label className="lc-c-m-password-label" for="lc-c-m-password">
+                Confirm Password
               </label>
             </div>
 

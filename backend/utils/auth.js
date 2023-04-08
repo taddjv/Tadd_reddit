@@ -27,7 +27,6 @@ const setTokenCookie = (res, user) => {
 const findUser = (req, res, next) => {
   // const { token } = req.cookies;
   const token = req.headers.authentication;
-  // console.log(req.headers.authentication);
   req.user = null;
 
   if (token) {
@@ -36,7 +35,6 @@ const findUser = (req, res, next) => {
         err.status = 403;
         return next(err);
       }
-
       try {
         const { _id } = jwtPayload.data;
         req.user = await User.findOne({ _id });

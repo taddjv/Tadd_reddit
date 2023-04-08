@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";
+import { url, token } from "../helper";
 
 const GET_USER_VOTES = "votes/GET_USER_VOTES";
 const UPVOTE_POST = "votes/UPVOTE_POST";
@@ -38,12 +38,9 @@ const downvoteComment = (id) => {
 };
 
 export const getTheUserVotes = (userId) => async (dispatch) => {
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/votes/user/${userId}`,
-    {
-      method: "GET",
-    }
-  );
+  const response = await fetch(`${url}/api/votes/user/${userId}`, {
+    method: "GET",
+  });
   if (response.ok) {
     const data = await response.json();
     dispatch(getUserVotes(data));
@@ -51,16 +48,13 @@ export const getTheUserVotes = (userId) => async (dispatch) => {
 };
 export const upvoteThePost = (post, user) => async (dispatch) => {
   const postId = post._id;
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/votes/post/${postId}/upvote/`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user: user }),
-    }
-  );
+  const response = await fetch(`${url}/api/votes/post/${postId}/upvote/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ user: user }),
+  });
   if (response.ok) {
     const data = await response.json();
     dispatch(upvotePost(data, post._id));
@@ -69,16 +63,13 @@ export const upvoteThePost = (post, user) => async (dispatch) => {
 };
 export const downvoteThePost = (post, user) => async (dispatch) => {
   const postId = post._id;
-  const response = await fetch(
-    `https://greenit-api.onrender.com/api/votes/post/${postId}/downvote/`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user: user }),
-    }
-  );
+  const response = await fetch(`${url}/api/votes/post/${postId}/downvote/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ user: user }),
+  });
   if (response.ok) {
     const data = await response.json();
     dispatch(downvotePost(data, post._id));
@@ -87,7 +78,7 @@ export const downvoteThePost = (post, user) => async (dispatch) => {
 };
 export const upvoteTheComment = (comment, user) => async (dispatch) => {
   const response = await fetch(
-    `https://greenit-api.onrender.com/api/votes/comment/${comment._id}/upvote/`,
+    `${url}/api/votes/comment/${comment._id}/upvote/`,
     {
       method: "POST",
       headers: {
@@ -104,7 +95,7 @@ export const upvoteTheComment = (comment, user) => async (dispatch) => {
 };
 export const downvoteTheComment = (comment, user) => async (dispatch) => {
   const response = await fetch(
-    `https://greenit-api.onrender.com/api/votes/comment/${comment._id}/downvote/`,
+    `${url}/api/votes/comment/${comment._id}/downvote/`,
     {
       method: "POST",
       headers: {

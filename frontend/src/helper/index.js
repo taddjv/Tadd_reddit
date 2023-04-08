@@ -130,3 +130,8 @@ export const setDark = () => {
   colors.style.setProperty("--accentColor", "rgba(215,218,220,1)");
   colors.style.setProperty("--mainFontColor", "rgba(215,218,220,1)");
 };
+
+export const url = "https://greenit-api.onrender.com";
+// export const url = "http://localhost:8000";
+
+export const token = document.cookie.split(";")[0].slice(6);

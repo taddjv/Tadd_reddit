@@ -23,14 +23,15 @@ function App() {
   const { setDropUser } = usePop();
   useEffect(() => {
     checkMode();
-
-    dispatch(
-      usersActions.restoreTheUser(document.cookie.split(";")[0].slice(6))
-    ).then(async (res) => {
+    dispatch(usersActions.restoreTheUser()).then(async (res) => {
       const data = await res;
-      dispatch(subscriptionsActions.getTheCommunitiesS(data._id));
-      dispatch(votesActions.getTheUserVotes(data._id));
-      setIsLoaded(true);
+      if (data.user) {
+        dispatch(subscriptionsActions.getTheCommunitiesS(data._id));
+        dispatch(votesActions.getTheUserVotes(data._id));
+        setIsLoaded(true);
+      } else {
+        setIsLoaded(true);
+      }
     });
   }, [dispatch]);
 

@@ -21,20 +21,21 @@ function LoginPop() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(usersActions.loginTheUser({ username, password }))
-      .then(() => {
-        setUsername("");
-        setPassword("");
-        setErrors([]);
-        setShowLogin(false);
-      })
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.message === "Validation Error")
+    return dispatch(usersActions.loginTheUser({ username, password })).then(
+      async (res) => {
+        const data = await res;
+        if (data?.message === "Validation Error") {
           setErrors([data.errors]);
-        else if (data && data.message) setErrors([data.message]);
-        // if (data && data.message) setErrors([data.message]);
-      });
+        } else if (data?.message) {
+          setErrors([data.message]);
+        } else {
+          setUsername("");
+          setPassword("");
+          setErrors([]);
+          setShowLogin(false);
+        }
+      }
+    );
   };
   return (
     <>
