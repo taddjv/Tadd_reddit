@@ -40,6 +40,9 @@ const downvoteComment = (id) => {
 export const getTheUserVotes = (userId) => async (dispatch) => {
   const response = await fetch(`${url}/api/votes/user/${userId}`, {
     method: "GET",
+    headers: {
+      Authentication: token,
+    },
   });
   if (response.ok) {
     const data = await response.json();
@@ -47,11 +50,13 @@ export const getTheUserVotes = (userId) => async (dispatch) => {
   }
 };
 export const upvoteThePost = (post, user) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const postId = post._id;
   const response = await fetch(`${url}/api/votes/post/${postId}/upvote/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authentication: cookie,
     },
     body: JSON.stringify({ user: user }),
   });
@@ -62,11 +67,13 @@ export const upvoteThePost = (post, user) => async (dispatch) => {
   }
 };
 export const downvoteThePost = (post, user) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const postId = post._id;
   const response = await fetch(`${url}/api/votes/post/${postId}/downvote/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authentication: cookie,
     },
     body: JSON.stringify({ user: user }),
   });
@@ -77,29 +84,34 @@ export const downvoteThePost = (post, user) => async (dispatch) => {
   }
 };
 export const upvoteTheComment = (comment, user) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(
     `${url}/api/votes/comment/${comment._id}/upvote/`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authentication: cookie,
       },
       body: JSON.stringify({ user: user }),
     }
   );
+  const data = await response.json();
   if (response.ok) {
-    const data = await response.json();
     dispatch(upvoteComment(data, comment._id));
     return data;
+  } else {
   }
 };
 export const downvoteTheComment = (comment, user) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(
     `${url}/api/votes/comment/${comment._id}/downvote/`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authentication: cookie,
       },
       body: JSON.stringify({ user: user }),
     }

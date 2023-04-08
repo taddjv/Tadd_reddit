@@ -74,7 +74,12 @@ function RulesCommunity({ community, user }) {
           >
             Cancel
           </button>
-          <button className="ac-c-d-ta-s" type="submit">
+          <button
+            className={`ac-c-d-ta-s ${
+              ruleError || detailsError ? "ac-c-d-ta-s-curs" : null
+            }`}
+            type="submit"
+          >
             Save
           </button>
         </form>

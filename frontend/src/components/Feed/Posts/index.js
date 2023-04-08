@@ -32,6 +32,7 @@ function Posts({ search, type, user, community }) {
     if (type === "home") {
       dispatch(postsActions.getTheHomePosts(sort)).then(async (res) => {
         const data = await res;
+        console.log(data);
         if (!data.length) setEmpty(true);
       });
     }

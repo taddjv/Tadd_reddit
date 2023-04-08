@@ -132,10 +132,12 @@ export const getTheSinglePost = (postId) => async (dispatch) => {
   }
 };
 export const upvoteThePost = (postId, vote) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/posts/upvote/${postId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authentication: cookie,
     },
     body: JSON.stringify({ status: vote }),
   });
@@ -146,10 +148,12 @@ export const upvoteThePost = (postId, vote) => async (dispatch) => {
   }
 };
 export const downvoteThePost = (postId, vote) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/posts/downvote/${postId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authentication: cookie,
     },
     body: JSON.stringify({ status: vote }),
   });
@@ -161,19 +165,20 @@ export const downvoteThePost = (postId, vote) => async (dispatch) => {
 };
 export const postThePost =
   (postData, type, communityId) => async (dispatch) => {
+    const cookie = document.cookie.split(";")[0].slice(6);
     const { title, content } = postData;
     const response = await fetch(`${url}/api/posts/community/${communityId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authentication: cookie,
       },
       body: JSON.stringify({ title: title, content: content, type: type }),
     });
+    const data = await response.json();
     if (response.ok) {
-      const data = await response.json();
       dispatch(postPost(data));
     } else {
-      const data = await response.json();
       return data;
     }
   };
@@ -189,8 +194,12 @@ export const searchThePosts =
     }
   };
 export const getTheHomePosts = (sort) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/posts/home/?sort=${sort}`, {
     method: "GET",
+    headers: {
+      Authentication: cookie,
+    },
   });
   if (response.ok) {
     const data = await response.json();
@@ -199,13 +208,18 @@ export const getTheHomePosts = (sort) => async (dispatch) => {
   }
 };
 export const deleteThePost = (postId) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/posts/${postId}`, {
     method: "DELETE",
+    headers: {
+      Authentication: cookie,
+    },
   });
-
+  const data = await response.json();
   if (response.ok) {
     dispatch(deletePost(postId));
   }
+  return data;
 };
 export const clearThePosts = () => async (dispatch) => {
   dispatch(clearPosts());

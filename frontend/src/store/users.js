@@ -1,5 +1,7 @@
 import { url, token } from "../helper";
 
+const cookie = document.cookie.split(";")[0].slice(6);
+
 const SIGNUP_USER = "users/SIGNUP_USER";
 const LOGIN_USER = "users/LOGIN_USER";
 const LOGOUT_USER = "users/LOGOUT_USER";
@@ -84,24 +86,28 @@ export const logoutTheUser = () => async (dispatch) => {
   }
 };
 export const restoreTheUser = () => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/users/restore`, {
     method: "GET",
     headers: {
-      Authentication: token,
+      Authentication: cookie,
     },
   });
+  const data = await response.json();
   if (response.ok) {
-    const data = await response.json();
     dispatch(restoreUser(data));
     return data;
+  } else {
+    return;
   }
 };
 export const addTheRecent = (userId, community) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/users/${userId}/add-recent`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authentication: token,
+      Authentication: cookie,
     },
     body: JSON.stringify(community),
   });

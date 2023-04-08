@@ -10,6 +10,7 @@ const Community = require("../models/Communities");
 const Subscription = require("../models/Subscriptions");
 const Post = require("../models/Posts");
 const Comment = require("../models/Comments");
+const Vote = require("../models/Votes");
 require("dotenv").config();
 
 mongoose.connect(
@@ -27,6 +28,8 @@ const seedDB = async () => {
   await Community.deleteMany({});
   await Post.deleteMany({});
   await Subscription.deleteMany({});
+  await Vote.deleteMany({});
+
   await User.insertMany(await seedUsers());
   const allUsers = await User.find({});
   await Community.insertMany(

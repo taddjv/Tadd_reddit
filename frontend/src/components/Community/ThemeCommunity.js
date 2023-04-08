@@ -60,7 +60,12 @@ const ThemeCommunity = ({ community }) => {
         />
         <div className="ac-c-o-c-preview2"></div>
       </div>
-      <button onClick={changeColors} className="ac-c-d-ta-s">
+      <button
+        onClick={changeColors}
+        className={`ac-c-d-ta-s ${
+          error1 || error2 ? "ac-c-d-ta-s-curs" : null
+        }`}
+      >
         Add Colors
       </button>
     </>

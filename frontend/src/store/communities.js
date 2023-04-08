@@ -63,16 +63,16 @@ export const getTheCommunities = () => async (dispatch) => {
   }
 };
 export const postTheCommunity = (communityCredentials) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/communities`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authentication: token,
+      Authentication: cookie,
     },
     body: JSON.stringify(communityCredentials),
   });
   const data = await response.json();
-  console.log(response);
   if (response.ok) {
     dispatch(postCommunity(data));
   } else {
@@ -80,10 +80,11 @@ export const postTheCommunity = (communityCredentials) => async (dispatch) => {
   }
 };
 export const deleteTheCommunity = (id) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/communities/${id}`, {
     method: "DELETE",
     headers: {
-      Authentication: token,
+      Authentication: cookie,
     },
   });
   if (response.ok) {
@@ -92,11 +93,12 @@ export const deleteTheCommunity = (id) => async (dispatch) => {
 };
 export const patchTheCommunity =
   (name, communityCredentials) => async (dispatch) => {
+    const cookie = document.cookie.split(";")[0].slice(6);
     const response = await fetch(`${url}/api/communities/${name}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authentication: token,
+        Authentication: cookie,
       },
       body: JSON.stringify(communityCredentials),
     });
@@ -132,10 +134,13 @@ const communitiesReducer = (state = initialState, action) => {
       newState = Object.assign({}, state);
       newState.community = null;
       return newState;
-    case PATCH_COMMUNITY:
-      newState = Object.assign({}, state);
+    case PATCH_COMMUNITY: {
+      const oldState = { ...state };
+      newState = {};
       newState.community = action.payload;
+      newState.community["subCount"] = oldState.community.subCount;
       return newState;
+    }
     case CLEAR: {
       let newState = { ...state };
       newState.community = null;

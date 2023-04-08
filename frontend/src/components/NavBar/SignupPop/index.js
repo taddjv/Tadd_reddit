@@ -35,6 +35,7 @@ function SignupPop() {
             setPassword("");
             setErrors([]);
             setShowSignin(false);
+            dispatch(usersActions.restoreTheUser());
           }
         }
       );

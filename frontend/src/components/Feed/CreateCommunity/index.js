@@ -88,11 +88,11 @@ function CreateCommunity() {
                 </label>
               </div>
               <div className="cc-c-n-count">21 characters remaining</div>
-              {/* <ul className="lc-c-m-errors">
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul> */}
+              <ul className="lc-c-m-errors-com">
+                {errors.map((error, idx) => (
+                  <li key={idx}>{error}</li>
+                ))}
+              </ul>
             </div>
             <div className="cc-c-type">
               <div className="cc-c-t-title">Community type</div>

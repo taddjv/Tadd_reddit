@@ -381,6 +381,10 @@ input[type="file"] {
   font-weight: 500;
   font-size: 14px;
   margin-bottom: 16px;
+  cursor: pointer;
+}
+.ac-c-d-ta-s-curs {
+  cursor: not-allowed;
 }
 .ac-c-d-ta-c {
   color: #fe4500;

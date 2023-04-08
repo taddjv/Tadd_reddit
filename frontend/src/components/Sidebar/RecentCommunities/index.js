@@ -10,28 +10,32 @@ function RecentCommunities() {
   return (
     <>
       {currentUser && (
-        <div className="recentCommunities">
-          <div className="rc-title">RECENT COMMUNITIES</div>
-          {currentUser.recentCommunities.map((ele) => {
-            const data = ele.split(",");
-            return (
-              <NavLink to={`/r/${data[1]}`}>
-                <div className="rc-community1">
-                  {data[0] !== "undefined" ? (
-                    <img src={data[0]} />
-                  ) : (
-                    <FontAwesomeIcon
-                      className="c-rc-community-logo"
-                      icon={faClipboardList}
-                    />
-                  )}
+        <>
+          {currentUser.recentCommunities.length ? (
+            <div className="recentCommunities">
+              <div className="rc-title">RECENT COMMUNITIES</div>
+              {currentUser.recentCommunities.map((ele) => {
+                const data = ele.split(",");
+                return (
+                  <NavLink to={`/r/${data[1]}`}>
+                    <div className="rc-community1">
+                      {data[0] !== "undefined" ? (
+                        <img src={data[0]} />
+                      ) : (
+                        <FontAwesomeIcon
+                          className="c-rc-community-logo"
+                          icon={faClipboardList}
+                        />
+                      )}
 
-                  <span className="rc-c1-text">r/{data[1]}</span>
-                </div>
-              </NavLink>
-            );
-          })}
-        </div>
+                      <span className="rc-c1-text">r/{data[1]}</span>
+                    </div>
+                  </NavLink>
+                );
+              })}
+            </div>
+          ) : null}
+        </>
       )}
     </>
   );

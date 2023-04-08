@@ -15,7 +15,7 @@ const DeletePost = ({ post }) => {
   const deletePost = (e) => {
     e.preventDefault();
     dispatch(postsActions.deleteThePost(post._id)).then(() => {
-      history(-1);
+      return history(`/r/${post.community.name}`);
     });
   };
   return (

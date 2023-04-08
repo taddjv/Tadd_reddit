@@ -1,4 +1,4 @@
-import { url, token } from "../helper";
+import { url } from "../helper";
 
 const GET_COMMENT = "comments/GET_COMMENT";
 const GET_COMMENTS = "comments/GET_COMMENTS";
@@ -88,10 +88,14 @@ export const getTheComments = (search, sort) => async (dispatch) => {
   }
 };
 export const getTheUserComments = (userId, sort) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(
     `${url}/api/comments/user/${userId}/?sort=${sort}`,
     {
       method: "GET",
+      headers: {
+        Authentication: cookie,
+      },
     }
   );
   if (response.ok) {
@@ -114,10 +118,12 @@ export const getThePostComments = (postId, sort) => async (dispatch) => {
   }
 };
 export const postTheComment = (content, post) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/comments/post/${post._id}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authentication: cookie,
     },
     body: JSON.stringify(content),
   });
@@ -131,10 +137,12 @@ export const postTheComment = (content, post) => async (dispatch) => {
   }
 };
 export const upvoteTheComment = (commentId, vote) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/comments/upvote/${commentId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authentication: cookie,
     },
     body: JSON.stringify({ status: vote }),
   });
@@ -145,10 +153,12 @@ export const upvoteTheComment = (commentId, vote) => async (dispatch) => {
   }
 };
 export const downvoteTheComment = (commentId, vote) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/comments/downvote/${commentId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authentication: cookie,
     },
     body: JSON.stringify({ status: vote }),
   });
@@ -159,10 +169,12 @@ export const downvoteTheComment = (commentId, vote) => async (dispatch) => {
   }
 };
 export const editTheComment = (content, commentId) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/comments/${commentId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authentication: cookie,
     },
     body: JSON.stringify(content),
   });
@@ -175,10 +187,12 @@ export const editTheComment = (content, commentId) => async (dispatch) => {
   }
 };
 export const deleteTheComment = (commentId) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(`${url}/api/comments/${commentId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      Authentication: cookie,
     },
   });
   if (response.ok) {

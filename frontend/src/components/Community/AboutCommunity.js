@@ -23,11 +23,13 @@ function AboutCommunity({ community, user }) {
   const addDescription = (e) => {
     e.preventDefault();
     const desiredDescription = { description: newDesc };
-    dispatch(
-      communitiesActions.patchTheCommunity(community.name, desiredDescription)
-    ).then(() => {
-      setShowDescEdit(false);
-    });
+    if (newDesc) {
+      dispatch(
+        communitiesActions.patchTheCommunity(community.name, desiredDescription)
+      ).then(() => {
+        setShowDescEdit(false);
+      });
+    }
   };
   const comModDescription = description ? (
     <>
@@ -52,7 +54,10 @@ function AboutCommunity({ community, user }) {
           >
             Cancel
           </button>
-          <button className="ac-c-d-ta-s" type="submit">
+          <button
+            className={`ac-c-d-ta-s ${newDesc ? null : "ac-c-d-ta-s-curs"}`}
+            type="submit"
+          >
             Save
           </button>
         </form>

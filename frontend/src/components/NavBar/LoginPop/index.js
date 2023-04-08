@@ -33,6 +33,7 @@ function LoginPop() {
           setPassword("");
           setErrors([]);
           setShowLogin(false);
+          dispatch(usersActions.restoreTheUser());
         }
       }
     );

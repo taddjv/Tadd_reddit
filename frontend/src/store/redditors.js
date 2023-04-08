@@ -28,10 +28,12 @@ export const getTheRedditor = (user) => async (dispatch) => {
 };
 export const editTheRedditor =
   (userCredentials, userId) => async (dispatch) => {
+    const cookie = document.cookie.split(";")[0].slice(6);
     const response = await fetch(`${url}/api/users/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authentication: cookie,
       },
       body: JSON.stringify(userCredentials),
     });

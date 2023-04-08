@@ -32,7 +32,7 @@ const deleteSubscription = (id) => {
 
 export const getTheUsersS = (communityId) => async (dispatch) => {
   const response = await fetch(
-    `${url}/api/suscriptions/community/${communityId}`,
+    `${url}/api/subscriptions/community/${communityId}`,
     {
       method: "GET",
     }
@@ -44,8 +44,12 @@ export const getTheUsersS = (communityId) => async (dispatch) => {
   }
 };
 export const getTheCommunitiesS = (userId) => async (dispatch) => {
-  const response = await fetch(`${url}/api/suscriptions/user/${userId}`, {
+  const cookie = document.cookie.split(";")[0].slice(6);
+  const response = await fetch(`${url}/api/subscriptions/user/${userId}`, {
     method: "GET",
+    headers: {
+      Authentication: cookie,
+    },
   });
   if (response.ok) {
     const data = await response.json();
@@ -53,12 +57,14 @@ export const getTheCommunitiesS = (userId) => async (dispatch) => {
   }
 };
 export const postTheSubscription = (communityId, role) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(
-    `${url}/api/suscriptions/community/${communityId}`,
+    `${url}/api/subscriptions/community/${communityId}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authentication: cookie,
       },
       body: JSON.stringify(role),
     }
@@ -69,10 +75,14 @@ export const postTheSubscription = (communityId, role) => async (dispatch) => {
   }
 };
 export const deleteTheSubscription = (communityId) => async (dispatch) => {
+  const cookie = document.cookie.split(";")[0].slice(6);
   const response = await fetch(
-    `${url}/api/suscriptions/community/${communityId}`,
+    `${url}/api/subscriptions/community/${communityId}`,
     {
       method: "DELETE",
+      headers: {
+        Authentication: cookie,
+      },
     }
   );
   if (response.ok) {

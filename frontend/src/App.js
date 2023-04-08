@@ -25,11 +25,11 @@ function App() {
     checkMode();
     dispatch(usersActions.restoreTheUser()).then(async (res) => {
       const data = await res;
-      if (data.user) {
+      if (data?.message) {
+        setIsLoaded(true);
+      } else if (data?._id) {
         dispatch(subscriptionsActions.getTheCommunitiesS(data._id));
         dispatch(votesActions.getTheUserVotes(data._id));
-        setIsLoaded(true);
-      } else {
         setIsLoaded(true);
       }
     });

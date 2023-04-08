@@ -20,19 +20,18 @@ const LinkSubmit = ({ community }) => {
       content: link,
     };
 
-    dispatch(postsActions.postThePost(data, "link", community._id))
-      .then(() => {
-        history(-1);
-      })
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data.errors.join(" ").includes("title")) {
+    dispatch(postsActions.postThePost(data, "link", community._id)).then(
+      async (res) => {
+        const data = await res;
+        if (data?.errors.join(" ").includes("title")) {
           setTitleError(true);
-        }
-        if (data.errors.join(" ").includes("Link")) {
+        } else if (data?.errors.join(" ").includes("Link")) {
           setLinkError(true);
+        } else {
+          history(-1);
         }
-      });
+      }
+    );
   };
   return (
     <>

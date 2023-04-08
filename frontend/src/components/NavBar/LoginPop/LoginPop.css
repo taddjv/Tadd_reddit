@@ -159,3 +159,15 @@
   margin: auto;
   text-align: center;
 }
+
+.lc-c-m-errors-com {
+  list-style-type: none;
+  display: flex;
+}
+.lc-c-m-errors-com > li {
+  color: #fb133a;
+  font-size: 12px;
+  width: 240px;
+  margin: auto;
+  text-align: center;
+}

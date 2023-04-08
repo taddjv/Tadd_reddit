@@ -75,7 +75,6 @@ exports.deleteUserLog = async (req, res) => {
 
 exports.getUserLog = async (req, res) => {
   const { user } = req;
-
   if (user) {
     return res.json(user);
   } else return res.json({});
