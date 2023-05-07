@@ -55,6 +55,7 @@ export const signupTheUser = (userCredentials) => async (dispatch) => {
   });
   const data = await response.json();
   if (response.ok) {
+    document.cookie = `token=${data.token}`;
     dispatch(signupUser(data));
     return data;
   } else {
@@ -127,10 +128,11 @@ const initialState = { user: null };
 const usersReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
-    case SIGNUP_USER:
-      newState = Object.assign({}, state);
-      newState.user = action.payload;
+    case SIGNUP_USER: {
+      let newState = {};
+      newState = action.payload;
       return newState;
+    }
     case LOGIN_USER:
       newState = Object.assign({}, state);
       newState.user = action.payload;

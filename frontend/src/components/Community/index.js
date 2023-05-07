@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as communitiesActions from "../../store/communities";
 import * as subscriptionsActions from "../../store/subscriptions";
 import * as userActions from "../../store/users";
-import { userSubbed, dataRender, setComColor } from "../../helper";
+import { userSubbed, setComColor } from "../../helper";
 import { usePop } from "../../context/UserPopcontext";
 
 import Posts from "../Feed/Posts";
@@ -13,11 +13,7 @@ import RulesCommunity from "./RulesCommunity";
 
 import "./Community.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPaperPlane,
-  faPlusSquare,
-  faUser,
-} from "@fortawesome/free-regular-svg-icons";
+import { faPaperPlane, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import AddPhotoFrom from "../User/AddPhotoFrom";
 
@@ -29,16 +25,11 @@ function Community() {
   const { communityName } = params;
   const community = useSelector((state) => state.communities.community);
   const currentUser = useSelector((state) => state.users.user);
-  const userVotes = useSelector((state) => state.votes);
   const subscriptionStatus = useSelector((state) => state.subscriptions);
   const { setDropUser, setShowLogin } = usePop();
 
   const [communityId, setCommunityId] = useState(null);
   const [isMod, setIsMod] = useState(false);
-
-  const [showPosts, setShowPosts] = useState(false);
-  const [showPost, setShowPost] = useState(false);
-  const [subcount, setSubCount] = useState(null);
 
   useEffect(() => {
     if (community?.colors) {
@@ -128,7 +119,17 @@ function Community() {
                       Joined
                     </button>
                   ) : (
-                    <button onClick={subscribe} className="c-h-2-button">
+                    <button
+                      // onClick={subscribe}
+                      onClick={
+                        currentUser
+                          ? subscribe
+                          : () => {
+                              setShowLogin(true);
+                            }
+                      }
+                      className="c-h-2-button"
+                    >
                       Join
                     </button>
                   )}

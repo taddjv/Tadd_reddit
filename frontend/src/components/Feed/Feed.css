@@ -29,4 +29,5 @@
   margin-bottom: 16px;
   height: fit-content;
   margin-top: 48px;
+  color: var(--mainFontColor);
 }
